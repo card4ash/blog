@@ -1,0 +1,9 @@
+#recipe Blog
+
+// Customize your settings and add new ones here
+Settings[Keys.LinkRoot] = "/blog";
+Settings[Keys.Host] = "host.com";
+Settings[BlogKeys.Title] = "ashcoder.io";
+Settings[BlogKeys.Description] = "Welcome!";
+
+// Add any pipeline customizations here
