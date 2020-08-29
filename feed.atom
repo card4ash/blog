@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<id>http://host.com/blog</id>
+	<title>ashcoder.io</title>
+	<link rel="self" href="http://host.com/blog" />
+	<rights>2020</rights>
+	<updated>2020-08-29T02:17:28Z</updated>
+	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>http://host.com/blog/posts/mongoquery</id>
+		<title>Mongo DB Basics</title>
+		<link href="http://host.com/blog/posts/mongoquery" />
+		<updated>2020-08-29T00:00:00Z</updated>
+		<content>&lt;h1 id="connect-to-mongodb-from-cli"&gt;Connect to mongodb from cli&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;mongo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;with port&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mongo --port 28015&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can specify a connection string. For example, to connect to a MongoDB instance running on a remote host machine&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mongo &amp;quot;mongodb://mongodb0.example.com:28015&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can use the command-line option --host &lt;host&gt;:&lt;port&gt;. For example, to connect to a MongoDB instance running on a remote host machine:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mongo --host mongodb0.example.com:28015
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mongo --host mongodb0.example.com --port 28015
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;using auth&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mongo &amp;quot;mongodb://alice&amp;#64;mongodb0.examples.com:28015/?authSource=admin&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    mongo --username alice --password --authenticationDatabase admin --host mongodb0.examples.com --port 28015
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="database-command"&gt;Database Command&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    db
+    use &amp;lt;database&amp;gt;
+    show dbs
+    use myNewDatabase
+    db.myCollection.insertOne( { x: 1 } );
+    db.getCollection(&amp;quot;3 test&amp;quot;).find()
+    db.getCollection(&amp;quot;3-test&amp;quot;).find()
+    db.getCollection(&amp;quot;stats&amp;quot;).find()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;populate data
++++++++++++++++++&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.insertMany([
+    { item: &amp;quot;journal&amp;quot;, qty: 25, status: &amp;quot;A&amp;quot;, size: { h: 14, w: 21, uom: &amp;quot;cm&amp;quot; }, tags: [ &amp;quot;blank&amp;quot;, &amp;quot;red&amp;quot; ] },
+    { item: &amp;quot;notebook&amp;quot;, qty: 50, status: &amp;quot;A&amp;quot;, size: { h: 8.5, w: 11, uom: &amp;quot;in&amp;quot; }, tags: [ &amp;quot;red&amp;quot;, &amp;quot;blank&amp;quot; ] },
+    { item: &amp;quot;paper&amp;quot;, qty: 10, status: &amp;quot;D&amp;quot;, size: { h: 8.5, w: 11, uom: &amp;quot;in&amp;quot; }, tags: [ &amp;quot;red&amp;quot;, &amp;quot;blank&amp;quot;, &amp;quot;plain&amp;quot; ] },
+    { item: &amp;quot;planner&amp;quot;, qty: 0, status: &amp;quot;D&amp;quot;, size: { h: 22.85, w: 30, uom: &amp;quot;cm&amp;quot; }, tags: [ &amp;quot;blank&amp;quot;, &amp;quot;red&amp;quot; ] },
+    { item: &amp;quot;postcard&amp;quot;, qty: 45, status: &amp;quot;A&amp;quot;, size: { h: 10, w: 15.25, uom: &amp;quot;cm&amp;quot; }, tags: [ &amp;quot;blue&amp;quot; ] }
+    ]);
+
+    // MongoDB adds an _id field with an ObjectId value if the field is not present in the document
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Select All Documents
+++++++++++++++++++++++&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.find({})
+    db.inventory.find({}).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Specify Equality Matches
++++++++++++++++++++++++++++&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;D&amp;quot; } );
+    db.inventory.find( { qty: 0 } );
+    db.inventory.find( { qty: 0, status: &amp;quot;D&amp;quot; } );
+    db.inventory.find( { &amp;quot;size.uom&amp;quot;: &amp;quot;in&amp;quot; } )
+    db.inventory.find( { size: { h: 14, w: 21, uom: &amp;quot;cm&amp;quot; } } )
+    db.inventory.find( { tags: &amp;quot;red&amp;quot; } )
+    db.inventory.find( { tags: [ &amp;quot;red&amp;quot;, &amp;quot;blank&amp;quot; ] } )
+    db.inventory.find( { status: { $in: [ &amp;quot;A&amp;quot;, &amp;quot;D&amp;quot; ] } } )
+    db.inventory.find( { $or: [ { status: &amp;quot;A&amp;quot; }, { qty: { $lt: 30 } } ] } )
+    db.inventory.find( {
+     status: &amp;quot;A&amp;quot;,
+     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
+} )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="project-fields-to-return-from-query"&gt;Project Fields to Return from Query&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { item: 1, status: 1 } )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Suppress _id Field&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { item: 1, status: 1, _id: 0 } )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { status: 0, instock: 0 } )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="links"&gt;Links&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://docs.mongodb.com/manual/mongo/"&gt;https://docs.mongodb.com/manual/mongo/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+		<summary>&lt;p&gt;&lt;code&gt;mongo&lt;/code&gt;&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/aspnetcore</id>
+		<title>aspnet core notebook</title>
+		<link href="http://host.com/blog/posts/aspnetcore" />
+		<updated>2020-02-18T00:00:00Z</updated>
+		<content>&lt;p&gt;new console app&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new console -o myapp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;new solution&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new sln -o golden
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now cd into golden and add library project with the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new classlib -o library
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Execute the dotnet sln command to add the newly created library.csproj project to the solution&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet sln add library/library.csproj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+		<summary>&lt;p&gt;new console app&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/publickey-privatekey-generation</id>
+		<title>Crete public key private key OpenSSL</title>
+		<link href="http://host.com/blog/posts/publickey-privatekey-generation" />
+		<updated>2019-12-08T00:00:00Z</updated>
+		<content>&lt;h1 id="create-public-key-private-key-openssl"&gt;Create public key private key OpenSSL&lt;/h1&gt;
+&lt;p&gt;Generate Private key(pkcs1) and certificate&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    openssl genrsa -out file.key 2048
+    openssl req -new -x509 -key file.key -out publickey.cer -days 1825
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes  -keyout example.key -out example.crt -subj /CN=example.com  -addext subjectAltName=DNS:example.com,DNS:example.net,IP:10.0.0.1
+
+    openssl pkcs8 -topk8 -inform pem -in file.key -outform pem -nocrypt -out file.pem
+
+    openssl genrsa -out file.key 1024
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alternating Way (Create Private key and Certificate)&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    openssl genrsa -out privkey.pem 4096
+    openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095 -subj /CN=example.com  -addext subjectAltName=DNS:example.com,DNS:example.net,IP:10.0.0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="convertion-between-different-formats"&gt;convertion between different formats&lt;/h1&gt;
+&lt;p&gt;PKCS #1&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Defines the traditional format for RSA keys. Two structures:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    -----BEGIN RSA PRIVATE KEY-----
+    RSAPrivateKey
+    -----END RSA PRIVATE KEY-----
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    -----BEGIN RSA PUBLIC KEY-----
+    RSAPublicKey
+    -----END RSA PUBLIC KEY-----
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Generate RSA private key&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    openssl genrsa -out private.pem 2048
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Extract public key from RSA private key&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    openssl rsa -in private.pem -out public.pem -RSAPublicKey_out
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ASN.1 and DER encoding&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Within the RSA, PKCS#1 and SSL/TLS communities the Distinguished Encoding Rules (DER) encoding of ASN.1 is used to represent keys, certificates and such in a portable format. Although ASN.1 is not the easiest to understand representation formats and brings a lot of complexity, it does have its merits. The certificate or key information is stored in the binary DER for ASN.1 and applications providing RSA, SSL and TLS should handle DER encoding to read in the information.&lt;/p&gt;
+&lt;p&gt;PEM files&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Because DER encoding results in a truly binary representation of the encoded data, a format has been devised for being able to send these in an encoding of printable characters so you can actually mail these things. The format I focus on now is the PEM format.&lt;/p&gt;
+&lt;p&gt;In essence PEM files are just base64 encoded versions of the DER encoded data. In order to distinguish from the outside what kind of data is inside the DER encoded string, a header and footer are present around the data. An example of a PEM encoded file is:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    -----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMYfnvWtC8Id5bPKae5yXSxQTt
+    +Zpul6AnnZWfI2TtIarvjHBFUtXRo96y7hoL4VWOPKGCsRqMFDkrbeUjRrx8iL91
+    4/srnyf6sh9c8Zk04xEOpK1ypvBz+Ks4uZObtjnnitf0NBGdjMKxveTq+VE7BWUI
+    yQjtQ8mbDOsiLLvh7wIDAQAB
+    -----END PUBLIC KEY-----
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first and last line indicate the DER format that should be expected inside. The data inside is a base64 encoded version of the DER encoded information.&lt;/p&gt;
+&lt;p&gt;Good explanations of the difference between the two formats pkcs1 and pkcs8 &lt;a href="https://tls.mbed.org/kb/cryptography/asn1-key-structures-in-der-and-pem"&gt;https://tls.mbed.org/kb/cryptography/asn1-key-structures-in-der-and-pem&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Also Take A look &lt;a href="https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204"&gt;https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One"&gt;Abstract Syntax Notation One&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204"&gt;https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204&lt;/a&gt;&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;Generate Private key(pkcs1) and certificate&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/djangocheetsh</id>
+		<title>Python Getting Started Cheet Sheet</title>
+		<link href="http://host.com/blog/posts/djangocheetsh" />
+		<updated>2019-11-25T00:00:00Z</updated>
+		<content>&lt;h1 id="python-django-gs"&gt;Python Django GS&lt;/h1&gt;
+&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Configure virtualenvwrapper and django (Windows)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    pip install virtualenvwrapper-win
+	mkvirtualenv test
+	workon test
+	pip install django
+	django-admin --version
+	django-admin startproject hellodj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Install the virtualenv package&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;	python -m pip install --user virtualenv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Checking Installation&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;	python -m virtualenv --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Activating and Shutting down an enviroment&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;	workon test
+	deactivate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Quick Start Guide(recommended)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    mkdir hellodj   
+    cd hellodj
+    python -m venv env
+    .\env\Scripts\activate
+    mkdir src
+    pip install django
+	pip freeze
+    cd src
+    django-admin --version
+    django-admin --help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Downgrade or Install Specific python version Inside venv using conda&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;create a virtual environment, install then switch to python 3.6.5&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-python"&gt;	$ conda create -n tensorflow python=3.7
+	$ conda activate tensorflow
+	$ conda install python=3.6.5
+	$ pip install tensorflow
+    $ conda deactivate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;conda environment path &lt;code&gt;UserDirectory(C:\Users\ashraful.alam)\Anaconda3\envs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Remove conda environment&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    conda env remove --name myenv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Clear screen in shell&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    import os
+    cls = lambda: os.system('cls')
+
+    &amp;gt;&amp;gt;&amp;gt; cls()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;colored text in Python Shell&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code&gt;    from colorama import Fore
+    from colorama import Style
+    
+    print ('This is {Fore.GREEN}color{Style.RESET_ALL}!')
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Django Python Shell&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;where manage.py located cd into this location. Go to python shell with below command&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    python manage.py shell
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/wyamgettingstarted</id>
+		<title>Wyam Blog Getting Started(cheetsheet)</title>
+		<link href="http://host.com/blog/posts/wyamgettingstarted" />
+		<updated>2019-11-25T00:00:00Z</updated>
+		<content>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/mysqlbasic</id>
+		<title>My SQL Basic</title>
+		<link href="http://host.com/blog/posts/mysqlbasic" />
+		<updated>2019-10-10T00:00:00Z</updated>
+		<content>&lt;h1 id="mysql-command-line-connection"&gt;Mysql command line connection&lt;/h1&gt;
+&lt;p&gt;connect db&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    mysql -h {hostip} -P {port} -u {username} -p {database}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Example&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    mysql -h 127.0.0.1 -P 3306 -u root -p
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;database backup&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    mysqldump -h 127.0.0.1 -P 3306 -u root -p billpayment&amp;gt; sqlback.sql
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If mysqldump throws: Unknown table 'COLUMN_STATISTICS' in information_schema (1109)
+Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    mysqldump --column-statistics=0 -h 127.0.0.1 -P 3306 -u root -p billpayment&amp;gt; sqlback.sql
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="restore-database"&gt;Restore Database&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    mysql -u [user] -p [database_name] &amp;lt; [filename].sql
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="php-my-admin-connecting-to-mysql-server-config"&gt;PHP My Admin Connecting to MySQL Server Config&lt;/h1&gt;
+&lt;p&gt;Change the following paramert as appropriate  &lt;code&gt;C:\wamp64\apps\phpmyadmin4.8.4\config.inc.php&lt;/code&gt; and&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-php"&gt;    $cfg['Servers'][$i]['verbose'] = 'MySQL';
+	$cfg['Servers'][$i]['host'] = '127.0.0.1';
+	$cfg['Servers'][$i]['port'] =3306;//$wampConf['mysqlPortUsed'];// 3307;//$wampConf['mysqlPortUsed'];
+	$cfg['Servers'][$i]['extension'] = 'mysqli';
+	$cfg['Servers'][$i]['auth_type'] = 'cookie';
+	$cfg['Servers'][$i]['user'] = '';
+	$cfg['Servers'][$i]['password'] = '';
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="wampserver-mysql-port-changes"&gt;WampServer MYSQL port changes&lt;/h1&gt;
+&lt;p&gt;Finding the configuration file&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-xml"&gt;C:\wamp64\bin\mysql\mysql5.7.24\my.ini
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;change&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# The MySQL server
+[wampmysqld]
+port = 3306
+#
+#
+[mysqld]
+port=3306
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Change both instances to another port (i.e. 3307) and restart Wamp MYSQL&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;connect db&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/sqlServerhelper</id>
+		<title>Sql Server Important Query</title>
+		<link href="http://host.com/blog/posts/sqlServerhelper" />
+		<updated>2019-07-20T00:00:00Z</updated>
+		<content>&lt;h1 id="get-all-table-row-count"&gt;Get All Table Row Count&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;method1:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;CREATE TABLE #counts
+(
+    table_name varchar(255),
+    row_count int
+)
+
+EXEC sp_MSForEachTable &amp;#64;command1='INSERT #counts (table_name, row_count) SELECT ''?'', COUNT(*) FROM ?'
+SELECT table_name, row_count FROM #counts ORDER BY table_name, row_count DESC
+DROP TABLE #counts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;method2:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;SELECT o.NAME,
+  i.rowcnt 
+FROM sysindexes AS i
+  INNER JOIN sysobjects AS o ON i.id = o.id 
+WHERE i.indid &amp;lt; 2  AND OBJECTPROPERTY(o.id, 'IsMSShipped') = 0
+ORDER BY o.NAME
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;method3:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;-- Shows all user tables and row counts for the current database 
+-- Remove is_ms_shipped = 0 check to include system objects 
+-- i.index_id &amp;lt; 2 indicates clustered index (1) or hash table (0) 
+SELECT o.name,
+  ddps.row_count 
+FROM sys.indexes AS i
+  INNER JOIN sys.objects AS o ON i.OBJECT_ID = o.OBJECT_ID
+  INNER JOIN sys.dm_db_partition_stats AS ddps ON i.OBJECT_ID = ddps.OBJECT_ID
+  AND i.index_id = ddps.index_id 
+WHERE i.index_id &amp;lt; 2  AND o.is_ms_shipped = 0 ORDER BY o.NAME 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Describe Table&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;exec sp_help 'table_name';
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;select *
+from INFORMATION_SCHEMA.COLUMNS
+where TABLE_NAME='Mct_GL'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Force Database Delete(Database Is in Use)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;Use master;
+ALTER database DatabaseName set offline with ROLLBACK IMMEDIATE;
+DROP database DatabaseName;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Get table constraints&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;Select C.*, (Select definition From sys.default_constraints Where object_id = C.object_id) As dk_definition,
+(Select definition From sys.check_constraints Where object_id = C.object_id) As ck_definition,
+(Select name From sys.objects Where object_id = D.referenced_object_id) As fk_table,
+(Select name From sys.columns Where column_id = D.parent_column_id And object_id = D.parent_object_id) As fk_col
+From sys.objects As C
+Left Join (Select * From sys.foreign_key_columns) As D On D.constraint_object_id = C.object_id 
+Where C.parent_object_id = (Select object_id From sys.objects Where type = 'U'
+And name = 'Table Name Here');
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="database-size-estimation"&gt;Database Size estimation&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;  SELECT 
+    t.NAME AS TableName,
+    s.Name AS SchemaName,
+    p.rows,
+    SUM(a.total_pages) * 8 AS TotalSpaceKB, 
+    CAST(ROUND(((SUM(a.total_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS TotalSpaceMB,
+    SUM(a.used_pages) * 8 AS UsedSpaceKB, 
+    CAST(ROUND(((SUM(a.used_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS UsedSpaceMB, 
+    (SUM(a.total_pages) - SUM(a.used_pages)) * 8 AS UnusedSpaceKB,
+    CAST(ROUND(((SUM(a.total_pages) - SUM(a.used_pages)) * 8) / 1024.00, 2) AS NUMERIC(36, 2)) AS UnusedSpaceMB
+FROM 
+    sys.tables t
+INNER JOIN      
+    sys.indexes i ON t.OBJECT_ID = i.object_id
+INNER JOIN 
+    sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
+INNER JOIN 
+    sys.allocation_units a ON p.partition_id = a.container_id
+LEFT OUTER JOIN 
+    sys.schemas s ON t.schema_id = s.schema_id
+WHERE 
+    t.NAME NOT LIKE 'dt%' 
+    AND t.is_ms_shipped = 0
+    AND i.OBJECT_ID &amp;gt; 255 
+GROUP BY 
+    t.Name, s.Name, p.Rows
+ORDER BY 
+    TotalSpaceMB DESC, t.Name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="sqlcmd-utility"&gt;sqlcmd Utility&lt;/h1&gt;
+&lt;p&gt;Download and Install appropriate version of sqlcmd.Check the following atricle about sqlcmd utility and latest vesion of download link&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15"&gt;https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Connecting and Running Script using sqlcmd&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;sqlcmd -S.\SQLEXPRESS14 -i e:\ASH\test\posinventoryfullscript.sql -o e:\ASH\test\posoutput.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="sql-server-localdb-cheet-sheet"&gt;SQL Server localdb Cheet sheet&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    SqlLocalDb info
+    SQLLocalDB info v11.0
+    SQLLocalDB share v11.0 Mare
+    SQLLocalDB info v11.0
+    SqlLocalDB create NewInstance
+    SqlLocalDB info NewInstance
+    SqlLocalDB create Test 11.0
+    SqlLocalDB info Test
+    SQLLocalDB create “Test instance” 
+    SqlLocalDB start Test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;SQL ServerManagement Studio Connect:
+ServerName:(LocalDB)\ followed by the name of the LocalDB instance (v11.0)
+Example:(LocalDB)\Test
+Example:(LocalDB)\v11.0
+And Windows Authentication&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    SqlLocalDB stop MSSQLLocaDB
+    cd C:\Program Files\Microsoft SQL Server\110\Tools\Binn\
+    sqlcmd -S (localDB)\v11.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    CREATE DATABASE TestSQlCMD;
+    GO
+    USE TestSQlCMD;
+    GO
+    CREATE TABLE dbo.Pesron(
+    ID INT,
+    Name VARCHAR(50)
+    );
+    GO
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="generate-class-from-database-table"&gt;Generate class from database table&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-sql"&gt;declare &amp;#64;TableName sysname = 'Division'
+declare &amp;#64;Result varchar(max) = 'public class ' + &amp;#64;TableName + '
+{'
+
+select &amp;#64;Result = &amp;#64;Result + '
+    public ' + ColumnType + NullableSign + ' ' + ColumnName + ' { get; set; }
+'
+from
+(
+    select 
+        replace(col.name, ' ', '_') ColumnName,
+        column_id ColumnId,
+        case typ.name 
+            when 'bigint' then 'long'
+            when 'binary' then 'byte[]'
+            when 'bit' then 'bool'
+            when 'char' then 'string'
+            when 'date' then 'DateTime'
+            when 'datetime' then 'DateTime'
+            when 'datetime2' then 'DateTime'
+            when 'datetimeoffset' then 'DateTimeOffset'
+            when 'decimal' then 'decimal'
+            when 'float' then 'double'
+            when 'image' then 'byte[]'
+            when 'int' then 'int'
+            when 'money' then 'decimal'
+            when 'nchar' then 'string'
+            when 'ntext' then 'string'
+            when 'numeric' then 'decimal'
+            when 'nvarchar' then 'string'
+            when 'real' then 'float'
+            when 'smalldatetime' then 'DateTime'
+            when 'smallint' then 'short'
+            when 'smallmoney' then 'decimal'
+            when 'text' then 'string'
+            when 'time' then 'TimeSpan'
+            when 'timestamp' then 'long'
+            when 'tinyint' then 'byte'
+            when 'uniqueidentifier' then 'Guid'
+            when 'varbinary' then 'byte[]'
+            when 'varchar' then 'string'
+            else 'UNKNOWN_' + typ.name
+        end ColumnType,
+        case 
+            when col.is_nullable = 1 and typ.name in ('bigint', 'bit', 'date', 'datetime', 'datetime2', 'datetimeoffset', 'decimal', 'float', 'int', 'money', 'numeric', 'real', 'smalldatetime', 'smallint', 'smallmoney', 'time', 'tinyint', 'uniqueidentifier') 
+            then '?' 
+            else '' 
+        end NullableSign
+    from sys.columns col
+        join sys.types typ on
+            col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id
+    where object_id = object_id(&amp;#64;TableName)
+) t
+order by ColumnId
+
+set &amp;#64;Result = &amp;#64;Result  + '
+}'
+
+print &amp;#64;Result
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="links"&gt;Links&lt;/h1&gt;
+&lt;p&gt;(&lt;a href="https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/"&gt;https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/&lt;/a&gt;)[https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/]&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;strong&gt;method1:&lt;/strong&gt;&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/modelvalidation</id>
+		<title>Custom Model Validation</title>
+		<link href="http://host.com/blog/posts/modelvalidation" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="custom-model-validation"&gt;Custom Model Validation&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public class Result
+{
+	public Result(bool success, string message)
+	{
+		Success = success;
+		Message = message;
+	}
+
+	public bool Success { get; private set; }
+
+	public string Message { get; private set; }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;private Result CheckModel(string test,string test2)
+{
+	var errors = new List&amp;lt;string&amp;gt;();
+	
+	if (!test.Equals(&amp;quot;TEST&amp;quot;))
+	{
+		errors.Add(&amp;quot;Input sting must be TEST&amp;quot;);
+	}
+
+	string test2 = sheet.Cell(1, 2).Value.ToString().Trim();
+	if (!test2.Equals(&amp;quot;MORE TEST&amp;quot;))
+	{
+		errors.Add(&amp;quot;Input sting must be MORE TEST&amp;quot;);
+	}
+
+	
+	var success = !errors.Any();
+	var message = success ? &amp;quot;Validation successful.&amp;quot; : string.Join(&amp;quot; &amp;quot;, errors);
+	return new Result(success, message);
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/parameter</id>
+		<title>Parameter passing in C# Passing by reference vs. passing by value</title>
+		<link href="http://host.com/blog/posts/parameter" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
+&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
+&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
+You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
+{
+    x = new IntHolder();
+}
+
+...
+
+IntHolder y = new IntHolder();
+y.i=5;
+Foo (??? y);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
+&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/jsonpatch</id>
+		<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
+		<link href="http://host.com/blog/posts/jsonpatch" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
+&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
+&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/httpclient</id>
+		<title>HttpClient to Consume API</title>
+		<link href="http://host.com/blog/posts/httpclient" />
+		<updated>2019-06-13T00:00:00Z</updated>
+		<content>&lt;h1 id="httpclient-to-comsume-api"&gt;HttpClient to Comsume API&lt;/h1&gt;
+&lt;h1 id="httpclient"&gt;HttpClient&lt;/h1&gt;
+&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;// HttpClient is intended to be instantiated once per application, rather than per-use. See Remarks.
+static readonly HttpClient client = new HttpClient();
+ 
+static async Task Main()
+{
+  // Call asynchronous network methods in a try/catch block to handle exceptions
+  try	
+  {
+     HttpResponseMessage response = await client.GetAsync(&amp;quot;http://www.contoso.com/&amp;quot;);
+     response.EnsureSuccessStatusCode();
+     string responseBody = await response.Content.ReadAsStringAsync();
+     // Above three lines can be replaced with new helper method below
+     // string responseBody = await client.GetStringAsync(uri);
+
+     Console.WriteLine(responseBody);
+  }  
+  catch(HttpRequestException e)
+  {
+     Console.WriteLine(&amp;quot;\nException Caught!&amp;quot;);	
+     Console.WriteLine(&amp;quot;Message :{0} &amp;quot;,e.Message);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="webrequest"&gt;WebRequest&lt;/h2&gt;
+&lt;p&gt;Makes a request to a Uniform Resource Identifier (URI). This is an abstract class.&lt;/p&gt;
+&lt;p&gt;Because the WebRequest class is an abstract class, the actual behavior of WebRequest instances at run time is determined by the descendant class (such as HttpWebRequest and FileWebRequest) returned by Create method.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;            WebRequest request = WebRequest.Create (&amp;quot;http://www.google.com&amp;quot;);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
+            Stream dataStream = response.GetResponseStream ();
+            // Open the stream using a StreamReader for easy access.
+            StreamReader reader = new StreamReader (dataStream);
+            string responseFromServer = reader.ReadToEnd ();
+            Console.WriteLine (responseFromServer);
+            reader.Close ();
+            dataStream.Close ();
+            response.Close ();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="httpwebrequest"&gt;HttpWebRequest&lt;/h2&gt;
+&lt;p&gt;Provides an HTTP-specific implementation of the WebRequest class.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;    HttpWebRequest myReq =
+    (HttpWebRequest)WebRequest.Create(&amp;quot;http://www.contoso.com/&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;for new development HttpClient class is recommended&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="httpmessagehandler"&gt;HttpMessageHandler&lt;/h2&gt;
+&lt;p&gt;A base type for HTTP message handlers.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public abstract class HttpMessageHandler : IDisposable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are various HTTP message handles that can be used. These include the following.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;DelegatingHandler - A class used to plug a handler into a handler chain.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;HttpMessageHandler - A simple class to derive from that supports the most common requirements for most applications.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;HttpClientHandler - A class that operates at the bottom of the handler chain that actually handles the HTTP transport operations.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;WebRequestHandler - A specialty class that operates at the bottom of the handler chain class that handles HTTP transport operations with options that are specific to the System.Net.HttpWebRequest object.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="httpclienthandler"&gt;HttpClientHandler&lt;/h2&gt;
+&lt;p&gt;The default message handler used by HttpClient in .NET Framework and .NET Core 2.0 and earlier.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public class HttpClientHandler : System.Net.Http.HttpMessageHandler
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;static async Task Main()
+{
+   // Create an HttpClientHandler object and set to use default credentials
+   HttpClientHandler handler = new HttpClientHandler();
+   handler.UseDefaultCredentials = true;
+
+   // Create an HttpClient object
+   HttpClient client = new HttpClient(handler);
+
+   // Call asynchronous network methods in a try/catch block to handle exceptions
+   try	
+   {
+      HttpResponseMessage response = await client.GetAsync(&amp;quot;http://www.contoso.com/&amp;quot;);
+
+      response.EnsureSuccessStatusCode();
+
+      string responseBody = await response.Content.ReadAsStringAsync();
+      Console.WriteLine(responseBody);
+   }  
+   catch(HttpRequestException e)
+   {
+       Console.WriteLine(&amp;quot;\nException Caught!&amp;quot;);	
+       Console.WriteLine(&amp;quot;Message :{0} &amp;quot;,e.Message);
+   }
+
+   // Need to call dispose on the HttpClient and HttpClientHandler objects 
+   // when done using them, so the app doesn't leak resources
+   handler.Dispose(true);
+   client.Dispose(true);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;HttpClientHandler in .NET Core&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Starting with .NET Core 2.1, the System.Net.Http.SocketsHttpHandler class instead of HttpClientHandler provides the implementation used by higher-level HTTP networking APIs.&lt;/p&gt;
+&lt;h2 id="webrequesthandler"&gt;WebRequestHandler&lt;/h2&gt;
+&lt;p&gt;Provides desktop-specific features not available to Windows Store apps or other environments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public class WebRequestHandler : System.Net.Http.HttpClientHandler
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="delegating-handler"&gt;Delegating handler&lt;/h2&gt;
+&lt;p&gt;A message handler is a class that receives an HTTP request and returns an HTTP response. Message handlers derive from the abstract HttpMessageHandler class.&lt;/p&gt;
+&lt;p&gt;Typically, a series of message handlers are chained together. The first handler receives an HTTP request, does some processing, and gives the request to the next handler. At some point, the response is created and goes back up the chain. This pattern is called a delegating handler.&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/image1.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Server-Side Message Handlers in Web API&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;On the server side, the Web API pipeline uses some built-in message handlers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HttpServer gets the request from the host.&lt;/li&gt;
+&lt;li&gt;HttpRoutingDispatcher dispatches the request based on the route.&lt;/li&gt;
+&lt;li&gt;HttpControllerDispatcher sends the request to a Web API controller.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="images/image2.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Client-Side Message Handlers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;On the client side, the HttpClient class uses a message handler to process requests. The default handler is HttpClientHandler, which sends the request over the network and gets the response from the server. You can insert custom message handlers into the client pipeline:&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/image3.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Custom Message Handlers&lt;/strong&gt;
+To write a custom message handler, derive from System.Net.Http.DelegatingHandler and override the SendAsync method. Here is the method signature:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;Task&amp;lt;HttpResponseMessage&amp;gt; SendAsync(
+    HttpRequestMessage request, CancellationToken cancellationToken);
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/image-upload-preview</id>
+		<title>Image Upload Preview</title>
+		<link href="http://host.com/blog/posts/image-upload-preview" />
+		<updated>2019-06-11T00:00:00Z</updated>
+		<content>&lt;h1 id="image-upload-preview"&gt;Image Upload Preview&lt;/h1&gt;
+&lt;p&gt;HTML Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;    &amp;lt;form id=&amp;quot;form1&amp;quot; runat=&amp;quot;server&amp;quot;&amp;gt;
+        &amp;lt;input type=&amp;quot;file&amp;quot; accept=&amp;quot;image/*&amp;quot; onchange=&amp;quot;loadFile(event)&amp;quot; id=&amp;quot;LogoImageFile&amp;quot; name=&amp;quot;LogoImageFile&amp;quot; /&amp;gt;
+        &amp;lt;img id=&amp;quot;output&amp;quot;/&amp;gt;
+    &amp;lt;/form&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Javascript Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-javascript"&gt;    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Backend controller code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-c-sharp"&gt;    if (model.LogoImageFile != null)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            await model.LogoImageFile.CopyToAsync(memoryStream);
+            model.Person.LogoImage = memoryStream.ToArray();
+        }
+    }
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;HTML Code:&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/ubuntutime</id>
+		<title>Ubuntu time</title>
+		<link href="http://host.com/blog/posts/ubuntutime" />
+		<updated>2019-06-11T00:00:00Z</updated>
+		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
+&lt;p&gt;Basic Time Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    date
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl list-timezones
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo timedatectl set-timezone Asia/Dhaka
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configure NTP Servers&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    apt-get install ntp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     sudo nano /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     ntpq -p
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    service ntp restart
+
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/ubuntu-basics</id>
+		<title>Ubuntu basics</title>
+		<link href="http://host.com/blog/posts/ubuntu-basics" />
+		<updated>2019-06-11T00:00:00Z</updated>
+		<content>&lt;h1 id="ubuntu-basics"&gt;Ubuntu Basics&lt;/h1&gt;
+&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;
+&lt;p&gt;Check Ubuntu Version&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        lsb_release -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+       adduser username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Set and confirm the new user's password at the prompt. A strong password is highly recommended!&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        Set password prompts:
+        Enter new UNIX password:
+        Retype new UNIX password:
+        passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Follow the prompts to set the new user's information. It is fine to accept the defaults to leave all of this information blank.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        User information prompts:
+        Changing the user information for username
+        Enter the new value, or press ENTER for the default
+            Full Name []:
+            Room Number []:
+            Work Phone []:
+            Home Phone []:
+            Other []:
+        Is the information correct? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use the usermod command to add the user to the sudo group.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        usermod -aG sudo username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;By default, on Ubuntu, members of the sudo group have sudo privileges.
+Use the su command to switch to the new user account.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        su - username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo ls -la /root
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;Set static IP Ubuntu 16.04&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo nano /etc/network/interfaces
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and paste this under &lt;code&gt;# The primary network interface:&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        auto enp0s25
+        iface enp0s25 inet static
+        address 192.168.0.16
+        netmask 255.255.255.0
+        gateway 192.168.0.1
+        dns-nameservers 8.8.4.4 8.8.8.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo /etc/init.d/networking restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        # The loopback network interface  
+        auto lo  
+        iface lo inet loopback  
+
+
+        # The primary network interface  
+        auto enp8s0 
+        iface enp8s0 inet static  
+        address 192.168.11.95
+        netmask 255.255.255.0
+        gateway 192.168.11.1
+        dns-nameservers 8.8.8.8 8.8.4.4 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</summary>
+	</entry>
+</feed>

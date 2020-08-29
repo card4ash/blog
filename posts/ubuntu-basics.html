@@ -1,0 +1,260 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+
+        <title>ashcoder.io - Ubuntu basics</title>
+        <meta name="description" content="Welcome!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+
+        <link type="application/rss+xml" rel="alternate" title="ashcoder.io" href="/blog/feed.rss" />
+                <link type="application/atom+xml" rel="alternate" title="ashcoder.io" href="/blog/feed.atom" />
+        <link rel="shortcut icon" href="/blog/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+
+        <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/blog/assets/css/highlight.css" rel="stylesheet">
+        <link href="/blog/assets/css/clean-blog.css" rel="stylesheet" />
+        <link href="/blog/assets/css/master.css" rel="stylesheet" />
+        <link href="/blog/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="/blog/assets/css/override.css" rel="stylesheet" />
+
+
+        <meta name="application-name" content="ashcoder.io" />
+        <meta name="msapplication-tooltip" content="ashcoder.io" />
+        <meta name="msapplication-starturl" content="/blog/" />
+
+        <meta property="og:title" content="ashcoder.io - Ubuntu basics" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="http://host.com/blog/posts/ubuntu-basics" />
+        <!-- TODO: More social graph meta tags -->
+
+        
+
+
+        </head>
+        <body>
+                
+                <!-- Navigation -->
+                <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+                        <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header page-scroll">
+                                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        </button>
+                                        <a class="navbar-brand" href="/blog/">ashcoder.io</a>
+                                </div>
+                        
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="navbar-collapse">
+                                        <ul class="nav navbar-nav navbar-right">
+                                                        <li><a href="/blog/posts">Archive</a></li>
+        <li><a href="/blog/tags">Tags</a></li>
+        <li><a href="/blog/about">About Me</a></li>
+ 
+                                        </ul>
+                                </div>
+                                <!-- /.navbar-collapse -->
+                        </div>
+                        <!-- /.container -->
+                </nav>
+                
+                <!-- Page Header -->
+                <header class="intro-header" id="intro-header">
+                        <div class="container">
+                                <div class="row">
+                                        <div class="col-md-12">
+
+    
+<div class="post-heading">
+    <h1>Ubuntu basics</h1>
+    <div class="meta">        
+Published on Tuesday, June 11, 2019<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/blog/tags/Basics" class="btn btn-default btn-xs">Basics</a>
+                    <a role="button" href="/blog/tags/Introduction" class="btn btn-default btn-xs">Introduction</a>
+                    <a role="button" href="/blog/tags/Ubuntu" class="btn btn-default btn-xs">Ubuntu</a>
+                    <a role="button" href="/blog/tags/UbuntuUser" class="btn btn-default btn-xs">UbuntuUser</a>
+        </div>     
+</div>
+                                        </div>
+                                </div>
+                        </div>
+                </header>
+                
+                <!-- Main Content -->
+                <div class="container">
+                        <div class="row">
+                                <div id="content" class="col-md-12">
+                                        
+
+<h1 id="ubuntu-basics">Ubuntu Basics</h1>
+<p>How To Create a Sudo User on Ubuntu</p>
+<p>Check Ubuntu Version</p>
+<pre><code class="language-shell">
+        lsb_release -a
+</code></pre>
+<pre><code class="language-shell">
+       adduser username
+</code></pre>
+<p>Set and confirm the new user's password at the prompt. A strong password is highly recommended!</p>
+<pre><code class="language-shell">
+        Set password prompts:
+        Enter new UNIX password:
+        Retype new UNIX password:
+        passwd: password updated successfully
+</code></pre>
+<p>Follow the prompts to set the new user's information. It is fine to accept the defaults to leave all of this information blank.</p>
+<pre><code class="language-shell">
+        User information prompts:
+        Changing the user information for username
+        Enter the new value, or press ENTER for the default
+            Full Name []:
+            Room Number []:
+            Work Phone []:
+            Home Phone []:
+            Other []:
+        Is the information correct? [Y/n]
+</code></pre>
+<p>Use the usermod command to add the user to the sudo group.</p>
+<pre><code class="language-shell">
+        usermod -aG sudo username
+</code></pre>
+<p>By default, on Ubuntu, members of the sudo group have sudo privileges.
+Use the su command to switch to the new user account.</p>
+<pre><code class="language-shell">
+        su - username
+</code></pre>
+<pre><code class="language-shell">
+        sudo ls -la /root
+</code></pre>
+<hr />
+<p>Set static IP Ubuntu 16.04</p>
+<hr />
+<pre><code class="language-shell">
+        sudo nano /etc/network/interfaces
+
+</code></pre>
+<p>and paste this under <code># The primary network interface:</code></p>
+<pre><code class="language-shell">
+        auto enp0s25
+        iface enp0s25 inet static
+        address 192.168.0.16
+        netmask 255.255.255.0
+        gateway 192.168.0.1
+        dns-nameservers 8.8.4.4 8.8.8.8
+</code></pre>
+<pre><code class="language-shell">
+        sudo /etc/init.d/networking restart
+</code></pre>
+<pre><code class="language-shell">
+        # The loopback network interface  
+        auto lo  
+        iface lo inet loopback  
+
+
+        # The primary network interface  
+        auto enp8s0 
+        iface enp8s0 inet static  
+        address 192.168.11.95
+        netmask 255.255.255.0
+        gateway 192.168.11.1
+        dns-nameservers 8.8.8.8 8.8.4.4 
+</code></pre>
+<p><code>sudo ifdown enp8s0 &amp;&amp; sudo ifup enp8s0</code></p>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'shadowkiller69x'; // required: replace example with your forum shortname
+    var disqus_identifier = 'ubuntu-basics';
+    var disqus_title = 'Ubuntu basics';
+    var disqus_url = 'http://host.com/blog/posts/ubuntu-basics';
+
+    
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://shadowkiller69x.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                                </div>
+                        </div>
+                </div>
+                
+                <hr>
+                
+                <!-- Footer -->
+                <footer>
+                        <div class="container">
+        <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright text-muted">
+                        Copyright © 2020
+                        <br />
+                            <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
+                        |
+                            <a href="/blog/feed.atom"><i class="fa fa-rss"></i> Atom Feed</a>
+                        <br />
+                       
+                    </p>
+                </div>
+        </div>
+</div>
+
+                </footer> 
+
+                <script src="/blog/assets/js/jquery.min.js"></script>
+                <script src="/blog/assets/js/bootstrap.min.js"></script>     
+                <script src="/blog/assets/js/highlight.pack.js"></script>   
+                <script src="/blog/assets/js/clean-blog.js"></script>
+                <script src="/blog/assets/js/d3.v3.min.js"></script>
+                <script src="/blog/assets/js/trianglify.min.js"></script>
+                <script src="/blog/assets/js/Please-compressed.js"></script>
+                <script src="/blog/assets/js/background-check.min.js"></script>
+
+                <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+                <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+                <!--[if lt IE 9]>
+                        <script src="/blog/assets/js/html5shiv.js"></script>
+                        <script src="/blog/assets/js/respond.min.js"></script>
+                <![endif]-->
+                
+                
+                <script>hljs.initHighlightingOnLoad();</script>
+
+                        <script type="text/javascript">                
+                                // Header background                        
+                                var colors = Please.make_color({
+                                        colors_returned: 3,
+                                        saturation: .6
+                                });
+                                var t = new Trianglify({
+                                        x_gradient: colors,
+                                        y_gradient: ["#FFFFFF"]
+                                });
+                                var header = document.getElementById("intro-header");
+                                var pattern = t.generate(header.clientWidth, header.clientHeight);
+                                header.setAttribute('style', 'background-image: ' + pattern.dataUrl);                        
+                        </script>
+
+                <script>
+                        BackgroundCheck.init({
+                                targets: '.intro-header,.navbar',
+                                images: '.intro-header'
+                        });
+                </script>
+        </body>
+</html>
+
