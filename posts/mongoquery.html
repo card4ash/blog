@@ -165,6 +165,25 @@ Published on Saturday, August 29, 2020<br>    </div>
 </code></pre>
 <pre><code>    db.inventory.find( { status: &quot;A&quot; }, { status: 0, instock: 0 } )
 </code></pre>
+<h1 id="pretty-print-mongodb-shell-output-to-a-file">Pretty print MongoDB shell output to a file</h1>
+<p>use Javascript to translate the result of a find() into a printable JSON</p>
+<pre><code>    mongo dbname command.js &gt; output.json
+</code></pre>
+<p>where command.js contains this (or its equivalent):</p>
+<pre><code>    printjson( db.collection.find().toArray() )
+</code></pre>
+<h1 id="stop-mongodb-server-on-windows">stop mongodb server on Windows</h1>
+<p>Save the following snippet in stop_mongod.js file</p>
+<pre><code>    db = connect(&quot;localhost:27017/admin&quot;);
+    db.shutdownServer();
+    quit();
+</code></pre>
+<p>Adjust the connection string if necessary. Then from the command line or within your batch script:</p>
+<pre><code>    mongo stop_mongod.js
+</code></pre>
+<p>or
+Open Command Prompt/Powershell as Administrator.
+Execute <code>net stop MongoDB</code></p>
 <h1 id="links">Links</h1>
 <ol>
 <li><a href="https://docs.mongodb.com/manual/mongo/">https://docs.mongodb.com/manual/mongo/</a></li>

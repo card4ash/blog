@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>ashcoder.io - httpClient</title>
+        <title>ashcoder.io - Docker for Windows</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="ashcoder.io" />
         <meta name="msapplication-starturl" content="/blog/" />
 
-        <meta property="og:title" content="ashcoder.io - httpClient" />
+        <meta property="og:title" content="ashcoder.io - Docker for Windows" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://host.com/blog/tags/httpClient" />
+        <meta property="og:url" content="http://host.com/blog/posts/docker" />
         <!-- TODO: More social graph meta tags -->
 
         
@@ -72,9 +72,18 @@
                         <div class="container">
                                 <div class="row">
                                         <div class="col-md-12">
-<div class="site-heading">
-    <h1>httpClient</h1>
-</div>                                            </div>
+
+    
+<div class="post-heading">
+    <h1>Docker for Windows</h1>
+    <div class="meta">        
+Published on Friday, September 4, 2020<br>    </div>
+        <div class="tags">
+                    <a role="button" href="/blog/tags/docker" class="btn btn-default btn-xs">docker</a>
+                    <a role="button" href="/blog/tags/windows" class="btn btn-default btn-xs">windows</a>
+        </div>     
+</div>
+                                        </div>
                                 </div>
                         </div>
                 </header>
@@ -83,70 +92,91 @@
                 <div class="container">
                         <div class="row">
                                 <div id="content" class="col-md-12">
-                                        <div class="container-sm-height">
-    <div class="row row-sm-height">
-        <div class="col-sm-8 right-border col-sm-height">
-            
-        <div class="post-list">
-            <a href="/blog/posts/httpclient">
-                <h3 class="post-title">HttpClient to Consume API</h3>
-            </a>
-            <p class="post-meta">Posted on Thursday, June 13, 2019</p>      
-        </div>   
+                                        
+
+<h1 id="docker-basic-command">Docker Basic Command</h1>
+<p>all the process for docker</p>
+<pre><code>    docker ps
+</code></pre>
+<pre><code>    docker ps -a
+</code></pre>
+<p>pulling an image from docker-hub if not available locally and install it</p>
+<pre><code>    docker run hello-world
+</code></pre>
+<pre><code>    docker image ls
+</code></pre>
+<p>Docker run in port 80 and mapping it to host port 80
+hostport:containerport</p>
+<pre><code>    docker run -p 80:80 nginx
+</code></pre>
+<p>stop the software</p>
+<pre><code>    docker stop parts_of_container_id_which_is_unique
+</code></pre>
+<pre><code>    docker stop ee3
+</code></pre>
+<pre><code>    docker ps -a
+</code></pre>
+<pre><code>    docker start container_name/part_of_container_id
+</code></pre>
+<p>uninstalling software</p>
+<pre><code>    docker rm ee3
+</code></pre>
+<pre><code>    docker rm ee3 b9 etc_rasa
+</code></pre>
+<p>Removing images</p>
+<pre><code>    docker rmi nginx
+</code></pre>
+<p>Docker command help</p>
+<pre><code>    docker help search
+</code></pre>
+<p>Search from command line</p>
+<pre><code>    docker search docs
+</code></pre>
+<p>Run docker documents locally</p>
+<pre><code>    docker run -p 4000:4000 docs/docker.github.io
+</code></pre>
+<p>Run docker server with interactive command line with name</p>
+<pre><code>    docker run -p 4000:4000 -it --name docs docs/docker.github.io
+</code></pre>
+<p>Running server in background in detached mode</p>
+<pre><code>    docker run -p 81:80 --name iis -d microsoft/iis:nanoserver
+</code></pre>
+<p>So see the details about runnig image</p>
+<pre><code>    docker inspect iis
+</code></pre>
+<p>Get the process associated with dockeer in powershell</p>
+<pre><code>    get-process *docker*
+</code></pre>
+<h1 id="installing-docker-engine-on-windows-server-2016">Installing Docker Engine on Windows Server 2016</h1>
+<p><a href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=Windows-Server">Set up Environment</a></p>
+<pre><code>    Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+</code></pre>
+<pre><code>    Install-Package -Name docker -ProviderName DockerMsftProvider
+    Restart-Computer -Force
+</code></pre>
+<pre><code>    docker run microsoft/dotnet:nanoserver
+</code></pre>
+<pre><code>    docker run -it microsoft/dotnet:nanoserver dotnet --version
+</code></pre>
 
 
-            <nav>
-                <ul class="pager">
-                    <li class="previous">                
-                    </li>
-                    <li class="next">
-                    </li>
-                </ul>
-            </nav>
-            <hr class="visible-xs-block" />
-        </div>
-		
-        <div class="col-sm-4 col-sm-height">
-                <a role="button" href="/blog/tags/Introduction" class="btn btn-default btn-xs">Introduction (14)</a>
-                <a role="button" href="/blog/tags/C%23" class="btn btn-default btn-xs">C# (6)</a>
-                <a role="button" href="/blog/tags/Basics" class="btn btn-default btn-xs">Basics (3)</a>
-                <a role="button" href="/blog/tags/Sql" class="btn btn-default btn-xs">Sql (2)</a>
-                <a role="button" href="/blog/tags/Aspnet-Core" class="btn btn-default btn-xs">Asp.net Core (2)</a>
-                <a role="button" href="/blog/tags/Web-API" class="btn btn-default btn-xs">Web API (2)</a>
-                <a role="button" href="/blog/tags/Json-Patch" class="btn btn-default btn-xs">Json Patch (2)</a>
-                <a role="button" href="/blog/tags/HTTP-Patch" class="btn btn-default btn-xs">HTTP Patch (2)</a>
-                <a role="button" href="/blog/tags/Incomplete" class="btn btn-default btn-xs">Incomplete (2)</a>
-                <a role="button" href="/blog/tags/Ubuntu" class="btn btn-default btn-xs">Ubuntu (2)</a>
-                <a role="button" href="/blog/tags/MySql" class="btn btn-default btn-xs">MySql (1)</a>
-                <a role="button" href="/blog/tags/Connection" class="btn btn-default btn-xs">Connection (1)</a>
-                <a role="button" href="/blog/tags/SQL-Server" class="btn btn-default btn-xs">SQL Server (1)</a>
-                <a role="button" href="/blog/tags/sqlcmd" class="btn btn-default btn-xs">sqlcmd (1)</a>
-                <a role="button" href="/blog/tags/POCO" class="btn btn-default btn-xs">POCO (1)</a>
-                <a role="button" href="/blog/tags/Parameter" class="btn btn-default btn-xs">Parameter (1)</a>
-                <a role="button" href="/blog/tags/httpClient" class="btn btn-primary btn-xs">httpClient (1)</a>
-                <a role="button" href="/blog/tags/Net" class="btn btn-default btn-xs">.Net (1)</a>
-                <a role="button" href="/blog/tags/Aspnet-MVC" class="btn btn-default btn-xs">Asp.net MVC (1)</a>
-                <a role="button" href="/blog/tags/UbuntuUser" class="btn btn-default btn-xs">UbuntuUser (1)</a>
-                <a role="button" href="/blog/tags/UbuntuTime" class="btn btn-default btn-xs">UbuntuTime (1)</a>
-                <a role="button" href="/blog/tags/docker" class="btn btn-default btn-xs">docker (1)</a>
-                <a role="button" href="/blog/tags/windows" class="btn btn-default btn-xs">windows (1)</a>
-                <a role="button" href="/blog/tags/mongo" class="btn btn-default btn-xs">mongo (1)</a>
-                <a role="button" href="/blog/tags/mongo-cli" class="btn btn-default btn-xs">mongo cli (1)</a>
-                <a role="button" href="/blog/tags/query" class="btn btn-default btn-xs">query (1)</a>
-                <a role="button" href="/blog/tags/OpenSSL" class="btn btn-default btn-xs">OpenSSL (1)</a>
-                <a role="button" href="/blog/tags/publickey" class="btn btn-default btn-xs">publickey (1)</a>
-                <a role="button" href="/blog/tags/privatekey" class="btn btn-default btn-xs">privatekey (1)</a>
-                <a role="button" href="/blog/tags/pkcs1" class="btn btn-default btn-xs">pkcs1 (1)</a>
-                <a role="button" href="/blog/tags/pkcs8" class="btn btn-default btn-xs">pkcs8 (1)</a>
-                <a role="button" href="/blog/tags/der" class="btn btn-default btn-xs">der (1)</a>
-                <a role="button" href="/blog/tags/pem" class="btn btn-default btn-xs">pem (1)</a>
-                <a role="button" href="/blog/tags/intermediate" class="btn btn-default btn-xs">intermediate (1)</a>
-                <a role="button" href="/blog/tags/wyam" class="btn btn-default btn-xs">wyam (1)</a>
-                <a role="button" href="/blog/tags/Python" class="btn btn-default btn-xs">Python (1)</a>
-                <a role="button" href="/blog/tags/Django" class="btn btn-default btn-xs">Django (1)</a>
-        </div>
-    </div>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'shadowkiller69x'; // required: replace example with your forum shortname
+    var disqus_identifier = 'docker';
+    var disqus_title = 'Docker for Windows';
+    var disqus_url = 'http://host.com/blog/posts/docker';
+
+    
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://shadowkiller69x.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                                 </div>
                         </div>
                 </div>
