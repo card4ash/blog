@@ -112,6 +112,37 @@ Suppress _id Field
     db.inventory.find( { status: "A" }, { status: 0, instock: 0 } )
 ```
 
+Pretty print MongoDB shell output to a file
+======================================================
+
+use Javascript to translate the result of a find() into a printable JSON
+```
+    mongo dbname command.js > output.json
+```
+where command.js contains this (or its equivalent):
+
+```
+    printjson( db.collection.find().toArray() )
+```
+
+stop mongodb server on Windows
+===================================
+Save the following snippet in stop_mongod.js file
+
+```
+    db = connect("localhost:27017/admin");
+    db.shutdownServer();
+    quit();
+```
+Adjust the connection string if necessary. Then from the command line or within your batch script:
+
+```
+    mongo stop_mongod.js
+```
+or
+Open Command Prompt/Powershell as Administrator.
+Execute ```net stop MongoDB```
+
 Links
 ===========
 1. [https://docs.mongodb.com/manual/mongo/](https://docs.mongodb.com/manual/mongo/)
