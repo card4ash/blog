@@ -5,8 +5,8 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Sun, 06 Sep 2020 08:28:49 GMT</pubDate>
-		<lastBuildDate>Sun, 06 Sep 2020 08:28:49 GMT</lastBuildDate>
+		<pubDate>Wed, 09 Sep 2020 15:54:11 GMT</pubDate>
+		<lastBuildDate>Wed, 09 Sep 2020 15:54:11 GMT</lastBuildDate>
 		<item>
 			<title>Docker for Windows</title>
 			<link>http://host.com/blog/posts/docker</link>
@@ -277,35 +277,6 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Wyam Blog Getting Started(cheetsheet)</title>
-			<link>http://host.com/blog/posts/wyamgettingstarted</link>
-			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
-			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Python Getting Started Cheet Sheet</title>
 			<link>http://host.com/blog/posts/djangocheetsh</link>
 			<description>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</description>
@@ -381,6 +352,35 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;where manage.py located cd into this location. Go to python shell with below command&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    python manage.py shell
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Wyam Blog Getting Started(cheetsheet)</title>
+			<link>http://host.com/blog/posts/wyamgettingstarted</link>
+			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
+			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
