@@ -4,8 +4,66 @@
 	<title>ashcoder.io</title>
 	<link rel="self" href="http://host.com/blog" />
 	<rights>2020</rights>
-	<updated>2020-09-09T16:04:42Z</updated>
+	<updated>2020-09-09T16:14:31Z</updated>
 	<subtitle>Welcome!</subtitle>
+	<entry>
+		<id>http://host.com/blog/posts/mqttgs</id>
+		<title>Mqtt Publish Subscribe Example</title>
+		<link href="http://host.com/blog/posts/mqttgs" />
+		<updated>2020-09-09T00:00:00Z</updated>
+		<content>&lt;h1 id="publishing-using-mosquitto_pub"&gt;Publishing Using mosquitto_pub&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_pub -h 127.0.0.1 -m &amp;quot;test message&amp;quot; -t wasa/data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="useful-flag-options-and-examples"&gt;Useful Flag Options and Examples&lt;/h1&gt;
+&lt;p&gt;-r  Sets retain flag
+-n  Sends Null message useful for clearing retain message.
+-p – Set Port number Default is 1883
+-u – Provide a username
+-P – Provide a password
+-i – Provide client name
+-I – Provide a client id prefix- Used when testing client restrictions using prefix security.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_pub -h 127.0.0.1 -m &amp;quot;test message&amp;quot; -t wasa/data -u ash -P secred -d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;with client id&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_pub -h 127.0.0.1 -m &amp;quot;test message&amp;quot; -t wasa/data -u ash -P secred -d -i testclientid 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Publishing JSON Data
+JSON Data has a special format described here. When is comes to publishing with the mosquitto_pub client you need to escape the quotes so that they are included.&lt;/p&gt;
+&lt;p&gt;So don’t use {“status”:”off”} but instead use: {\”status\”:\”off\”}.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_pub -h 127.0.0.1 -m {\&amp;quot;status\&amp;quot;:\&amp;quot;off\&amp;quot;} -t wasa/data -u ash -P secred -d -i testclientid 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_pub -h localhost -t test -m &amp;quot;{\&amp;quot;value1\&amp;quot;:20,\&amp;quot;value2\&amp;quot;:40}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="the-mosquitto_sub-client"&gt;The Mosquitto_sub Client&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    mosquitto_sub -h localhost -t wasa/# -u ash -P secred
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="links"&gt;Links&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="http://www.steves-internet-guide.com/mosquitto_pub-sub-clients/"&gt;http://www.steves-internet-guide.com/mosquitto_pub-sub-clients/&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+		<summary>&lt;p&gt;-r  Sets retain flag
+-n  Sends Null message useful for clearing retain message.
+-p – Set Port number Default is 1883
+-u – Provide a username
+-P – Provide a password
+-i – Provide client name
+-I – Provide a client id prefix- Used when testing client restrictions using prefix security.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/mqttbroker</id>
+		<title>My SQL Basic</title>
+		<link href="http://host.com/blog/posts/mqttbroker" />
+		<updated>2020-09-09T00:00:00Z</updated>
+		<content>&lt;h1 id="mysql-command-line-connection"&gt;Mysql command line connection&lt;/h1&gt;
+&lt;p&gt;connect db&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    mysql -h {hostip} -P {port} -u {username} -p {database}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;connect db&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/docker</id>
 		<title>Docker for Windows</title>
@@ -636,6 +694,42 @@ print &amp;#64;Result
 		<summary>&lt;p&gt;&lt;strong&gt;method1:&lt;/strong&gt;&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<id>http://host.com/blog/posts/jsonpatch</id>
+		<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
+		<link href="http://host.com/blog/posts/jsonpatch" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
+&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
+&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/parameter</id>
+		<title>Parameter passing in C# Passing by reference vs. passing by value</title>
+		<link href="http://host.com/blog/posts/parameter" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
+&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
+&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
+You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
+{
+    x = new IntHolder();
+}
+
+...
+
+IntHolder y = new IntHolder();
+y.i=5;
+Foo (??? y);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
+&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>http://host.com/blog/posts/modelvalidation</id>
 		<title>Custom Model Validation</title>
 		<link href="http://host.com/blog/posts/modelvalidation" />
@@ -676,42 +770,6 @@ print &amp;#64;Result
 }
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-	</entry>
-	<entry>
-		<id>http://host.com/blog/posts/parameter</id>
-		<title>Parameter passing in C# Passing by reference vs. passing by value</title>
-		<link href="http://host.com/blog/posts/parameter" />
-		<updated>2019-06-16T00:00:00Z</updated>
-		<content>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
-&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
-&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
-You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
-{
-    x = new IntHolder();
-}
-
-...
-
-IntHolder y = new IntHolder();
-y.i=5;
-Foo (??? y);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
-&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>http://host.com/blog/posts/jsonpatch</id>
-		<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
-		<link href="http://host.com/blog/posts/jsonpatch" />
-		<updated>2019-06-16T00:00:00Z</updated>
-		<content>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
-&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
-&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/httpclient</id>
@@ -844,6 +902,49 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 		<summary>&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<id>http://host.com/blog/posts/ubuntutime</id>
+		<title>Ubuntu time</title>
+		<link href="http://host.com/blog/posts/ubuntutime" />
+		<updated>2019-06-11T00:00:00Z</updated>
+		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
+&lt;p&gt;Basic Time Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    date
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl list-timezones
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo timedatectl set-timezone Asia/Dhaka
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configure NTP Servers&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    apt-get install ntp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     sudo nano /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     ntpq -p
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    service ntp restart
+
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>http://host.com/blog/posts/image-upload-preview</id>
 		<title>Image Upload Preview</title>
 		<link href="http://host.com/blog/posts/image-upload-preview" />
@@ -955,48 +1056,5 @@ Use the su command to switch to the new user account.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>http://host.com/blog/posts/ubuntutime</id>
-		<title>Ubuntu time</title>
-		<link href="http://host.com/blog/posts/ubuntutime" />
-		<updated>2019-06-11T00:00:00Z</updated>
-		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
-&lt;p&gt;Basic Time Commands&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    date
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl list-timezones
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo timedatectl set-timezone Asia/Dhaka
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo dpkg-reconfigure tzdata
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Configure NTP Servers&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    apt-get install ntp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     sudo nano /etc/ntp.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     ntpq -p
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    service ntp restart
-
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
 	</entry>
 </feed>
