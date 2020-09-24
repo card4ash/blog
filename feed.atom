@@ -4,7 +4,7 @@
 	<title>ashcoder.io</title>
 	<link rel="self" href="http://host.com/blog" />
 	<rights>2020</rights>
-	<updated>2020-09-24T08:01:37Z</updated>
+	<updated>2020-09-24T09:50:13Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
 		<id>http://host.com/blog/posts/chatbot</id>
@@ -26,6 +26,9 @@
  $ pip install tensorflow
 $ pip install rasa==2.0.0rc1
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;check tensorflow installtion&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python -c 'import tensorflow as tf; print(tf.__version__)' 
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Create and directory for source and initiate rasa project creation&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;e:
@@ -34,6 +37,39 @@ cd rasaproj
 rasa init
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Powershell Version Checking. Open Powershell and run the following to check the powershell version&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    $PSVersionTable.PSVersion
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If Powershell version lower than 5 then install using the following link&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://aka.ms/wmf5download"&gt;https://aka.ms/wmf5download&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For Installtin docker on Windows Server follow the below link&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://card4ash.github.io/blog/posts/docker"&gt;https://card4ash.github.io/blog/posts/docker&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For Install-PackageProvider : No match was found for the specified search criteria for the provider 'NuGet'. The package
+provider requires 'PackageManagement' and 'Provider' tags. Please check if the specified package has the tags.
+At line:1 char:1 related error try the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Get the latest version from PowerShell Gallery&lt;/p&gt;
+&lt;p&gt;Before updating PowerShellGet, you should always install the latest NuGet provider. From an elevated PowerShell session, run the following command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install-PackageProvider -Name NuGet -Force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For systems with PowerShell 5.0 (or newer) you can install the latest PowerShellGet&lt;/p&gt;
+&lt;p&gt;To install PowerShellGet on Windows 10, Windows Server 2016, any system with WMF 5.0 or 5.1 installed, or any system with PowerShell 6, run the following commands from an elevated PowerShell session.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install-Module -Name PowerShellGet -Force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use Update-Module to get newer versions.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Update-Module -Name PowerShellGet
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="links"&gt;links&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7"&gt;https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content>
 		<summary>&lt;p&gt;Download and install Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019&lt;/p&gt;</summary>
@@ -352,6 +388,35 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 		<summary>&lt;p&gt;Generate Private key(pkcs1) and certificate&lt;/p&gt;</summary>
 	</entry>
 	<entry>
+		<id>http://host.com/blog/posts/wyamgettingstarted</id>
+		<title>Wyam Blog Getting Started(cheetsheet)</title>
+		<link href="http://host.com/blog/posts/wyamgettingstarted" />
+		<updated>2019-11-25T00:00:00Z</updated>
+		<content>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>http://host.com/blog/posts/djangocheetsh</id>
 		<title>Python Getting Started Cheet Sheet</title>
 		<link href="http://host.com/blog/posts/djangocheetsh" />
@@ -428,35 +493,6 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>http://host.com/blog/posts/wyamgettingstarted</id>
-		<title>Wyam Blog Getting Started(cheetsheet)</title>
-		<link href="http://host.com/blog/posts/wyamgettingstarted" />
-		<updated>2019-11-25T00:00:00Z</updated>
-		<content>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/mysqlbasic</id>
@@ -754,6 +790,17 @@ print &amp;#64;Result
 </content>
 	</entry>
 	<entry>
+		<id>http://host.com/blog/posts/jsonpatch</id>
+		<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
+		<link href="http://host.com/blog/posts/jsonpatch" />
+		<updated>2019-06-16T00:00:00Z</updated>
+		<content>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
+&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
+&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>http://host.com/blog/posts/parameter</id>
 		<title>Parameter passing in C# Passing by reference vs. passing by value</title>
 		<link href="http://host.com/blog/posts/parameter" />
@@ -777,17 +824,6 @@ Foo (??? y);
 &lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<id>http://host.com/blog/posts/jsonpatch</id>
-		<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
-		<link href="http://host.com/blog/posts/jsonpatch" />
-		<updated>2019-06-16T00:00:00Z</updated>
-		<content>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
-&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
-&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/httpclient</id>
@@ -951,49 +987,6 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 		<summary>&lt;p&gt;HTML Code:&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/ubuntutime</id>
-		<title>Ubuntu time</title>
-		<link href="http://host.com/blog/posts/ubuntutime" />
-		<updated>2019-06-11T00:00:00Z</updated>
-		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
-&lt;p&gt;Basic Time Commands&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    date
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl list-timezones
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo timedatectl set-timezone Asia/Dhaka
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo dpkg-reconfigure tzdata
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Configure NTP Servers&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    apt-get install ntp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     sudo nano /etc/ntp.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     ntpq -p
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    service ntp restart
-
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
-	</entry>
-	<entry>
 		<id>http://host.com/blog/posts/ubuntu-basics</id>
 		<title>Ubuntu basics</title>
 		<link href="http://host.com/blog/posts/ubuntu-basics" />
@@ -1074,5 +1067,48 @@ Use the su command to switch to the new user account.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
 </content>
 		<summary>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/ubuntutime</id>
+		<title>Ubuntu time</title>
+		<link href="http://host.com/blog/posts/ubuntutime" />
+		<updated>2019-06-11T00:00:00Z</updated>
+		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
+&lt;p&gt;Basic Time Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    date
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl list-timezones
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo timedatectl set-timezone Asia/Dhaka
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configure NTP Servers&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    apt-get install ntp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     sudo nano /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     ntpq -p
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    service ntp restart
+
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
 	</entry>
 </feed>
