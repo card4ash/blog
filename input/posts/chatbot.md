@@ -1,5 +1,5 @@
-Title: Docker for Windows
-Published: 09/04/2020
+Title: Rasa Chatbot Installation for Windows
+Published: 09/24/2020
 Tags:
     - chatbot
     - rasa
