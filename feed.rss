@@ -5,8 +5,59 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Thu, 24 Sep 2020 09:50:13 GMT</pubDate>
-		<lastBuildDate>Thu, 24 Sep 2020 09:50:13 GMT</lastBuildDate>
+		<pubDate>Tue, 06 Oct 2020 09:18:03 GMT</pubDate>
+		<lastBuildDate>Tue, 06 Oct 2020 09:18:03 GMT</lastBuildDate>
+		<item>
+			<title>Powershell fundamentals</title>
+			<link>http://host.com/blog/posts/powershell</link>
+			<description>&lt;p&gt;Powershell Version Checking. Open Powershell and run the following to check the powershell version&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/powershell</guid>
+			<pubDate>Tue, 06 Oct 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Powershell Version Checking. Open Powershell and run the following to check the powershell version&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    $PSVersionTable.PSVersion
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If Powershell version lower than 5 then install using the following link&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://aka.ms/wmf5download"&gt;https://aka.ms/wmf5download&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For Installtin docker on Windows Server follow the below link&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://card4ash.github.io/blog/posts/docker"&gt;https://card4ash.github.io/blog/posts/docker&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For Install-PackageProvider : No match was found for the specified search criteria for the provider 'NuGet'. The package
+provider requires 'PackageManagement' and 'Provider' tags. Please check if the specified package has the tags.
+At line:1 char:1 related error try the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Get the latest version from PowerShell Gallery&lt;/p&gt;
+&lt;p&gt;Before updating PowerShellGet, you should always install the latest NuGet provider. From an elevated PowerShell session, run the following command.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install-PackageProvider -Name NuGet -Force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For systems with PowerShell 5.0 (or newer) you can install the latest PowerShellGet&lt;/p&gt;
+&lt;p&gt;To install PowerShellGet on Windows 10, Windows Server 2016, any system with WMF 5.0 or 5.1 installed, or any system with PowerShell 6, run the following commands from an elevated PowerShell session.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install-Module -Name PowerShellGet -Force
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use Update-Module to get newer versions.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Update-Module -Name PowerShellGet
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Install module packagemanagement for powershell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Install-Module -Name PackageManagement
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Powershell Repository&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-PSRepository
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="links"&gt;links&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7"&gt;https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Rasa Chatbot Installation for Windows</title>
 			<link>http://host.com/blog/posts/chatbot</link>
@@ -39,39 +90,6 @@ cd rasaproj
 rasa init
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Powershell Version Checking. Open Powershell and run the following to check the powershell version&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    $PSVersionTable.PSVersion
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If Powershell version lower than 5 then install using the following link&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://aka.ms/wmf5download"&gt;https://aka.ms/wmf5download&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For Installtin docker on Windows Server follow the below link&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://card4ash.github.io/blog/posts/docker"&gt;https://card4ash.github.io/blog/posts/docker&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For Install-PackageProvider : No match was found for the specified search criteria for the provider 'NuGet'. The package
-provider requires 'PackageManagement' and 'Provider' tags. Please check if the specified package has the tags.
-At line:1 char:1 related error try the following command&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Get the latest version from PowerShell Gallery&lt;/p&gt;
-&lt;p&gt;Before updating PowerShellGet, you should always install the latest NuGet provider. From an elevated PowerShell session, run the following command.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Install-PackageProvider -Name NuGet -Force
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For systems with PowerShell 5.0 (or newer) you can install the latest PowerShellGet&lt;/p&gt;
-&lt;p&gt;To install PowerShellGet on Windows 10, Windows Server 2016, any system with WMF 5.0 or 5.1 installed, or any system with PowerShell 6, run the following commands from an elevated PowerShell session.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Install-Module -Name PowerShellGet -Force
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Use Update-Module to get newer versions.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Update-Module -Name PowerShellGet
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id="links"&gt;links&lt;/h1&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;a href="https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7"&gt;https://docs.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content:encoded>
 		</item>
@@ -988,6 +1006,49 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 </content:encoded>
 		</item>
 		<item>
+			<title>Ubuntu time</title>
+			<link>http://host.com/blog/posts/ubuntutime</link>
+			<description>&lt;p&gt;Basic Time Commands&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/ubuntutime</guid>
+			<pubDate>Tue, 11 Jun 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
+&lt;p&gt;Basic Time Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    date
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl list-timezones
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo timedatectl set-timezone Asia/Dhaka
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configure NTP Servers&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    apt-get install ntp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     sudo nano /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     ntpq -p
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    service ntp restart
+
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Ubuntu basics</title>
 			<link>http://host.com/blog/posts/ubuntu-basics</link>
 			<description>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</description>
@@ -1067,49 +1128,6 @@ Use the su command to switch to the new user account.&lt;/p&gt;
         dns-nameservers 8.8.8.8 8.8.4.4 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Ubuntu time</title>
-			<link>http://host.com/blog/posts/ubuntutime</link>
-			<description>&lt;p&gt;Basic Time Commands&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/ubuntutime</guid>
-			<pubDate>Tue, 11 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
-&lt;p&gt;Basic Time Commands&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    date
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl list-timezones
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo timedatectl set-timezone Asia/Dhaka
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo dpkg-reconfigure tzdata
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Configure NTP Servers&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    apt-get install ntp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     sudo nano /etc/ntp.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     ntpq -p
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    service ntp restart
-
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>
