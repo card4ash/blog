@@ -5,8 +5,7 @@ Tags:
     - windows
 ---
 
-Docker Basic Command
-========================
+**Docker Basic Command**
 
 all the process for docker
 ```
@@ -97,8 +96,7 @@ Get the process associated with dockeer in powershell
 ```
 
 
-Installing Docker Engine on Windows Server 2016
-=======================================================
+**Installing Docker Engine on Windows Server 2016**
 
 [Set up Environment](https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=Windows-Server)
 
@@ -116,5 +114,68 @@ Installing Docker Engine on Windows Server 2016
 
 ```
     docker run -it microsoft/dotnet:nanoserver dotnet --version
+```
+
+**Running Command Line Apps in Containers**
+
+```shell
+    docker save nanoserver/iis -o iis.tar
+```
+
+***Using linux container to extract tar***
+
+```shell
+    docker run -it alpine
+```
+mounting c:\Users to container /data folder and show all files and folder inside container /data folder
+
+```shell
+    docker run --rm -v c:/Users:/data alpine ls /data
+    docker run --rm -v c:/Users/ashraful.alam/iistartest:/data alpine ls /data 
+```
+
+```shell
+    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh
+    bash:\# tar -tf /data/iis.tar
+    \# mkdir /data/extract
+    \# tar -xf /data/iis.tar -C /data/extract
+    \# cd /data/extract/ 
+    \# ls
+    \# cat manifest.json
+    \# jq
+    \# apk add --no-cache jq
+    \# cat manifest.json | jq
+```
+
+```shell
+    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine tar -xf /data/extract/e7306db32ff89edf4f4b1da671bb3923cdd116eb90df9882a78f5dbe3e92f019/layer.tar -C /data/extract/e7306db32ff89edf4f4b1da671bb3923cdd116eb90df9882a78f5dbe3e92f019/layer
+```
+
+```shell
+    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh 
+    \#ls
+    \#cd data
+    \#cd extract
+    \#cd 7a27115c84f3a27e5658c2af681b313ddec35152658fc89270380c0495d0434b
+    \#mkdir layer
+    \#tar -xf layer.tar -C layer  
+```
+```shell
+    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data ubuntu sh
+```
+
+nmap port scanning
+
+```shell
+    docker run --rm `
+    weshigbee/nmap -v 192.168.0.0/24
+```
+
+ffmpeg converting mp4 to gif
+
+```shell
+    docker run --rm `
+    --volume ${pwd}:/output `
+    jrottenberg/ffmpeg -i http://www.weshigbee.com/wp-content/uploads/2014/12/Turkey-Short.mp4 /output/Turkey.gif
 ```
 
