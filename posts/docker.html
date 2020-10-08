@@ -170,24 +170,24 @@ hostport:containerport</p>
 </code></pre>
 <pre><code class="language-shell">    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh
     bash:\# tar -tf /data/iis.tar
-    \# mkdir /data/extract
-    \# tar -xf /data/iis.tar -C /data/extract
-    \# cd /data/extract/ 
-    \# ls
-    \# cat manifest.json
-    \# jq
-    \# apk add --no-cache jq
-    \# cat manifest.json | jq
+    # mkdir /data/extract
+    # tar -xf /data/iis.tar -C /data/extract
+    # cd /data/extract/ 
+    # ls
+    # cat manifest.json
+    # jq
+    # apk add --no-cache jq
+    # cat manifest.json | jq
 </code></pre>
 <pre><code class="language-shell">    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine tar -xf /data/extract/e7306db32ff89edf4f4b1da671bb3923cdd116eb90df9882a78f5dbe3e92f019/layer.tar -C /data/extract/e7306db32ff89edf4f4b1da671bb3923cdd116eb90df9882a78f5dbe3e92f019/layer
 </code></pre>
 <pre><code class="language-shell">    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh 
-    \#ls
-    \#cd data
-    \#cd extract
-    \#cd 7a27115c84f3a27e5658c2af681b313ddec35152658fc89270380c0495d0434b
-    \#mkdir layer
-    \#tar -xf layer.tar -C layer  
+    # ls
+    # cd data
+    # cd extract
+    # cd 7a27115c84f3a27e5658c2af681b313ddec35152658fc89270380c0495d0434b
+    # mkdir layer
+    # tar -xf layer.tar -C layer  
 </code></pre>
 <pre><code class="language-shell">    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data ubuntu sh
 </code></pre>
@@ -199,6 +199,69 @@ hostport:containerport</p>
 <pre><code class="language-shell">    docker run --rm `
     --volume ${pwd}:/output `
     jrottenberg/ffmpeg -i http://www.weshigbee.com/wp-content/uploads/2014/12/Turkey-Short.mp4 /output/Turkey.gif
+</code></pre>
+<p><strong>Building Images to Host Web Sites</strong></p>
+<pre><code class="language-shell">    docker run --rm -it -p 8080:80 nginx
+    docker run --rm -it -p 8080:80 -v C:\Users\ashraful.alam\solitaire\app:/usr/share/nginx/html nginx
+
+
+    docker run -d -p 8080:80 --name ngi nginx
+    docker cp .\app\. ngi:/usr/share/nginx/html 
+    docker exec -it ngi bash
+    cd /usr/share/nginx/html
+
+    docker exec nginx ls /usr/share/nginx/html 
+</code></pre>
+<p><strong>Create Image</strong></p>
+<pre><code class="language-shell">    docker commit ngi solitaire:nginx
+    docker run -d -p 8090:80 solitaire:nginx
+    docker exec 4f9e1 ls /usr/share/nginx/html
+</code></pre>
+<p><strong>Image layer</strong></p>
+<pre><code class="language-shell">    docker history nginx
+</code></pre>
+<p><strong>Docker File</strong></p>
+<pre><code class="language-shell">    From nginx
+    COPY app /usr/share/nginx/html
+</code></pre>
+<pre><code class="language-shell">mv  .\Dockerfile.txt .\Dockerfile
+</code></pre>
+<pre><code class="language-shell">    docker build -f Dockerfile -t solitaire:nginx-df .
+    or
+    docker build -t solitaire:nginx-df .
+</code></pre>
+<pre><code class="language-shell">    docker images | sls nginx
+</code></pre>
+<p><strong>Publishing to Docker HUb</strong></p>
+<pre><code class="language-shell">    docker tag solitaire:nginx-df ashcoder/solitaire:nginx
+    docker push  ashcoder/solitaire:nginx
+</code></pre>
+<p><strong>Running Database in Container</strong>
+MS SQL Server on linux Docker</p>
+<pre><code class="language-shell">    docker run -e &quot;ACCEPT_EULA=Y&quot; -e &quot;SA_PASSWORD=sqladmin&#64;123&quot; -p 1450:1433 -d mcr.microsoft.com/mssql/server
+     docker logs container_id_partial
+</code></pre>
+<pre><code class="language-shell">    docker run --name some-mysql -p 1305:1306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+    docker exec -it some-mysql mysql --user=root --password=my-secret-pw 
+</code></pre>
+<p><strong>Clean Up</strong>
+stop all container</p>
+<pre><code class="language-shell">    docker stop $(docker ps -q)
+</code></pre>
+<p>remove all stoped container</p>
+<pre><code class="language-shell">    docker container prune
+</code></pre>
+<p>remove all container</p>
+<pre><code class="language-shell">docker rm -f $(docker ps -aq)
+</code></pre>
+<p>Remove unused volumes</p>
+<pre><code class="language-shell">    docker volume prune
+</code></pre>
+<p>remove all volume</p>
+<pre><code class="language-shell">docker volume rm $(docker volume ls -q)
+</code></pre>
+<p>remove container with volume</p>
+<pre><code class="language-shell">docker rm -fv container_id
 </code></pre>
 
 
