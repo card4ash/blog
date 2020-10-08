@@ -137,14 +137,14 @@ mounting c:\Users to container /data folder and show all files and folder inside
 ```shell
     docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh
     bash:\# tar -tf /data/iis.tar
-    \# mkdir /data/extract
-    \# tar -xf /data/iis.tar -C /data/extract
-    \# cd /data/extract/ 
-    \# ls
-    \# cat manifest.json
-    \# jq
-    \# apk add --no-cache jq
-    \# cat manifest.json | jq
+    # mkdir /data/extract
+    # tar -xf /data/iis.tar -C /data/extract
+    # cd /data/extract/ 
+    # ls
+    # cat manifest.json
+    # jq
+    # apk add --no-cache jq
+    # cat manifest.json | jq
 ```
 
 ```shell
@@ -153,12 +153,12 @@ mounting c:\Users to container /data folder and show all files and folder inside
 
 ```shell
     docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data alpine sh 
-    \#ls
-    \#cd data
-    \#cd extract
-    \#cd 7a27115c84f3a27e5658c2af681b313ddec35152658fc89270380c0495d0434b
-    \#mkdir layer
-    \#tar -xf layer.tar -C layer  
+    # ls
+    # cd data
+    # cd extract
+    # cd 7a27115c84f3a27e5658c2af681b313ddec35152658fc89270380c0495d0434b
+    # mkdir layer
+    # tar -xf layer.tar -C layer  
 ```
 ```shell
     docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data ubuntu sh
@@ -179,3 +179,100 @@ ffmpeg converting mp4 to gif
     jrottenberg/ffmpeg -i http://www.weshigbee.com/wp-content/uploads/2014/12/Turkey-Short.mp4 /output/Turkey.gif
 ```
 
+**Building Images to Host Web Sites**
+
+```shell
+    docker run --rm -it -p 8080:80 nginx
+    docker run --rm -it -p 8080:80 -v C:\Users\ashraful.alam\solitaire\app:/usr/share/nginx/html nginx
+
+
+    docker run -d -p 8080:80 --name ngi nginx
+    docker cp .\app\. ngi:/usr/share/nginx/html 
+    docker exec -it ngi bash
+    cd /usr/share/nginx/html
+
+    docker exec nginx ls /usr/share/nginx/html 
+```
+
+**Create Image**
+
+```shell
+    docker commit ngi solitaire:nginx
+    docker run -d -p 8090:80 solitaire:nginx
+    docker exec 4f9e1 ls /usr/share/nginx/html
+```
+
+**Image layer**
+
+```shell
+    docker history nginx
+```
+
+**Docker File**
+
+```shell
+    From nginx
+    COPY app /usr/share/nginx/html
+```
+
+```shell
+mv  .\Dockerfile.txt .\Dockerfile
+```
+
+```shell
+    docker build -f Dockerfile -t solitaire:nginx-df .
+    or
+    docker build -t solitaire:nginx-df .
+```
+
+```shell
+    docker images | sls nginx
+```
+
+**Publishing to Docker HUb**
+
+```shell
+    docker tag solitaire:nginx-df ashcoder/solitaire:nginx
+    docker push  ashcoder/solitaire:nginx
+```
+
+**Running Database in Container**
+MS SQL Server on linux Docker
+
+```shell
+    docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=sqladmin@123" -p 1450:1433 -d mcr.microsoft.com/mssql/server
+     docker logs container_id_partial
+```
+
+```shell
+    docker run --name some-mysql -p 1305:1306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+    docker exec -it some-mysql mysql --user=root --password=my-secret-pw 
+```
+
+
+**Clean Up**
+stop all container
+```shell
+    docker stop $(docker ps -q)
+```
+remove all stoped container
+```shell
+    docker container prune
+```
+remove all container
+```shell
+docker rm -f $(docker ps -aq)
+```
+
+Remove unused volumes
+```shell
+    docker volume prune
+```
+remove all volume
+```shell
+docker volume rm $(docker volume ls -q)
+```
+remove container with volume
+```shell
+docker rm -fv container_id
+```
