@@ -5,9 +5,9 @@ Tags:
     - windows
 ---
 
-**Docker Basic Command**
+# Docker Basic Command
 
-all the process for docker
+All the process for docker
 ```
     docker ps
 ```
@@ -15,7 +15,7 @@ all the process for docker
 ```
     docker ps -a
 ```
-pulling an image from docker-hub if not available locally and install it
+Pulling an image from docker-hub if not available locally and install it
 
 ```
     docker run hello-world
@@ -29,7 +29,7 @@ hostport:containerport
 ```
     docker run -p 80:80 nginx
 ```
-stop the software 
+Stop the software 
 ```
     docker stop parts_of_container_id_which_is_unique
 ```
@@ -44,7 +44,7 @@ stop the software
 ```
     docker start container_name/part_of_container_id
 ```
-uninstalling software
+Uninstalling/Removing software/docker container
 
 ```
     docker rm ee3
@@ -89,6 +89,12 @@ So see the details about runnig image
 ```
     docker inspect iis
 ```
+Docker IP Address
+
+```shell
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+```
+
 Get the process associated with dockeer in powershell
 
 ```
@@ -96,7 +102,7 @@ Get the process associated with dockeer in powershell
 ```
 
 
-**Installing Docker Engine on Windows Server 2016**
+# Installing Docker Engine on Windows Server 2016
 
 [Set up Environment](https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=Windows-Server)
 
@@ -116,18 +122,18 @@ Get the process associated with dockeer in powershell
     docker run -it microsoft/dotnet:nanoserver dotnet --version
 ```
 
-**Running Command Line Apps in Containers**
+# Running Command Line Apps in Containers
 
 ```shell
     docker save nanoserver/iis -o iis.tar
 ```
 
-***Using linux container to extract tar***
+**Using linux container to extract tar**
 
 ```shell
     docker run -it alpine
 ```
-mounting c:\Users to container /data folder and show all files and folder inside container /data folder
+Mounting c:\Users to container /data folder and show all files and folder inside container /data folder
 
 ```shell
     docker run --rm -v c:/Users:/data alpine ls /data
@@ -164,7 +170,7 @@ mounting c:\Users to container /data folder and show all files and folder inside
     docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data ubuntu sh
 ```
 
-nmap port scanning
+Nmap port scanning
 
 ```shell
     docker run --rm `
@@ -179,7 +185,7 @@ ffmpeg converting mp4 to gif
     jrottenberg/ffmpeg -i http://www.weshigbee.com/wp-content/uploads/2014/12/Turkey-Short.mp4 /output/Turkey.gif
 ```
 
-**Building Images to Host Web Sites**
+# Building Images to Host Web Sites
 
 ```shell
     docker run --rm -it -p 8080:80 nginx
@@ -236,7 +242,7 @@ mv  .\Dockerfile.txt .\Dockerfile
     docker push  ashcoder/solitaire:nginx
 ```
 
-**Running Database in Container**
+# Running Database in Container
 MS SQL Server on linux Docker
 
 ```shell
@@ -245,12 +251,12 @@ MS SQL Server on linux Docker
 ```
 
 ```shell
-    docker run --name some-mysql -p 1305:1306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+    docker run --name some-mysql -p 3305:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
     docker exec -it some-mysql mysql --user=root --password=my-secret-pw 
 ```
 
 
-**Clean Up**
+# Clean Up
 stop all container
 ```shell
     docker stop $(docker ps -q)
@@ -275,4 +281,113 @@ docker volume rm $(docker volume ls -q)
 remove container with volume
 ```shell
 docker rm -fv container_id
+```
+
+# Docker Compose
+```shell
+    docker run --name db `
+		-d `
+		-p 3306:3306 `
+		-e MYSQL_ROOT_PASSWORD=my-secret-pw `
+		-v db:/var/lib/mysql `
+		mysql
+		
+docker inspect db #extract ip address
+
+docker run --name web `
+		-d `
+		-p 8080:80 `
+		-e MY_DB_PORT=3306 `
+		-e MY_DB_HOST=? `
+		-v /my/php/app:/usr/share/nginx/html `
+		nginx
+```
+docker-compose.yml file
+```shell
+version: '2'
+
+services:
+    teamcity:
+        image: sjoerdmulder/teamcity
+        ports:
+            - 8111:8111
+    teamcity-agent:
+        image: sjoerdmulder/teamcity-agent
+        environment:
+            - TEAMCITY_SERVER=http://teamcity:8111
+    postgres:
+        image: postgres
+        environment:
+            - POSTGRES_DB=teamcity
+            - POSTGRES_PASSWORD=teamcity
+```
+
+```shell
+    docker-compose up
+    docker network ls 
+    docker network inspect eb1_container_id
+    docker network inspect bridge
+    docker exec -it teamcity_postgres_1 bash
+    docker-compose exec postgres bash 
+    docker run --name alpine --rm --net teamcity_default -it alpine sh
+    docker-compose exec teamcity bash
+    docker-compose start teamcity-agent
+    docker-compose ps
+    docker-compose exec postgres psql -U postgres 
+    docker-compose stop
+    docker-compose rm
+    docker-compose down
+```
+
+```shell
+version: ‘2’
+services:
+    db:
+        image: mysql
+        ports:
+        -3306:3306
+        environment:
+        -MYSQL_ROOT_PASSWORD=my-secret-pw
+        volumes:
+        -db:/var/lib/mysql
+    web:
+        image: nginx
+        ports:
+        -8080:80
+        environment:
+        -MY_DB_PORT=3306
+        -MY_DB_HOST=db
+        volumes:
+        -/my/php/app:/usr/share/nginx/html
+
+```
+[github://friism/MusicStore](https://github.com/friism/MusicStore)
+
+
+```shell
+version: '3'
+services:
+  db:
+    image: microsoft/mssql-server-windows-developer
+    environment:
+      sa_password: "Password1"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433" # REMARK: This is currently required, needs investigation
+    healthcheck:
+      test: [ "CMD", "sqlcmd", "-U", "sa", "-P", "Password1", "-Q", "select 1" ]
+      interval: 1s
+      retries: 30
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.windows
+    environment:
+      - "Data:DefaultConnection:ConnectionString=Server=db,1433;Database=MusicStore;User Id=sa;Password=Password1;MultipleActiveResultSets=True"
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+
 ```

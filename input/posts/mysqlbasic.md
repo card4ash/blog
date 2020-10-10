@@ -38,6 +38,20 @@ Example:
     mysqldump --column-statistics=0 -h 127.0.0.1 -P 3306 -u root -p billpayment> sqlback.sql
 ```
 
+**Create User and Grant Permission for remote connection**
+
+```shell
+    select host, user from mysql.user;
+```
+
+```shell
+    mysql> CREATE USER 'dev'@'%' IDENTIFIED BY 'secret';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> GRANT ALL PRIVILEGES ON * . * TO 'dev'@'%';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> quit
+```
+
 Restore Database
 ==================
 
