@@ -5,8 +5,8 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Thu, 08 Oct 2020 23:58:34 GMT</pubDate>
-		<lastBuildDate>Thu, 08 Oct 2020 23:58:34 GMT</lastBuildDate>
+		<pubDate>Sat, 10 Oct 2020 21:55:52 GMT</pubDate>
+		<lastBuildDate>Sat, 10 Oct 2020 21:55:52 GMT</lastBuildDate>
 		<item>
 			<title>Powershell fundamentals</title>
 			<link>http://host.com/blog/posts/powershell</link>
@@ -140,16 +140,16 @@ JSON Data has a special format described here. When is comes to publishing with 
 		<item>
 			<title>Docker for Windows</title>
 			<link>http://host.com/blog/posts/docker</link>
-			<description>&lt;p&gt;&lt;strong&gt;Docker Basic Command&lt;/strong&gt;&lt;/p&gt;</description>
+			<description>&lt;p&gt;All the process for docker&lt;/p&gt;</description>
 			<guid>http://host.com/blog/posts/docker</guid>
 			<pubDate>Fri, 04 Sep 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;&lt;strong&gt;Docker Basic Command&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;all the process for docker&lt;/p&gt;
+			<content:encoded>&lt;h1 id="docker-basic-command"&gt;Docker Basic Command&lt;/h1&gt;
+&lt;p&gt;All the process for docker&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker ps
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker ps -a
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;pulling an image from docker-hub if not available locally and install it&lt;/p&gt;
+&lt;p&gt;Pulling an image from docker-hub if not available locally and install it&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker run hello-world
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker image ls
@@ -158,7 +158,7 @@ JSON Data has a special format described here. When is comes to publishing with 
 hostport:containerport&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker run -p 80:80 nginx
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;stop the software&lt;/p&gt;
+&lt;p&gt;Stop the software&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker stop parts_of_container_id_which_is_unique
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker stop ee3
@@ -167,7 +167,7 @@ hostport:containerport&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker start container_name/part_of_container_id
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;uninstalling software&lt;/p&gt;
+&lt;p&gt;Uninstalling/Removing software/docker container&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker rm ee3
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker rm ee3 b9 etc_rasa
@@ -193,10 +193,13 @@ hostport:containerport&lt;/p&gt;
 &lt;p&gt;So see the details about runnig image&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    docker inspect iis
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Docker IP Address&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Get the process associated with dockeer in powershell&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    get-process *docker*
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Installing Docker Engine on Windows Server 2016&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id="installing-docker-engine-on-windows-server-2016"&gt;Installing Docker Engine on Windows Server 2016&lt;/h1&gt;
 &lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=Windows-Server"&gt;Set up Environment&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
 &lt;/code&gt;&lt;/pre&gt;
@@ -207,13 +210,13 @@ hostport:containerport&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    docker run -it microsoft/dotnet:nanoserver dotnet --version
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Running Command Line Apps in Containers&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id="running-command-line-apps-in-containers"&gt;Running Command Line Apps in Containers&lt;/h1&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker save nanoserver/iis -o iis.tar
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Using linux container to extract tar&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Using linux container to extract tar&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run -it alpine
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;mounting c:\Users to container /data folder and show all files and folder inside container /data folder&lt;/p&gt;
+&lt;p&gt;Mounting c:\Users to container /data folder and show all files and folder inside container /data folder&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --rm -v c:/Users:/data alpine ls /data
     docker run --rm -v c:/Users/ashraful.alam/iistartest:/data alpine ls /data 
 &lt;/code&gt;&lt;/pre&gt;
@@ -240,7 +243,7 @@ hostport:containerport&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --rm -it -v c:/Users/ashraful.alam/iistartest:/data ubuntu sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;nmap port scanning&lt;/p&gt;
+&lt;p&gt;Nmap port scanning&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --rm `
     weshigbee/nmap -v 192.168.0.0/24
 &lt;/code&gt;&lt;/pre&gt;
@@ -249,7 +252,7 @@ hostport:containerport&lt;/p&gt;
     --volume ${pwd}:/output `
     jrottenberg/ffmpeg -i http://www.weshigbee.com/wp-content/uploads/2014/12/Turkey-Short.mp4 /output/Turkey.gif
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Building Images to Host Web Sites&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id="building-images-to-host-web-sites"&gt;Building Images to Host Web Sites&lt;/h1&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --rm -it -p 8080:80 nginx
     docker run --rm -it -p 8080:80 -v C:\Users\ashraful.alam\solitaire\app:/usr/share/nginx/html nginx
 
@@ -285,16 +288,16 @@ hostport:containerport&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker tag solitaire:nginx-df ashcoder/solitaire:nginx
     docker push  ashcoder/solitaire:nginx
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Running Database in Container&lt;/strong&gt;
-MS SQL Server on linux Docker&lt;/p&gt;
+&lt;h1 id="running-database-in-container"&gt;Running Database in Container&lt;/h1&gt;
+&lt;p&gt;MS SQL Server on linux Docker&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker run -e &amp;quot;ACCEPT_EULA=Y&amp;quot; -e &amp;quot;SA_PASSWORD=sqladmin&amp;#64;123&amp;quot; -p 1450:1433 -d mcr.microsoft.com/mssql/server
      docker logs container_id_partial
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --name some-mysql -p 1305:1306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
+&lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --name some-mysql -p 3305:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
     docker exec -it some-mysql mysql --user=root --password=my-secret-pw 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Clean Up&lt;/strong&gt;
-stop all container&lt;/p&gt;
+&lt;h1 id="clean-up"&gt;Clean Up&lt;/h1&gt;
+&lt;p&gt;stop all container&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    docker stop $(docker ps -q)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;remove all stoped container&lt;/p&gt;
@@ -311,6 +314,105 @@ stop all container&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;remove container with volume&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;docker rm -fv container_id
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="docker-compose"&gt;Docker Compose&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    docker run --name db `
+		-d `
+		-p 3306:3306 `
+		-e MYSQL_ROOT_PASSWORD=my-secret-pw `
+		-v db:/var/lib/mysql `
+		mysql
+		
+docker inspect db #extract ip address
+
+docker run --name web `
+		-d `
+		-p 8080:80 `
+		-e MY_DB_PORT=3306 `
+		-e MY_DB_HOST=? `
+		-v /my/php/app:/usr/share/nginx/html `
+		nginx
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;docker-compose.yml file&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;version: '2'
+
+services:
+    teamcity:
+        image: sjoerdmulder/teamcity
+        ports:
+            - 8111:8111
+    teamcity-agent:
+        image: sjoerdmulder/teamcity-agent
+        environment:
+            - TEAMCITY_SERVER=http://teamcity:8111
+    postgres:
+        image: postgres
+        environment:
+            - POSTGRES_DB=teamcity
+            - POSTGRES_PASSWORD=teamcity
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    docker-compose up
+    docker network ls 
+    docker network inspect eb1_container_id
+    docker network inspect bridge
+    docker exec -it teamcity_postgres_1 bash
+    docker-compose exec postgres bash 
+    docker run --name alpine --rm --net teamcity_default -it alpine sh
+    docker-compose exec teamcity bash
+    docker-compose start teamcity-agent
+    docker-compose ps
+    docker-compose exec postgres psql -U postgres 
+    docker-compose stop
+    docker-compose rm
+    docker-compose down
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;version: ‘2’
+services:
+    db:
+        image: mysql
+        ports:
+        -3306:3306
+        environment:
+        -MYSQL_ROOT_PASSWORD=my-secret-pw
+        volumes:
+        -db:/var/lib/mysql
+    web:
+        image: nginx
+        ports:
+        -8080:80
+        environment:
+        -MY_DB_PORT=3306
+        -MY_DB_HOST=db
+        volumes:
+        -/my/php/app:/usr/share/nginx/html
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="https://github.com/friism/MusicStore"&gt;github://friism/MusicStore&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;version: '3'
+services:
+  db:
+    image: microsoft/mssql-server-windows-developer
+    environment:
+      sa_password: &amp;quot;Password1&amp;quot;
+      ACCEPT_EULA: &amp;quot;Y&amp;quot;
+    ports:
+      - &amp;quot;1433:1433&amp;quot; # REMARK: This is currently required, needs investigation
+    healthcheck:
+      test: [ &amp;quot;CMD&amp;quot;, &amp;quot;sqlcmd&amp;quot;, &amp;quot;-U&amp;quot;, &amp;quot;sa&amp;quot;, &amp;quot;-P&amp;quot;, &amp;quot;Password1&amp;quot;, &amp;quot;-Q&amp;quot;, &amp;quot;select 1&amp;quot; ]
+      interval: 1s
+      retries: 30
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.windows
+    environment:
+      - &amp;quot;Data:DefaultConnection:ConnectionString=Server=db,1433;Database=MusicStore;User Id=sa;Password=Password1;MultipleActiveResultSets=True&amp;quot;
+    depends_on:
+      - db
+    ports:
+      - &amp;quot;5000:5000&amp;quot;
+
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
@@ -512,6 +614,35 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Wyam Blog Getting Started(cheetsheet)</title>
+			<link>http://host.com/blog/posts/wyamgettingstarted</link>
+			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
+			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Python Getting Started Cheet Sheet</title>
 			<link>http://host.com/blog/posts/djangocheetsh</link>
 			<description>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</description>
@@ -590,35 +721,6 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Wyam Blog Getting Started(cheetsheet)</title>
-			<link>http://host.com/blog/posts/wyamgettingstarted</link>
-			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
-			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>My SQL Basic</title>
 			<link>http://host.com/blog/posts/mysqlbasic</link>
 			<description>&lt;p&gt;connect db&lt;/p&gt;</description>
@@ -643,6 +745,15 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 Example:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;
     mysqldump --column-statistics=0 -h 127.0.0.1 -P 3306 -u root -p billpayment&amp;gt; sqlback.sql
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Create User and Grant Permission for remote connection&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    select host, user from mysql.user;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;    mysql&amp;gt; CREATE USER 'dev'&amp;#64;'%' IDENTIFIED BY 'secret';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql&amp;gt; GRANT ALL PRIVILEGES ON * . * TO 'dev'&amp;#64;'%';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql&amp;gt; quit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="restore-database"&gt;Restore Database&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;    mysql -u [user] -p [database_name] &amp;lt; [filename].sql
@@ -914,6 +1025,17 @@ print &amp;#64;Result
 </content:encoded>
 		</item>
 		<item>
+			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
+			<link>http://host.com/blog/posts/jsonpatch</link>
+			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/jsonpatch</guid>
+			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
+&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
+&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
 			<link>http://host.com/blog/posts/parameter</link>
 			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
@@ -936,17 +1058,6 @@ Foo (??? y);
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
 &lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
-			<link>http://host.com/blog/posts/jsonpatch</link>
-			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/jsonpatch</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
-&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
-&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>

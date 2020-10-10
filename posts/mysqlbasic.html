@@ -116,6 +116,15 @@ Example:</p>
 <pre><code class="language-shell">
     mysqldump --column-statistics=0 -h 127.0.0.1 -P 3306 -u root -p billpayment&gt; sqlback.sql
 </code></pre>
+<p><strong>Create User and Grant Permission for remote connection</strong></p>
+<pre><code class="language-shell">    select host, user from mysql.user;
+</code></pre>
+<pre><code class="language-shell">    mysql&gt; CREATE USER 'dev'&#64;'%' IDENTIFIED BY 'secret';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql&gt; GRANT ALL PRIVILEGES ON * . * TO 'dev'&#64;'%';
+    Query OK, 0 rows affected (0.00 sec)
+    mysql&gt; quit
+</code></pre>
 <h1 id="restore-database">Restore Database</h1>
 <pre><code>    mysql -u [user] -p [database_name] &lt; [filename].sql
 </code></pre>
