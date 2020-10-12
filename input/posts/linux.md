@@ -1,4 +1,9 @@
-
+Title: Linux 7 Basics
+Published: 10/12/2020
+Tags:
+    - Introduction
+    - Linux
+---
 
 # Linux command to find out hardware info?
 Here is a list of commands to check hardware on Linux. Note that not all commands are available on all distributions. It is better to launch then as root (or via sudo) to get all the information.
