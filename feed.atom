@@ -4,14 +4,32 @@
 	<title>ashcoder.io</title>
 	<link rel="self" href="http://host.com/blog" />
 	<rights>2020</rights>
-	<updated>2020-10-12T12:31:22Z</updated>
+	<updated>2020-10-15T06:34:21Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
+		<id>http://host.com/blog/posts/test</id>
+		<title>test test test</title>
+		<link href="http://host.com/blog/posts/test" />
+		<updated>2020-10-15T00:00:00Z</updated>
+		<content>&lt;h1 id="new-console-app"&gt;new console app&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new console -o myapp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="new-solution"&gt;new solution&lt;/h1&gt;
+&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new sln -o golden
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now cd into golden and add library project with the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new classlib -o library
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<summary>&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;</summary>
+	</entry>
+	<entry>
 		<id>http://host.com/blog/posts/linux</id>
-		<title>Linux 7 Basics</title>
+		<title>Linux  Basics</title>
 		<link href="http://host.com/blog/posts/linux" />
 		<updated>2020-10-12T00:00:00Z</updated>
-		<content>&lt;h1 id="linux-command-to-find-out-hardware-info"&gt;Linux command to find out hardware info?&lt;/h1&gt;
+		<content>&lt;h1 id="linux-command-to-find-out-hardware-info"&gt;Linux command to find out hardware info&lt;/h1&gt;
 &lt;p&gt;Here is a list of commands to check hardware on Linux. Note that not all commands are available on all distributions. It is better to launch then as root (or via sudo) to get all the information.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    lscpu
 &lt;/code&gt;&lt;/pre&gt;
@@ -21,18 +39,17 @@ Not available on older distribution&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Require HAL (Hardware Abstraction Layer) to be installed
 List all hardware visible by HAL&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Command: lshw
+&lt;pre&gt;&lt;code&gt;    lshw
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Available on Ubuntu based distributions by default, and Debian in the main repo
 Available in the Fedora repositories
-Uses many inputs to detect all hardware: Kernel, HAL, DMI, etc.
-As a neat ‘-html’ switch that generates hardware reports
-Check more on this page&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Command: lspci
+Uses many inputs to detect all hardware: Kernel, HAL, DMI, etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    lspci
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Standard command
-List all hardware connected to the PCI bus as detected by the kernel
-Command: lsusb&lt;/p&gt;
+List all hardware connected to the PCI bus as detected by the kernel&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    lsusb
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Standard command
 List all hardware connected to the USB buses as detected by the kernel&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    dmidecode
@@ -1291,49 +1308,6 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 		<summary>&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/ubuntutime</id>
-		<title>Ubuntu time</title>
-		<link href="http://host.com/blog/posts/ubuntutime" />
-		<updated>2019-06-11T00:00:00Z</updated>
-		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
-&lt;p&gt;Basic Time Commands&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    date
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl list-timezones
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo timedatectl set-timezone Asia/Dhaka
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo dpkg-reconfigure tzdata
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Configure NTP Servers&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    apt-get install ntp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     sudo nano /etc/ntp.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     ntpq -p
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    service ntp restart
-
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
-	</entry>
-	<entry>
 		<id>http://host.com/blog/posts/ubuntu-basics</id>
 		<title>Ubuntu basics</title>
 		<link href="http://host.com/blog/posts/ubuntu-basics" />
@@ -1416,34 +1390,46 @@ Use the su command to switch to the new user account.&lt;/p&gt;
 		<summary>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/image-upload-preview</id>
-		<title>Image Upload Preview</title>
-		<link href="http://host.com/blog/posts/image-upload-preview" />
+		<id>http://host.com/blog/posts/ubuntutime</id>
+		<title>Ubuntu time</title>
+		<link href="http://host.com/blog/posts/ubuntutime" />
 		<updated>2019-06-11T00:00:00Z</updated>
-		<content>&lt;h1 id="image-upload-preview"&gt;Image Upload Preview&lt;/h1&gt;
-&lt;p&gt;HTML Code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;    &amp;lt;form id=&amp;quot;form1&amp;quot; runat=&amp;quot;server&amp;quot;&amp;gt;
-        &amp;lt;input type=&amp;quot;file&amp;quot; accept=&amp;quot;image/*&amp;quot; onchange=&amp;quot;loadFile(event)&amp;quot; id=&amp;quot;LogoImageFile&amp;quot; name=&amp;quot;LogoImageFile&amp;quot; /&amp;gt;
-        &amp;lt;img id=&amp;quot;output&amp;quot;/&amp;gt;
-    &amp;lt;/form&amp;gt;
+		<content>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
+&lt;p&gt;Basic Time Commands&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    date
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Javascript Code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-javascript"&gt;    var loadFile = function(event) {
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-    };
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl list-timezones
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Backend controller code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-c-sharp"&gt;    if (model.LogoImageFile != null)
-    {
-        using (var memoryStream = new MemoryStream())
-        {
-            await model.LogoImageFile.CopyToAsync(memoryStream);
-            model.Person.LogoImage = memoryStream.ToArray();
-        }
-    }
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo timedatectl set-timezone Asia/Dhaka
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    timedatectl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    sudo dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Configure NTP Servers&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    apt-get install ntp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     sudo nano /etc/ntp.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+     ntpq -p
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+    service ntp restart
+
 &lt;/code&gt;&lt;/pre&gt;
 </content>
-		<summary>&lt;p&gt;HTML Code:&lt;/p&gt;</summary>
+		<summary>&lt;p&gt;Basic Time Commands&lt;/p&gt;</summary>
 	</entry>
 </feed>
