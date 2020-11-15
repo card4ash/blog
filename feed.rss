@@ -5,26 +5,8 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Thu, 15 Oct 2020 06:34:21 GMT</pubDate>
-		<lastBuildDate>Thu, 15 Oct 2020 06:34:21 GMT</lastBuildDate>
-		<item>
-			<title>test test test</title>
-			<link>http://host.com/blog/posts/test</link>
-			<description>&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/test</guid>
-			<pubDate>Thu, 15 Oct 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="new-console-app"&gt;new console app&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;    dotnet new console -o myapp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="new-solution"&gt;new solution&lt;/h1&gt;
-&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    dotnet new sln -o golden
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now cd into golden and add library project with the following command&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    dotnet new classlib -o library
-&lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
+		<pubDate>Sun, 15 Nov 2020 10:15:00 GMT</pubDate>
+		<lastBuildDate>Sun, 15 Nov 2020 10:15:00 GMT</lastBuildDate>
 		<item>
 			<title>Linux  Basics</title>
 			<link>http://host.com/blog/posts/linux</link>
@@ -635,6 +617,395 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
+			<title>Creating MQTT Cluster</title>
+			<link>http://host.com/blog/posts/emqttcluster</link>
+			<description>&lt;p&gt;Emqtt Cluster Broker&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/emqttcluster</guid>
+			<pubDate>Sat, 15 Aug 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="emqtt-cluster-broker"&gt;Emqtt Cluster Broker&lt;/h1&gt;
+&lt;h1 id="creating-mqtt-cluster-broker"&gt;Creating MQTT Cluster Broker&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Emqtt Cluster Broker&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Install  broker&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;#. Cd into emqttd (all command run from C:\emqttd)
+#. Edit emqttd\etc\emq.conf file (possible line 21) change node.name = emqttd&amp;#64;192.168.11.9
+#. Repeat it for every node like node.name = emqttd&amp;#64;192.168.11.10 node.name =emqttd&amp;#64;192.168.11.11&lt;/p&gt;
+&lt;p&gt;For every node&lt;/p&gt;
+&lt;p&gt;#. Start the broker in console mode:&lt;code&gt;bin\emqttd console&lt;/code&gt;
+#. Install emqttd serivce:&lt;code&gt;bin\emqttd install&lt;/code&gt;
+#. Start emqttd serivce:&lt;code&gt;bin\emqttd start&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Start the three broker nodes, and ‘cluster join ‘ on node&amp;#64;213.136.77.177 and node&amp;#64;213.136.80.212 respectively as follows&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   ./bin/emqttd_ctl cluster join emqttd&amp;#64;213.136.80.212
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;The Firewall&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Open 4369 port  used by epmd daemon, and a port segment for nodes’ communication.
+here we open 20000-21000 for node communication&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  [{kernel, [
+        ...
+        {inet_dist_listen_min, 20000},
+        {inet_dist_listen_max, 21000}
+  ]},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;Verneqm Cluster Broker (Alternative to emqtt)&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Installation&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Since emqtt cluster does not support shared subscription accross cluster. We tried to
+solve the problem using vernemq cluster. Vernemq cluster support shared subscription.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Installing VerneMQ&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Download the binary package from &lt;a href="https://vernemq.com/downloads/"&gt;https://vernemq.com/downloads/&lt;/a&gt;
+we choose Xenial 1.3.0.
+Once downloaded the binary package, execute the following command to install VerneMQ:&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dpkg -i vernemq_1.3.0-1_amd64.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Verify installation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dpkg -s vernemq | grep Status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;vernemq nodes config for creating cluster&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo nano /etc/vernemq/vernemq.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    allow_anonymous = on
+    allow_register_during_netsplit = on
+    allow_publish_during_netsplit = on
+    allow_subscribe_during_netsplit = on
+    allow_unsubscribe_during_netsplit = on
+    allow_multiple_sessions = off
+    retry_interval = 10
+    max_client_id_size = 512
+    max_inflight_messages = 1000
+    max_online_messages = -1
+    max_offline_messages = -1
+    max_message_size = 0
+    upgrade_outgoing_qos = off
+    listener.max_connections = 10000
+    listener.nr_of_acceptors = 10
+    listener.tcp.default = 192.168.100.123:1883
+    listener.vmq.clustering = 192.168.100.123:44053
+    listener.http.default = 127.0.0.1:8888
+    listener.mountpoint = off
+    systree_enabled = on
+    systree_interval = 20000
+    graphite_enabled = off
+    graphite_host = localhost
+    graphite_port = 2003
+    graphite_interval = 20000
+    shared_subscription_policy = random
+    plugins.vmq_passwd = on
+    plugins.vmq_acl = on
+    plugins.vmq_diversity = off
+    plugins.vmq_webhooks = off
+    plugins.vmq_bridge = off
+    vmq_acl.acl_file = /etc/vernemq/vmq.acl
+    vmq_acl.acl_reload_interval = 10
+    vmq_passwd.password_file = /etc/vernemq/vmq.passwd
+    vmq_passwd.password_reload_interval = 10
+    vmq_diversity.script_dir = /usr/share/vernemq/lua
+    vmq_diversity.auth_postgres.enabled = off
+    vmq_diversity.auth_mysql.enabled = off
+    vmq_diversity.auth_mongodb.enabled = off
+    vmq_diversity.auth_redis.enabled = off
+    log.console = file
+    log.console.level = info
+    log.console.file = /var/log/vernemq/console.log
+    log.error.file = /var/log/vernemq/error.log
+    log.syslog = off
+    log.crash = on
+    log.crash.file = /var/log/vernemq/crash.log
+    log.crash.maximum_message_size = 64KB
+    log.crash.size = 10MB
+    log.crash.rotation = $D0
+    log.crash.rotation.keep = 5
+    nodename = VerneMQ&amp;#64;192.168.100.123
+    distributed_cookie = vmqaplomb
+    erlang.async_threads = 64
+    erlang.max_ports = 262144
+    leveldb.maximum_memory.percent = 70
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    allow_anonymous = on
+    allow_register_during_netsplit = on
+    allow_publish_during_netsplit = on
+    allow_subscribe_during_netsplit = on
+    allow_unsubscribe_during_netsplit = on
+    allow_multiple_sessions = off
+    retry_interval = 10
+    max_client_id_size = 512
+    max_inflight_messages = 1000
+    max_online_messages = -1
+    max_offline_messages = -1
+    max_message_size = 0
+    upgrade_outgoing_qos = off
+    listener.max_connections = 10000
+    listener.nr_of_acceptors = 10
+    listener.tcp.default = 192.168.100.124:1883
+    listener.vmq.clustering = 192.168.100.124:44053
+    listener.http.default = 127.0.0.1:8888
+    listener.mountpoint = off
+    systree_enabled = on
+    systree_interval = 20000
+    graphite_enabled = off
+    graphite_host = localhost
+    graphite_port = 2003
+    graphite_interval = 20000
+    shared_subscription_policy = random
+    plugins.vmq_passwd = on
+    plugins.vmq_acl = on
+    plugins.vmq_diversity = off
+    plugins.vmq_webhooks = off
+    plugins.vmq_bridge = off
+    vmq_acl.acl_file = /etc/vernemq/vmq.acl
+    vmq_acl.acl_reload_interval = 10
+    vmq_passwd.password_file = /etc/vernemq/vmq.passwd
+    vmq_passwd.password_reload_interval = 10
+    vmq_diversity.script_dir = /usr/share/vernemq/lua
+    vmq_diversity.auth_postgres.enabled = off
+    vmq_diversity.auth_mysql.enabled = off
+    vmq_diversity.auth_mongodb.enabled = off
+    vmq_diversity.auth_redis.enabled = off
+    log.console = file
+    log.console.level = info
+    log.console.file = /var/log/vernemq/console.log
+    log.error.file = /var/log/vernemq/error.log
+    log.syslog = off
+    log.crash = on
+    log.crash.file = /var/log/vernemq/crash.log
+    log.crash.maximum_message_size = 64KB
+    log.crash.size = 10MB
+    log.crash.rotation = $D0
+    log.crash.rotation.keep = 5
+    nodename = VerneMQ&amp;#64;192.168.100.124
+    distributed_cookie = vmqaplomb
+    erlang.async_threads = 64
+    erlang.max_ports = 262144
+    leveldb.maximum_memory.percent = 70
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Activate VerneMQ node&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo service vernemq start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once our broker has started, you can initially check that it is running with the vernemq ping command:&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vernemq ping
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Joining a Cluster&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vmq-admin cluster join discovery-node=VerneMQ&amp;#64;127.0.0.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Leaving a Cluster&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vmq-admin cluster leave node=&amp;lt;NodeThatShouldGo&amp;gt; (only the first step!)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Getting Cluster Status Information&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo vmq-admin cluster show
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Note: For a successful VerneMQ cluster setup, it is important to choose proper VerneMQ node names. In vernemq.conf change the nodename = VerneMQ&amp;#64;127.0.0.1 to something appropriate. We choose VerneMQ&amp;#64;192.168.100.124 and VerneMQ&amp;#64;192.168.100.123  Make sure that the node names are unique within the cluster. And choose distributed_cookie = vmqaplomb.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Other Configure Related Info&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;allow_multiple_sessions = off&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Allows a client to logon multiple times using the same client id. If on shared subscribtion may not work properly.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;max_inflight_messages = 1000&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This option defines the maximum number of QoS 1 or 2 messages that can be in the process of being transmitted simultaneously.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;max_online_messages = -1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The maximum number of messages to hold in the queue above those messages that are currently in flight. Defaults to 1000. Set to -1 for no limit. This option protects a client session from overload by dropping messages (of any QoS).Defaults to 1000 messages, use -1 for no limit. This parameter was named max_queued_messages in 0.10.*. Note that 0 will totally block message delivery from any queue!&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;max_offline_messages = -1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This option specifies the maximum number of QoS 1 and 2 messages to hold in the offline queue.Defaults to 1000 messages, use -1 for no limit, use 0 if no messages should be stored.&lt;/p&gt;
+&lt;p&gt;In contrast to the session based inflight window, max_online_messages and max_offline_messages serves as a protection of queues, on the outgoing side.&lt;/p&gt;
+&lt;p&gt;Need to study more about the behabior about message incoming rate and consumption rate behabior configuration. and control process.&lt;/p&gt;
+&lt;p&gt;Troubleshooting&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;In case cluster creation failed&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;wiping all cluster metadata  by shutting down all the nodes and then remove the metadata (probably in /var/lib/vernemq/meta/). This will mean each node no longer has any knowledge of the cluster. Then restart each node and re-create the cluster using the vmq-admin cluster join command.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Observing Log File&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block :: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo nano /var/log/vernemq/console.log
+sudo nano /var/log/vernemq/error.log
+sudo nano /var/log/vernemq/crash.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Varnemq Monitoring&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Observing Session&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo vmq-admin session show&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear session&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Example:
+&lt;code&gt;sudo vmq-admin session disconnect client-id=testf9695b6e-555b-4b3d-8da6-7164d5274103 -c&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Observing the metrics&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo vmq-admin metrics show&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;For qos2 message sum of  &lt;code&gt;counter.mqtt_pubcomp_sent = 20000&lt;/code&gt; across the cluster should be equal to no of message published to the broker.&lt;/p&gt;
+&lt;p&gt;.. image :: /Images/qos2.png&lt;/p&gt;
+&lt;p&gt;Adn for qos2 subscription in our case the sum of &lt;code&gt;counter.mqtt_pubcomp_received = 10023&lt;/code&gt; and &lt;code&gt;counter.mqtt_pubcomp_received = 9977&lt;/code&gt; should be equal to all message published to broker in the specific topic which our mqtt services client shared subscribed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reference Links:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;#. &lt;a href="http://emqtt.io/docs/v2/install.html#installing-on-windows"&gt;http://emqtt.io/docs/v2/install.html#installing-on-windows&lt;/a&gt;
+#. &lt;a href="http://emqttd-docs.readthedocs.io/en/latest/cluster.html"&gt;http://emqttd-docs.readthedocs.io/en/latest/cluster.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;#. &lt;a href="https://vernemq.com/docs/installation/"&gt;https://vernemq.com/docs/installation/&lt;/a&gt;
+#. &lt;a href="https://vernemq.com/docs/clustering/"&gt;https://vernemq.com/docs/clustering/&lt;/a&gt;&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>High Availability Setup</title>
+			<link>http://host.com/blog/posts/highavailablilt</link>
+			<description>&lt;p&gt;HA proxy&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/highavailablilt</guid>
+			<pubDate>Fri, 12 Jun 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;hr /&gt;
+&lt;p&gt;HA proxy&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;HAProxy(High Availability Proxy) is an open source load balancer which can load balance any TCP service. It is particularly suited for HTTP load balancing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Installing HAProxy&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Use the apt-get command to install HAProxy.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   Apt-get update
+   apt-get install haproxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We need to enable HAProxy to be started by the init script.
+&lt;code&gt;nano /etc/default/haproxy&lt;/code&gt;
+Set the ENABLED option to 1
+&lt;code&gt;ENABLED=1&lt;/code&gt;
+To check if this change is done properly execute the init script of HAProxy without any parameters. You should see the following.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   root&amp;#64;haproxy:~# service haproxy
+   Usage: /etc/init.d/haproxy {start|stop|reload|restart|status}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Configuring HAProxy&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We'll move the default configuration file and create our own one.
+&lt;code&gt;mv /etc/haproxy/haproxy.cfg{,.original}&lt;/code&gt;
+Create and edit a new configuration file:
+&lt;code&gt;nano /etc/haproxy/haproxy.cfg&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    global
+        log 127.0.0.1 local0 notice
+        maxconn 2000
+        user haproxy
+        group haproxy
+    defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        retries 3
+        option redispatch
+        timeout connect  5000
+        timeout client  10000
+        timeout server  10000
+    listen stats
+        bind 192.168.11.92:80
+        mode http
+        log global
+        stats enable
+        stats realm Haproxy\ Statistics
+        stats uri /haproxy_stats
+        stats hide-version
+        stats auth admin:card4me&amp;#64;321
+        balance roundrobin
+        option httpclose
+        option forwardfor
+        server svr1 192.168.11.100:80
+        server svr2 192.168.11.101:80
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;Installing keepalived&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Configuring HAProxy and Keepalived&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Install HAProxy and Keepalived on both ubuntu nodes.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   apt-get install haproxy 
+   apt-get install keepalived
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Load balancing in HAProxy also requires the ability to bind to an IP address that are nonlocal, meaning that it is not assigned to a device on the local system. Below configuration is added so that floating/shared IP can be assigned to one of the load balancers.&lt;/p&gt;
+&lt;p&gt;Good, keepalived is now installed. Before we proceed with configuring keepalived itself, edit the following file:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo nano /etc/sysctl.conf&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Add the below lines.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   net.ipv4.ip_nonlocal_bind=1
+  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To enable the changes made in sysctl.conf you will need to run the command.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   sysctl -p
+   Output: net.ipv4.ip_nonlocal_bind = 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let’s create keepalived.conf file on each instances.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   sudo nano  /etc/keepalived/keepalived.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the below configuration on the master node&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    global_defs {
+    # Keepalived process identifier
+    lvs_id haproxy_DH
+    }
+    # Script used to check if HAProxy is running
+
+    vrrp_script check_haproxy {
+    script &amp;quot;killall -0 haproxy&amp;quot;
+    interval 2
+    weight 2
+    }
+    # Virtual interface
+    # The priority specifies the order in which the assigned interface to take ove$
+    vrrp_instance VI_01 {
+    state MASTER
+    interface enp8s0
+    virtual_router_id 51
+    priority 102
+    # The virtual ip address shared between the two loadbalancers
+    virtual_ipaddress {
+    192.168.11.96/24
+    }
+    track_script {
+    check_haproxy
+    }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add the below configuration on the slave node.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   global_defs {
+    # Keepalived process identifier
+    lvs_id haproxy_DH_passive
+    }
+    # Script used to check if HAProxy is running
+    vrrp_script check_haproxy {
+    script &amp;quot;killall -0 haproxy&amp;quot;
+    interval 2
+    weight 2
+    }
+    # Virtual interface
+    # The priority specifies the order in which the assigned interface to take over in a failover
+    vrrp_instance VI_01 {
+    state SLAVE
+    interface ens33
+    virtual_router_id 51
+    priority 100
+    # The virtual ip address shared between the two loadbalancers
+    virtual_ipaddress {
+    192.168.11.96/24
+    }
+    track_script {
+    check_haproxy
+    }}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Restart Keepalived.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   service keepalived start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let’s configure HAProxy on both instances. You will have do the below steps on master node as well as slave node.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   sudo nano /etc/default/haproxy
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;set the property ENABLED to 1.&lt;/p&gt;
+&lt;p&gt;.. code-block:: shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;   sudo nano /etc/haproxy/haproxy.cfg
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>aspnet core notebook</title>
 			<link>http://host.com/blog/posts/aspnetcore</link>
 			<description>&lt;p&gt;new console app&lt;/p&gt;</description>
@@ -732,35 +1103,6 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
-			<title>Wyam Blog Getting Started(cheetsheet)</title>
-			<link>http://host.com/blog/posts/wyamgettingstarted</link>
-			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
-			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Python Getting Started Cheet Sheet</title>
 			<link>http://host.com/blog/posts/djangocheetsh</link>
 			<description>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</description>
@@ -836,6 +1178,35 @@ Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;where manage.py located cd into this location. Go to python shell with below command&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    python manage.py shell
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Wyam Blog Getting Started(cheetsheet)</title>
+			<link>http://host.com/blog/posts/wyamgettingstarted</link>
+			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
+			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1309,127 +1680,33 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 </content:encoded>
 		</item>
 		<item>
-			<title>Ubuntu basics</title>
-			<link>http://host.com/blog/posts/ubuntu-basics</link>
-			<description>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/ubuntu-basics</guid>
+			<title>Image Upload Preview</title>
+			<link>http://host.com/blog/posts/image-upload-preview</link>
+			<description>&lt;p&gt;HTML Code:&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/image-upload-preview</guid>
 			<pubDate>Tue, 11 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="ubuntu-basics"&gt;Ubuntu Basics&lt;/h1&gt;
-&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;
-&lt;p&gt;Check Ubuntu Version&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        lsb_release -a
+			<content:encoded>&lt;h1 id="image-upload-preview"&gt;Image Upload Preview&lt;/h1&gt;
+&lt;p&gt;HTML Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;    &amp;lt;form id=&amp;quot;form1&amp;quot; runat=&amp;quot;server&amp;quot;&amp;gt;
+        &amp;lt;input type=&amp;quot;file&amp;quot; accept=&amp;quot;image/*&amp;quot; onchange=&amp;quot;loadFile(event)&amp;quot; id=&amp;quot;LogoImageFile&amp;quot; name=&amp;quot;LogoImageFile&amp;quot; /&amp;gt;
+        &amp;lt;img id=&amp;quot;output&amp;quot;/&amp;gt;
+    &amp;lt;/form&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-       adduser username
+&lt;p&gt;Javascript Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-javascript"&gt;    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Set and confirm the new user's password at the prompt. A strong password is highly recommended!&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        Set password prompts:
-        Enter new UNIX password:
-        Retype new UNIX password:
-        passwd: password updated successfully
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Follow the prompts to set the new user's information. It is fine to accept the defaults to leave all of this information blank.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        User information prompts:
-        Changing the user information for username
-        Enter the new value, or press ENTER for the default
-            Full Name []:
-            Room Number []:
-            Work Phone []:
-            Home Phone []:
-            Other []:
-        Is the information correct? [Y/n]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Use the usermod command to add the user to the sudo group.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        usermod -aG sudo username
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;By default, on Ubuntu, members of the sudo group have sudo privileges.
-Use the su command to switch to the new user account.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        su - username
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        sudo ls -la /root
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;p&gt;Set static IP Ubuntu 16.04&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        sudo nano /etc/network/interfaces
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and paste this under &lt;code&gt;# The primary network interface:&lt;/code&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        auto enp0s25
-        iface enp0s25 inet static
-        address 192.168.0.16
-        netmask 255.255.255.0
-        gateway 192.168.0.1
-        dns-nameservers 8.8.4.4 8.8.8.8
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        sudo /etc/init.d/networking restart
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-        # The loopback network interface  
-        auto lo  
-        iface lo inet loopback  
-
-
-        # The primary network interface  
-        auto enp8s0 
-        iface enp8s0 inet static  
-        address 192.168.11.95
-        netmask 255.255.255.0
-        gateway 192.168.11.1
-        dns-nameservers 8.8.8.8 8.8.4.4 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Ubuntu time</title>
-			<link>http://host.com/blog/posts/ubuntutime</link>
-			<description>&lt;p&gt;Basic Time Commands&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/ubuntutime</guid>
-			<pubDate>Tue, 11 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="time-synchronization-on-ubuntu"&gt;Time Synchronization on Ubuntu&lt;/h1&gt;
-&lt;p&gt;Basic Time Commands&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    date
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl list-timezones
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo timedatectl set-timezone Asia/Dhaka
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    timedatectl
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    sudo dpkg-reconfigure tzdata
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Configure NTP Servers&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    apt-get install ntp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     sudo nano /etc/ntp.conf
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-     ntpq -p
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;
-    service ntp restart
-
+&lt;p&gt;Backend controller code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-c-sharp"&gt;    if (model.LogoImageFile != null)
+    {
+        using (var memoryStream = new MemoryStream())
+        {
+            await model.LogoImageFile.CopyToAsync(memoryStream);
+            model.Person.LogoImage = memoryStream.ToArray();
+        }
+    }
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
