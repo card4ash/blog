@@ -5,8 +5,8 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2020</copyright>
-		<pubDate>Sun, 15 Nov 2020 10:15:00 GMT</pubDate>
-		<lastBuildDate>Sun, 15 Nov 2020 10:15:00 GMT</lastBuildDate>
+		<pubDate>Tue, 17 Nov 2020 22:18:46 GMT</pubDate>
+		<lastBuildDate>Tue, 17 Nov 2020 22:18:46 GMT</lastBuildDate>
 		<item>
 			<title>Linux  Basics</title>
 			<link>http://host.com/blog/posts/linux</link>
@@ -522,10 +522,11 @@ services:
 			<description>&lt;p&gt;&lt;code&gt;mongo&lt;/code&gt;&lt;/p&gt;</description>
 			<guid>http://host.com/blog/posts/mongoquery</guid>
 			<pubDate>Sat, 29 Aug 2020 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="connect-to-mongodb-from-cli"&gt;Connect to mongodb from cli&lt;/h1&gt;
+			<content:encoded>&lt;h2 id="connect-to-mongodb-from-cli"&gt;Connect to mongodb from cli&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;mongo&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;with port&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;mongo --port 28015&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mongo --port 27017&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mongo localhost:27017&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;You can specify a connection string. For example, to connect to a MongoDB instance running on a remote host machine&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    mongo &amp;quot;mongodb://mongodb0.example.com:28015&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
@@ -540,7 +541,19 @@ services:
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    mongo --username alice --password --authenticationDatabase admin --host mongodb0.examples.com --port 28015
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="database-command"&gt;Database Command&lt;/h1&gt;
+&lt;h2 id="customize-mongo-shell-prompt"&gt;Customize Mongo shell prompt&lt;/h2&gt;
+&lt;p&gt;Edit .mongorc.js in user folder&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    host=db.serverStatus().host;
+
+    prompt=function(){
+        return db+&amp;quot;&amp;#64;&amp;quot;+host+&amp;quot; &amp;gt;&amp;quot;;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="import-sample-database"&gt;import sample database&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/dangeabunea/pluralsight-mongodb-queries/blob/master/how-to-import-sample-db.md"&gt;https://github.com/dangeabunea/pluralsight-mongodb-queries/blob/master/how-to-import-sample-db.md&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    mongoimport --file C:\flights.json --collection flights --db flightmgmt --drop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="database-command"&gt;Database Command&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;    db
     use &amp;lt;database&amp;gt;
     show dbs
@@ -549,9 +562,10 @@ services:
     db.getCollection(&amp;quot;3 test&amp;quot;).find()
     db.getCollection(&amp;quot;3-test&amp;quot;).find()
     db.getCollection(&amp;quot;stats&amp;quot;).find()
+    db.getCollection(&amp;quot;rasa&amp;quot;).find()
+    show collections
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;populate data
-+++++++++++++++++&lt;/p&gt;
+&lt;h2 id="populate-data"&gt;populate data&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.insertMany([
     { item: &amp;quot;journal&amp;quot;, qty: 25, status: &amp;quot;A&amp;quot;, size: { h: 14, w: 21, uom: &amp;quot;cm&amp;quot; }, tags: [ &amp;quot;blank&amp;quot;, &amp;quot;red&amp;quot; ] },
     { item: &amp;quot;notebook&amp;quot;, qty: 50, status: &amp;quot;A&amp;quot;, size: { h: 8.5, w: 11, uom: &amp;quot;in&amp;quot; }, tags: [ &amp;quot;red&amp;quot;, &amp;quot;blank&amp;quot; ] },
@@ -562,13 +576,13 @@ services:
 
     // MongoDB adds an _id field with an ObjectId value if the field is not present in the document
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Select All Documents
-++++++++++++++++++++++&lt;/p&gt;
+&lt;h2 id="select-all-documents"&gt;Select All Documents&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.find({})
     db.inventory.find({}).pretty()
+    db.conversations.find({})
+    db.conversations.find({}).pretty()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Specify Equality Matches
-+++++++++++++++++++++++++++&lt;/p&gt;
+&lt;h2 id="specify-equality-matches"&gt;Specify Equality Matches&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;D&amp;quot; } );
     db.inventory.find( { qty: 0 } );
     db.inventory.find( { qty: 0, status: &amp;quot;D&amp;quot; } );
@@ -580,25 +594,169 @@ services:
     db.inventory.find( { $or: [ { status: &amp;quot;A&amp;quot; }, { qty: { $lt: 30 } } ] } )
     db.inventory.find( {
      status: &amp;quot;A&amp;quot;,
-     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
-} )
+     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]} )
+    
+
+
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="project-fields-to-return-from-query"&gt;Project Fields to Return from Query&lt;/h1&gt;
+&lt;h2 id="project-fields-to-return-from-query"&gt;Project Fields to Return from Query&lt;/h2&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { item: 1, status: 1 } )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Suppress _id Field&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { item: 1, status: 1, _id: 0 } )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;    db.inventory.find( { status: &amp;quot;A&amp;quot; }, { status: 0, instock: 0 } )
+    db.flights.find({}, {duration: 1, &amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1}).pretty()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="pretty-print-mongodb-shell-output-to-a-file"&gt;Pretty print MongoDB shell output to a file&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;Counts all the documents in the flights collection&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.count()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Prints all the documents in the flights collection&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Prints all the documents in the flights collecion in a redable JSON format&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find().pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Prints the duration, departure.city and destination.city to the console in a redable JSON format
+The _id is also going to be added by default&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({}, {duration: 1, &amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Prints the duration, departure.city and destination.city to the console in a redable JSON format
+The _id is going to be excluded&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({}, {duration: 1, &amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1, _id: 0}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="6"&gt;
+&lt;li&gt;Prints the first 5 documents returned by the find method to the screen in a readable JSON format&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({}, {duration: 1, &amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1, _id: 0}).limit(5).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="7"&gt;
+&lt;li&gt;Prints the flight documents in descending order by the duration field.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({}, {duration: 1, &amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1, _id: 0}).sort({&amp;quot;duration: -1&amp;quot;}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="complex-query"&gt;Complex Query&lt;/h1&gt;
+&lt;h2 id="module-4-queries"&gt;Module 4 Queries&lt;/h2&gt;
+&lt;h3 id="query-sub-documents"&gt;Query Sub-Documents&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all flights where departure city is Paris&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({&amp;quot;departure.city&amp;quot; : &amp;quot;Paris&amp;quot;}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Find all flights where the destination runway length is less than 3000&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({&amp;quot;destination.runwayLength&amp;quot;: {$lt: 3000}})&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="query-against-multiple-conditions"&gt;Query Against Multiple Conditions&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all the flights where duration is less than 2 hours AND the type is internal&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({$and: [{duration: {$lt: 120}}, {type: &amp;quot;Internal&amp;quot;}]}, {duration: 1, type: 1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Select all the flights where the duration is between 2 and 3 hours (short query version because the same field is targeted)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({duration: {$lt: 180, $gt: 120}}, {duration: 1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Select all the flights where the depart OR land in Germany&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({$or: [{&amp;quot;departure.country&amp;quot;: &amp;quot;Germany&amp;quot;}, {&amp;quot;destination.country&amp;quot;: &amp;quot;Germany&amp;quot;}]}, {&amp;quot;departure.city&amp;quot;: 1, &amp;quot;destination.city&amp;quot;: 1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Find all the aircraft where the capacity is greater than 200 OR the range is less than 6000&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({ $or: [ {capacity : {$gt: 200}} , {range : {$gt : 6000}} ] })&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Combine AND and OR: Select all the flights where the 'minRunwayLength' is less than 3000 AND either the capacity is greater than 200 OR the range is greater than 6500&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;db.aircraft.find({ $and: [
+		{ minRunwayLength: {$lte: 3000} },
+		{ $or: [ {capacity: {$gt: 200}} , {range: {$gt: 6500}} ] }, 
+	]
+}).pretty()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="edge-cases-find-by-null-type-or-by-field-existence"&gt;Edge Cases: Find by null, type or by field existence&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Find all the flights where the 'aircraftCode' field exists&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({aircraftCode: {$exists: true}}, {aircraftCode: 1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Find all the flights where the 'aircraftCode' field exists and it's type is 'string'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({aircraftCode: {$exists: true, $type: &amp;quot;string&amp;quot;}}, {aircraftCode: 1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Find all the flights where the 'aircraftCode' fiels is null&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find( {aircraftCode : null} ).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="free-text-search"&gt;Free Text Search&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Create text index on departure and destination fields&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.createIndex({&amp;quot;departure.city&amp;quot;: &amp;quot;text&amp;quot;, &amp;quot;destination.city&amp;quot;: &amp;quot;text&amp;quot;, &amp;quot;departure.country&amp;quot;: &amp;quot;text&amp;quot;, &amp;quot;destination.country&amp;quot;: &amp;quot;text&amp;quot;})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Find all the documents by free text 'Paris Portugal' and also print the text score (relevance)
+&lt;code&gt;db.flights.find({$text: {$search: &amp;quot;Paris Portugal&amp;quot;}}, {_id:1, score: {$meta: &amp;quot;textScore&amp;quot;}}).pretty()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="working-with-array"&gt;Working With Array&lt;/h1&gt;
+&lt;h3 id="array-query-operators"&gt;Array Query Operators&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Find all the crew members where all the skills are either 'tehchnical' or 'sales'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({ skills: {$all: [&amp;quot;technical&amp;quot;, &amp;quot;sales&amp;quot;]}})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Find all the crew members that have exactly 2 skills&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({ skills: { $size: 2} })&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Find all the crew members where the skill object matches multiple conditions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({skills: {$elemMatch: {name: &amp;quot;flying&amp;quot;, lvl: {$gt: 7}}}})&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="array-projection-operators"&gt;Array Projection Operators&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Show first 2 elements from an array when performing queries&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({}, {skills: {$slice: 2})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Show the first element that matches the array querying&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({skills: &amp;quot;management&amp;quot;}, {&amp;quot;skills.$&amp;quot;:1})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Only display the array elements that match a list of given conditions&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({}, {skills: { $elemMatch: {lvl: {$gt: 7}} } })&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="demo-queryies"&gt;Demo Queryies&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Flights containing at least a German crew member&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({&amp;quot;crew.nationality&amp;quot;: &amp;quot;Germany&amp;quot;},{crew: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({&amp;quot;crew.nationality&amp;quot;: &amp;quot;Germany&amp;quot;},{&amp;quot;crew.$&amp;quot;: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Flights that do not have a crew (size is 0)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({crew: []}, {crew:1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({crew: {$size: 0}},{crew: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Flights that do not have a captain&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({&amp;quot;crew.position&amp;quot;: {$ne: &amp;quot;Captain&amp;quot;}}, {&amp;quot;crew.position&amp;quot;: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Flights where the captain has little hours of sleep (7)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({crew: {$elemMatch: {position: &amp;quot;Captain&amp;quot;, hoursSlept: {$gt: 6}}}}, {crew: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({crew: {$elemMatch: {position: &amp;quot;Captain&amp;quot;, hoursSlept: {$gt: 6}}}}, {&amp;quot;crew.$&amp;quot;: 1}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Display only the captain in the crew array when querying the flight documents&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.flights.find({}, {crew: {$elemMatch: {position: &amp;quot;Captain&amp;quot;}}}).pretty()&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="pretty-print-mongodb-shell-output-to-a-file"&gt;Pretty print MongoDB shell output to a file&lt;/h2&gt;
 &lt;p&gt;use Javascript to translate the result of a find() into a printable JSON&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    mongo dbname command.js &amp;gt; output.json
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;where command.js contains this (or its equivalent):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    printjson( db.collection.find().toArray() )
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="stop-mongodb-server-on-windows"&gt;stop mongodb server on Windows&lt;/h1&gt;
+&lt;h2 id="stop-mongodb-server-on-windows"&gt;stop mongodb server on Windows&lt;/h2&gt;
 &lt;p&gt;Save the following snippet in stop_mongod.js file&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;    db = connect(&amp;quot;localhost:27017/admin&amp;quot;);
     db.shutdownServer();
@@ -610,9 +768,108 @@ services:
 &lt;p&gt;or
 Open Command Prompt/Powershell as Administrator.
 Execute &lt;code&gt;net stop MongoDB&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="query-filter-documents"&gt;Query Filter Documents&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;{ field : { $operator : value } }&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    $eq
+    $ne
+    $in
+    $nin
+    $lt 
+    $lte
+    $gt 
+    $gte
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="equality-non-equality"&gt;Equality / Non Equality&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all the aircraft where the model field is equal to 'Boeing 737-900'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({model: &amp;quot;Boeing 737-900&amp;quot;})&lt;/code&gt;
+&lt;code&gt;db.aircraft.find({model: { $eq : &amp;quot;Boeing 737-900“ }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Select all the aircraft where the range field is 5600&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({range: 5600})&lt;/code&gt;
+&lt;code&gt;db.aircraft.find({range: {$eq: 5600}})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Select all the aircraft where the underMaintenance field is true&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({underMaintenance: true})&lt;/code&gt;	
+&lt;code&gt;db.aircraft.find({underMaintenance: {$eq: true}})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Select a single document by _id&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.findOne({_id: ObjectId(&amp;quot;5e8aa971e1562c14d031a021&amp;quot;)})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Select all the aircraft where the model field is not 'Boeing 737-900'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({range: { $neq : 5600 }})&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="greater-than"&gt;Greater Than&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all the aircraft where the capacity field is strictly greater than 200&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({capacity: { $gt : 200 }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Select all the aircraft where the nextMaintenance field is greater then (after) 2020-02-20&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({nextMaintenance: { $gt : ISODate(&amp;quot;2020-02-20&amp;quot;) }})&lt;/code&gt;	
+&lt;code&gt;db.aircraft.find({nextMaintenance: { $gte : ISODate(&amp;quot;2020-02-20T10:15:00Z&amp;quot;) }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Select all the aircraft where the capacity field is greater or equal than 200&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({capacity: { $gte : 200 }})&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="less-than"&gt;Less Than&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all the aircraft where the capacity field is strictly less than 200&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({capacity: { $lt : 200 }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Select all the aircraft where the nextMaintenance field is less then (before) 2020-02-20&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({nextMaintenance: { $lt : ISODate(&amp;quot;2020-02-20&amp;quot;) }})&lt;/code&gt;	
+&lt;code&gt;db.aircraft.find({nextMaintenance: { $lte : ISODate(&amp;quot;2020-02-20T10:15:00Z&amp;quot;) }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Select all the aircraft where the capacity field is less than or equal to 200&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({capacity: { $lte : 200 }})&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="in-not-in"&gt;In / Not In&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Select all aircraft where the model field has one of the values : 'Airbus A350', 'Boeing 747'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({ model: { $in: [&amp;quot;Airbus A350“, “Boeing 747”] }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Select all the crew that have at least a skill in the array: 'engineering', 'management'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({skills: { $in: [&amp;quot;engineering&amp;quot;, &amp;quot;management&amp;quot;] } })&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Select all the aircraft where the model field matches a regular expression&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({ model: { $in: [/^A/] } })&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Select all aircraft where the model field is different than : 'Airbus A350', 'Boeing 747'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({ model: { $nin: [&amp;quot;Airbus A350“, “Boeing 747”] }})&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;Select all the crew that have no skill element in the array: 'engineering', 'management'&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.crew.find({skills: { $nin: [&amp;quot;engineering&amp;quot;, &amp;quot;management&amp;quot;] } })&lt;/code&gt;&lt;/p&gt;
+&lt;ol start="6"&gt;
+&lt;li&gt;Select all the aircraft where the model field does not matche a regular expression&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;db.aircraft.find({ model: { $nin: [/^A/] } })&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id="near"&gt;Near&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Find all the aircraft within 10 km of lon=26.2, lat=44.4&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;db.aircraft.find({position: {$near : {
+	$geometry: {type: &amp;quot;Point&amp;quot;, coordinates: [26.2, 44.4]}, 
+	$maxDistance: 10000
+	}}
+}).pretty()
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h1 id="links"&gt;Links&lt;/h1&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://docs.mongodb.com/manual/mongo/"&gt;https://docs.mongodb.com/manual/mongo/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dangeabunea/pluralsight-mongodb-queries"&gt;https://github.com/dangeabunea/pluralsight-mongodb-queries&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </content:encoded>
 		</item>
@@ -1103,6 +1360,35 @@ Create and edit a new configuration file:
 </content:encoded>
 		</item>
 		<item>
+			<title>Wyam Blog Getting Started(cheetsheet)</title>
+			<link>http://host.com/blog/posts/wyamgettingstarted</link>
+			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
+			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Python Getting Started Cheet Sheet</title>
 			<link>http://host.com/blog/posts/djangocheetsh</link>
 			<description>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</description>
@@ -1178,35 +1464,6 @@ Create and edit a new configuration file:
 &lt;p&gt;where manage.py located cd into this location. Go to python shell with below command&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    python manage.py shell
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Wyam Blog Getting Started(cheetsheet)</title>
-			<link>http://host.com/blog/posts/wyamgettingstarted</link>
-			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
-			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1472,31 +1729,6 @@ print &amp;#64;Result
 </content:encoded>
 		</item>
 		<item>
-			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
-			<link>http://host.com/blog/posts/parameter</link>
-			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/parameter</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
-&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
-&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
-You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
-{
-    x = new IntHolder();
-}
-
-...
-
-IntHolder y = new IntHolder();
-y.i=5;
-Foo (??? y);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
-&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
 			<link>http://host.com/blog/posts/jsonpatch</link>
 			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
@@ -1547,6 +1779,31 @@ Foo (??? y);
 	return new Result(success, message);
 }
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
+			<link>http://host.com/blog/posts/parameter</link>
+			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/parameter</guid>
+			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
+&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
+&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
+You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
+{
+    x = new IntHolder();
+}
+
+...
+
+IntHolder y = new IntHolder();
+y.i=5;
+Foo (??? y);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
+&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -1680,34 +1937,85 @@ To write a custom message handler, derive from System.Net.Http.DelegatingHandler
 </content:encoded>
 		</item>
 		<item>
-			<title>Image Upload Preview</title>
-			<link>http://host.com/blog/posts/image-upload-preview</link>
-			<description>&lt;p&gt;HTML Code:&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/image-upload-preview</guid>
+			<title>Ubuntu basics</title>
+			<link>http://host.com/blog/posts/ubuntu-basics</link>
+			<description>&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/ubuntu-basics</guid>
 			<pubDate>Tue, 11 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="image-upload-preview"&gt;Image Upload Preview&lt;/h1&gt;
-&lt;p&gt;HTML Code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-html"&gt;    &amp;lt;form id=&amp;quot;form1&amp;quot; runat=&amp;quot;server&amp;quot;&amp;gt;
-        &amp;lt;input type=&amp;quot;file&amp;quot; accept=&amp;quot;image/*&amp;quot; onchange=&amp;quot;loadFile(event)&amp;quot; id=&amp;quot;LogoImageFile&amp;quot; name=&amp;quot;LogoImageFile&amp;quot; /&amp;gt;
-        &amp;lt;img id=&amp;quot;output&amp;quot;/&amp;gt;
-    &amp;lt;/form&amp;gt;
+			<content:encoded>&lt;h1 id="ubuntu-basics"&gt;Ubuntu Basics&lt;/h1&gt;
+&lt;p&gt;How To Create a Sudo User on Ubuntu&lt;/p&gt;
+&lt;p&gt;Check Ubuntu Version&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        lsb_release -a
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Javascript Code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-javascript"&gt;    var loadFile = function(event) {
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-    };
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+       adduser username
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Backend controller code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-c-sharp"&gt;    if (model.LogoImageFile != null)
-    {
-        using (var memoryStream = new MemoryStream())
-        {
-            await model.LogoImageFile.CopyToAsync(memoryStream);
-            model.Person.LogoImage = memoryStream.ToArray();
-        }
-    }
+&lt;p&gt;Set and confirm the new user's password at the prompt. A strong password is highly recommended!&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        Set password prompts:
+        Enter new UNIX password:
+        Retype new UNIX password:
+        passwd: password updated successfully
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Follow the prompts to set the new user's information. It is fine to accept the defaults to leave all of this information blank.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        User information prompts:
+        Changing the user information for username
+        Enter the new value, or press ENTER for the default
+            Full Name []:
+            Room Number []:
+            Work Phone []:
+            Home Phone []:
+            Other []:
+        Is the information correct? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use the usermod command to add the user to the sudo group.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        usermod -aG sudo username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;By default, on Ubuntu, members of the sudo group have sudo privileges.
+Use the su command to switch to the new user account.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        su - username
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo ls -la /root
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;p&gt;Set static IP Ubuntu 16.04&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo nano /etc/network/interfaces
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and paste this under &lt;code&gt;# The primary network interface:&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        auto enp0s25
+        iface enp0s25 inet static
+        address 192.168.0.16
+        netmask 255.255.255.0
+        gateway 192.168.0.1
+        dns-nameservers 8.8.4.4 8.8.8.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        sudo /etc/init.d/networking restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;
+        # The loopback network interface  
+        auto lo  
+        iface lo inet loopback  
+
+
+        # The primary network interface  
+        auto enp8s0 
+        iface enp8s0 inet static  
+        address 192.168.11.95
+        netmask 255.255.255.0
+        gateway 192.168.11.1
+        dns-nameservers 8.8.8.8 8.8.4.4 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sudo ifdown enp8s0 &amp;amp;&amp;amp; sudo ifup enp8s0&lt;/code&gt;&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>

@@ -96,10 +96,11 @@ Published on Saturday, August 29, 2020<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<h1 id="connect-to-mongodb-from-cli">Connect to mongodb from cli</h1>
+<h2 id="connect-to-mongodb-from-cli">Connect to mongodb from cli</h2>
 <p><code>mongo</code></p>
 <p>with port</p>
-<p><code>mongo --port 28015</code></p>
+<p><code>mongo --port 27017</code></p>
+<p><code>mongo localhost:27017</code></p>
 <p>You can specify a connection string. For example, to connect to a MongoDB instance running on a remote host machine</p>
 <pre><code>    mongo &quot;mongodb://mongodb0.example.com:28015&quot;
 </code></pre>
@@ -114,7 +115,19 @@ Published on Saturday, August 29, 2020<br>    </div>
 </code></pre>
 <pre><code>    mongo --username alice --password --authenticationDatabase admin --host mongodb0.examples.com --port 28015
 </code></pre>
-<h1 id="database-command">Database Command</h1>
+<h2 id="customize-mongo-shell-prompt">Customize Mongo shell prompt</h2>
+<p>Edit .mongorc.js in user folder</p>
+<pre><code>    host=db.serverStatus().host;
+
+    prompt=function(){
+        return db+&quot;&#64;&quot;+host+&quot; &gt;&quot;;
+    }
+</code></pre>
+<h2 id="import-sample-database">import sample database</h2>
+<p><a href="https://github.com/dangeabunea/pluralsight-mongodb-queries/blob/master/how-to-import-sample-db.md">https://github.com/dangeabunea/pluralsight-mongodb-queries/blob/master/how-to-import-sample-db.md</a></p>
+<pre><code>    mongoimport --file C:\flights.json --collection flights --db flightmgmt --drop
+</code></pre>
+<h2 id="database-command">Database Command</h2>
 <pre><code>    db
     use &lt;database&gt;
     show dbs
@@ -123,9 +136,10 @@ Published on Saturday, August 29, 2020<br>    </div>
     db.getCollection(&quot;3 test&quot;).find()
     db.getCollection(&quot;3-test&quot;).find()
     db.getCollection(&quot;stats&quot;).find()
+    db.getCollection(&quot;rasa&quot;).find()
+    show collections
 </code></pre>
-<p>populate data
-+++++++++++++++++</p>
+<h2 id="populate-data">populate data</h2>
 <pre><code>    db.inventory.insertMany([
     { item: &quot;journal&quot;, qty: 25, status: &quot;A&quot;, size: { h: 14, w: 21, uom: &quot;cm&quot; }, tags: [ &quot;blank&quot;, &quot;red&quot; ] },
     { item: &quot;notebook&quot;, qty: 50, status: &quot;A&quot;, size: { h: 8.5, w: 11, uom: &quot;in&quot; }, tags: [ &quot;red&quot;, &quot;blank&quot; ] },
@@ -136,13 +150,13 @@ Published on Saturday, August 29, 2020<br>    </div>
 
     // MongoDB adds an _id field with an ObjectId value if the field is not present in the document
 </code></pre>
-<p>Select All Documents
-++++++++++++++++++++++</p>
+<h2 id="select-all-documents">Select All Documents</h2>
 <pre><code>    db.inventory.find({})
     db.inventory.find({}).pretty()
+    db.conversations.find({})
+    db.conversations.find({}).pretty()
 </code></pre>
-<p>Specify Equality Matches
-+++++++++++++++++++++++++++</p>
+<h2 id="specify-equality-matches">Specify Equality Matches</h2>
 <pre><code>    db.inventory.find( { status: &quot;D&quot; } );
     db.inventory.find( { qty: 0 } );
     db.inventory.find( { qty: 0, status: &quot;D&quot; } );
@@ -154,25 +168,169 @@ Published on Saturday, August 29, 2020<br>    </div>
     db.inventory.find( { $or: [ { status: &quot;A&quot; }, { qty: { $lt: 30 } } ] } )
     db.inventory.find( {
      status: &quot;A&quot;,
-     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
-} )
+     $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]} )
+    
+
+
 </code></pre>
-<h1 id="project-fields-to-return-from-query">Project Fields to Return from Query</h1>
+<h2 id="project-fields-to-return-from-query">Project Fields to Return from Query</h2>
 <pre><code>    db.inventory.find( { status: &quot;A&quot; }, { item: 1, status: 1 } )
 </code></pre>
 <p>Suppress _id Field</p>
 <pre><code>    db.inventory.find( { status: &quot;A&quot; }, { item: 1, status: 1, _id: 0 } )
 </code></pre>
 <pre><code>    db.inventory.find( { status: &quot;A&quot; }, { status: 0, instock: 0 } )
+    db.flights.find({}, {duration: 1, &quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1}).pretty()
 </code></pre>
-<h1 id="pretty-print-mongodb-shell-output-to-a-file">Pretty print MongoDB shell output to a file</h1>
+<ol>
+<li>Counts all the documents in the flights collection</li>
+</ol>
+<p><code>db.flights.count()</code></p>
+<ol start="2">
+<li>Prints all the documents in the flights collection</li>
+</ol>
+<p><code>db.flights.find()</code></p>
+<ol start="3">
+<li>Prints all the documents in the flights collecion in a redable JSON format</li>
+</ol>
+<p><code>db.flights.find().pretty()</code></p>
+<ol start="4">
+<li>Prints the duration, departure.city and destination.city to the console in a redable JSON format
+The _id is also going to be added by default</li>
+</ol>
+<p><code>db.flights.find({}, {duration: 1, &quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1}).pretty()</code></p>
+<ol start="5">
+<li>Prints the duration, departure.city and destination.city to the console in a redable JSON format
+The _id is going to be excluded</li>
+</ol>
+<p><code>db.flights.find({}, {duration: 1, &quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1, _id: 0}).pretty()</code></p>
+<ol start="6">
+<li>Prints the first 5 documents returned by the find method to the screen in a readable JSON format</li>
+</ol>
+<p><code>db.flights.find({}, {duration: 1, &quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1, _id: 0}).limit(5).pretty()</code></p>
+<ol start="7">
+<li>Prints the flight documents in descending order by the duration field.</li>
+</ol>
+<p><code>db.flights.find({}, {duration: 1, &quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1, _id: 0}).sort({&quot;duration: -1&quot;}).pretty()</code></p>
+<h1 id="complex-query">Complex Query</h1>
+<h2 id="module-4-queries">Module 4 Queries</h2>
+<h3 id="query-sub-documents">Query Sub-Documents</h3>
+<ol>
+<li>Select all flights where departure city is Paris</li>
+</ol>
+<p><code>db.flights.find({&quot;departure.city&quot; : &quot;Paris&quot;}).pretty()</code></p>
+<ol start="2">
+<li>Find all flights where the destination runway length is less than 3000</li>
+</ol>
+<p><code>db.flights.find({&quot;destination.runwayLength&quot;: {$lt: 3000}})</code></p>
+<h3 id="query-against-multiple-conditions">Query Against Multiple Conditions</h3>
+<ol>
+<li>Select all the flights where duration is less than 2 hours AND the type is internal</li>
+</ol>
+<p><code>db.flights.find({$and: [{duration: {$lt: 120}}, {type: &quot;Internal&quot;}]}, {duration: 1, type: 1})</code></p>
+<ol start="2">
+<li>Select all the flights where the duration is between 2 and 3 hours (short query version because the same field is targeted)</li>
+</ol>
+<p><code>db.flights.find({duration: {$lt: 180, $gt: 120}}, {duration: 1})</code></p>
+<ol start="3">
+<li>Select all the flights where the depart OR land in Germany</li>
+</ol>
+<p><code>db.flights.find({$or: [{&quot;departure.country&quot;: &quot;Germany&quot;}, {&quot;destination.country&quot;: &quot;Germany&quot;}]}, {&quot;departure.city&quot;: 1, &quot;destination.city&quot;: 1})</code></p>
+<ol start="4">
+<li>Find all the aircraft where the capacity is greater than 200 OR the range is less than 6000</li>
+</ol>
+<p><code>db.aircraft.find({ $or: [ {capacity : {$gt: 200}} , {range : {$gt : 6000}} ] })</code></p>
+<ol start="5">
+<li>Combine AND and OR: Select all the flights where the 'minRunwayLength' is less than 3000 AND either the capacity is greater than 200 OR the range is greater than 6500</li>
+</ol>
+<pre><code>db.aircraft.find({ $and: [
+		{ minRunwayLength: {$lte: 3000} },
+		{ $or: [ {capacity: {$gt: 200}} , {range: {$gt: 6500}} ] }, 
+	]
+}).pretty()
+
+</code></pre>
+<h3 id="edge-cases-find-by-null-type-or-by-field-existence">Edge Cases: Find by null, type or by field existence</h3>
+<ol>
+<li>Find all the flights where the 'aircraftCode' field exists</li>
+</ol>
+<p><code>db.flights.find({aircraftCode: {$exists: true}}, {aircraftCode: 1})</code></p>
+<ol start="2">
+<li>Find all the flights where the 'aircraftCode' field exists and it's type is 'string'</li>
+</ol>
+<p><code>db.flights.find({aircraftCode: {$exists: true, $type: &quot;string&quot;}}, {aircraftCode: 1})</code></p>
+<ol start="3">
+<li>Find all the flights where the 'aircraftCode' fiels is null</li>
+</ol>
+<p><code>db.flights.find( {aircraftCode : null} ).pretty()</code></p>
+<h3 id="free-text-search">Free Text Search</h3>
+<ol>
+<li>Create text index on departure and destination fields</li>
+</ol>
+<p><code>db.flights.createIndex({&quot;departure.city&quot;: &quot;text&quot;, &quot;destination.city&quot;: &quot;text&quot;, &quot;departure.country&quot;: &quot;text&quot;, &quot;destination.country&quot;: &quot;text&quot;})</code></p>
+<ol start="2">
+<li>Find all the documents by free text 'Paris Portugal' and also print the text score (relevance)
+<code>db.flights.find({$text: {$search: &quot;Paris Portugal&quot;}}, {_id:1, score: {$meta: &quot;textScore&quot;}}).pretty()</code></li>
+</ol>
+<h1 id="working-with-array">Working With Array</h1>
+<h3 id="array-query-operators">Array Query Operators</h3>
+<ol>
+<li>Find all the crew members where all the skills are either 'tehchnical' or 'sales'</li>
+</ol>
+<p><code>db.crew.find({ skills: {$all: [&quot;technical&quot;, &quot;sales&quot;]}})</code></p>
+<ol start="2">
+<li>Find all the crew members that have exactly 2 skills</li>
+</ol>
+<p><code>db.crew.find({ skills: { $size: 2} })</code></p>
+<ol start="3">
+<li>Find all the crew members where the skill object matches multiple conditions</li>
+</ol>
+<p><code>db.crew.find({skills: {$elemMatch: {name: &quot;flying&quot;, lvl: {$gt: 7}}}})</code></p>
+<h3 id="array-projection-operators">Array Projection Operators</h3>
+<ol>
+<li>Show first 2 elements from an array when performing queries</li>
+</ol>
+<p><code>db.crew.find({}, {skills: {$slice: 2})</code></p>
+<ol start="2">
+<li>Show the first element that matches the array querying</li>
+</ol>
+<p><code>db.crew.find({skills: &quot;management&quot;}, {&quot;skills.$&quot;:1})</code></p>
+<ol start="3">
+<li>Only display the array elements that match a list of given conditions</li>
+</ol>
+<p><code>db.crew.find({}, {skills: { $elemMatch: {lvl: {$gt: 7}} } })</code></p>
+<h3 id="demo-queryies">Demo Queryies</h3>
+<ol>
+<li>Flights containing at least a German crew member</li>
+</ol>
+<p><code>db.flights.find({&quot;crew.nationality&quot;: &quot;Germany&quot;},{crew: 1}).pretty()</code></p>
+<p><code>db.flights.find({&quot;crew.nationality&quot;: &quot;Germany&quot;},{&quot;crew.$&quot;: 1}).pretty()</code></p>
+<ol start="2">
+<li>Flights that do not have a crew (size is 0)</li>
+</ol>
+<p><code>db.flights.find({crew: []}, {crew:1}).pretty()</code></p>
+<p><code>db.flights.find({crew: {$size: 0}},{crew: 1}).pretty()</code></p>
+<ol start="3">
+<li>Flights that do not have a captain</li>
+</ol>
+<p><code>db.flights.find({&quot;crew.position&quot;: {$ne: &quot;Captain&quot;}}, {&quot;crew.position&quot;: 1}).pretty()</code></p>
+<ol start="4">
+<li>Flights where the captain has little hours of sleep (7)</li>
+</ol>
+<p><code>db.flights.find({crew: {$elemMatch: {position: &quot;Captain&quot;, hoursSlept: {$gt: 6}}}}, {crew: 1}).pretty()</code></p>
+<p><code>db.flights.find({crew: {$elemMatch: {position: &quot;Captain&quot;, hoursSlept: {$gt: 6}}}}, {&quot;crew.$&quot;: 1}).pretty()</code></p>
+<ol start="5">
+<li>Display only the captain in the crew array when querying the flight documents</li>
+</ol>
+<p><code>db.flights.find({}, {crew: {$elemMatch: {position: &quot;Captain&quot;}}}).pretty()</code></p>
+<h2 id="pretty-print-mongodb-shell-output-to-a-file">Pretty print MongoDB shell output to a file</h2>
 <p>use Javascript to translate the result of a find() into a printable JSON</p>
 <pre><code>    mongo dbname command.js &gt; output.json
 </code></pre>
 <p>where command.js contains this (or its equivalent):</p>
 <pre><code>    printjson( db.collection.find().toArray() )
 </code></pre>
-<h1 id="stop-mongodb-server-on-windows">stop mongodb server on Windows</h1>
+<h2 id="stop-mongodb-server-on-windows">stop mongodb server on Windows</h2>
 <p>Save the following snippet in stop_mongod.js file</p>
 <pre><code>    db = connect(&quot;localhost:27017/admin&quot;);
     db.shutdownServer();
@@ -184,9 +342,108 @@ Published on Saturday, August 29, 2020<br>    </div>
 <p>or
 Open Command Prompt/Powershell as Administrator.
 Execute <code>net stop MongoDB</code></p>
+<h2 id="query-filter-documents">Query Filter Documents</h2>
+<p><code>{ field : { $operator : value } }</code></p>
+<pre><code>    $eq
+    $ne
+    $in
+    $nin
+    $lt 
+    $lte
+    $gt 
+    $gte
+</code></pre>
+<h3 id="equality-non-equality">Equality / Non Equality</h3>
+<ol>
+<li>Select all the aircraft where the model field is equal to 'Boeing 737-900'</li>
+</ol>
+<p><code>db.aircraft.find({model: &quot;Boeing 737-900&quot;})</code>
+<code>db.aircraft.find({model: { $eq : &quot;Boeing 737-900“ }})</code></p>
+<ol start="2">
+<li>Select all the aircraft where the range field is 5600</li>
+</ol>
+<p><code>db.aircraft.find({range: 5600})</code>
+<code>db.aircraft.find({range: {$eq: 5600}})</code></p>
+<ol start="3">
+<li>Select all the aircraft where the underMaintenance field is true</li>
+</ol>
+<p><code>db.aircraft.find({underMaintenance: true})</code>	
+<code>db.aircraft.find({underMaintenance: {$eq: true}})</code></p>
+<ol start="4">
+<li>Select a single document by _id</li>
+</ol>
+<p><code>db.aircraft.findOne({_id: ObjectId(&quot;5e8aa971e1562c14d031a021&quot;)})</code></p>
+<ol start="5">
+<li>Select all the aircraft where the model field is not 'Boeing 737-900'</li>
+</ol>
+<p><code>db.aircraft.find({range: { $neq : 5600 }})</code></p>
+<h3 id="greater-than">Greater Than</h3>
+<ol>
+<li>Select all the aircraft where the capacity field is strictly greater than 200</li>
+</ol>
+<p><code>db.aircraft.find({capacity: { $gt : 200 }})</code></p>
+<ol start="2">
+<li>Select all the aircraft where the nextMaintenance field is greater then (after) 2020-02-20</li>
+</ol>
+<p><code>db.aircraft.find({nextMaintenance: { $gt : ISODate(&quot;2020-02-20&quot;) }})</code>	
+<code>db.aircraft.find({nextMaintenance: { $gte : ISODate(&quot;2020-02-20T10:15:00Z&quot;) }})</code></p>
+<ol start="3">
+<li>Select all the aircraft where the capacity field is greater or equal than 200</li>
+</ol>
+<p><code>db.aircraft.find({capacity: { $gte : 200 }})</code></p>
+<h3 id="less-than">Less Than</h3>
+<ol>
+<li>Select all the aircraft where the capacity field is strictly less than 200</li>
+</ol>
+<p><code>db.aircraft.find({capacity: { $lt : 200 }})</code></p>
+<ol start="2">
+<li>Select all the aircraft where the nextMaintenance field is less then (before) 2020-02-20</li>
+</ol>
+<p><code>db.aircraft.find({nextMaintenance: { $lt : ISODate(&quot;2020-02-20&quot;) }})</code>	
+<code>db.aircraft.find({nextMaintenance: { $lte : ISODate(&quot;2020-02-20T10:15:00Z&quot;) }})</code></p>
+<ol start="3">
+<li>Select all the aircraft where the capacity field is less than or equal to 200</li>
+</ol>
+<p><code>db.aircraft.find({capacity: { $lte : 200 }})</code></p>
+<h3 id="in-not-in">In / Not In</h3>
+<ol>
+<li>Select all aircraft where the model field has one of the values : 'Airbus A350', 'Boeing 747'</li>
+</ol>
+<p><code>db.aircraft.find({ model: { $in: [&quot;Airbus A350“, “Boeing 747”] }})</code></p>
+<ol start="2">
+<li>Select all the crew that have at least a skill in the array: 'engineering', 'management'</li>
+</ol>
+<p><code>db.crew.find({skills: { $in: [&quot;engineering&quot;, &quot;management&quot;] } })</code></p>
+<ol start="3">
+<li>Select all the aircraft where the model field matches a regular expression</li>
+</ol>
+<p><code>db.aircraft.find({ model: { $in: [/^A/] } })</code></p>
+<ol start="4">
+<li>Select all aircraft where the model field is different than : 'Airbus A350', 'Boeing 747'</li>
+</ol>
+<p><code>db.aircraft.find({ model: { $nin: [&quot;Airbus A350“, “Boeing 747”] }})</code></p>
+<ol start="5">
+<li>Select all the crew that have no skill element in the array: 'engineering', 'management'</li>
+</ol>
+<p><code>db.crew.find({skills: { $nin: [&quot;engineering&quot;, &quot;management&quot;] } })</code></p>
+<ol start="6">
+<li>Select all the aircraft where the model field does not matche a regular expression</li>
+</ol>
+<p><code>db.aircraft.find({ model: { $nin: [/^A/] } })</code></p>
+<h3 id="near">Near</h3>
+<ol>
+<li>Find all the aircraft within 10 km of lon=26.2, lat=44.4</li>
+</ol>
+<pre><code>db.aircraft.find({position: {$near : {
+	$geometry: {type: &quot;Point&quot;, coordinates: [26.2, 44.4]}, 
+	$maxDistance: 10000
+	}}
+}).pretty()
+</code></pre>
 <h1 id="links">Links</h1>
 <ol>
 <li><a href="https://docs.mongodb.com/manual/mongo/">https://docs.mongodb.com/manual/mongo/</a></li>
+<li><a href="https://github.com/dangeabunea/pluralsight-mongodb-queries">https://github.com/dangeabunea/pluralsight-mongodb-queries</a></li>
 </ol>
 
 
