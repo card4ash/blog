@@ -4,19 +4,33 @@
 		<title>ashcoder.io</title>
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
-		<copyright>2020</copyright>
-		<pubDate>Mon, 07 Dec 2020 08:47:59 GMT</pubDate>
-		<lastBuildDate>Mon, 07 Dec 2020 08:47:59 GMT</lastBuildDate>
+		<copyright>2021</copyright>
+		<pubDate>Fri, 22 Jan 2021 22:44:13 GMT</pubDate>
+		<lastBuildDate>Fri, 22 Jan 2021 22:44:13 GMT</lastBuildDate>
 		<item>
 			<title>Python Packaging</title>
 			<link>http://host.com/blog/posts/pythonpackageing</link>
-			<description>&lt;p&gt;To install helloworld, along with the tools you need to develop and run tests, run the following in your virtualenv:&lt;/p&gt;</description>
+			<description>&lt;p&gt;Create a src folder
+Optionally create virtual environment
+&lt;code&gt;python -m venv env&lt;/code&gt;
+Activate virtual environment
+&lt;code&gt;.\env\Scripts\activate&lt;/code&gt;
+install the follwing package (need it later)
+&lt;code&gt;pip install wheel&lt;/code&gt;&lt;/p&gt;</description>
 			<guid>http://host.com/blog/posts/pythonpackageing</guid>
 			<pubDate>Mon, 07 Dec 2020 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;h1 id="python-packaging-step-by-step-guide"&gt;Python Packaging Step by Step Guide&lt;/h1&gt;
 &lt;ol&gt;
-&lt;li&gt;Create a src folder&lt;/li&gt;
-&lt;li&gt;Create a file helloworld.py and put&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a src folder
+Optionally create virtual environment
+&lt;code&gt;python -m venv env&lt;/code&gt;
+Activate virtual environment
+&lt;code&gt;.\env\Scripts\activate&lt;/code&gt;
+install the follwing package (need it later)
+&lt;code&gt;pip install wheel&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Create a file helloworld.py and put it in src folder&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;pre&gt;&lt;code class="language-python"&gt;def say_hello(name=None):
     if name is None:
@@ -38,7 +52,8 @@ setup(
 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ol start="4"&gt;
-&lt;li&gt;python &lt;code&gt;setup.py bdist_wheel&lt;/code&gt;&lt;br /&gt;
+&lt;li&gt;Run the below code
+&lt;code&gt;python setup.py bdist_wheel&lt;/code&gt;&lt;br /&gt;
 (&lt;code&gt;pip install wheel&lt;/code&gt; if in a venv)&lt;/li&gt;
 &lt;li&gt;testing our packaging----&amp;gt;&amp;gt;&amp;gt; &lt;code&gt;pip install -e .&lt;/code&gt;
 5.1 type python in current dir
@@ -1906,31 +1921,6 @@ print &amp;#64;Result
 </content:encoded>
 		</item>
 		<item>
-			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
-			<link>http://host.com/blog/posts/parameter</link>
-			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/parameter</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
-&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
-&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
-You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
-{
-    x = new IntHolder();
-}
-
-...
-
-IntHolder y = new IntHolder();
-y.i=5;
-Foo (??? y);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
-&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
 			<link>http://host.com/blog/posts/jsonpatch</link>
 			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
@@ -1981,6 +1971,31 @@ Foo (??? y);
 	return new Result(success, message);
 }
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
+			<link>http://host.com/blog/posts/parameter</link>
+			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/parameter</guid>
+			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
+&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
+&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
+You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
+{
+    x = new IntHolder();
+}
+
+...
+
+IntHolder y = new IntHolder();
+y.i=5;
+Foo (??? y);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
+&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>

@@ -97,8 +97,16 @@ Published on Monday, December 7, 2020<br>    </div>
 
 <h1 id="python-packaging-step-by-step-guide">Python Packaging Step by Step Guide</h1>
 <ol>
-<li>Create a src folder</li>
-<li>Create a file helloworld.py and put</li>
+<li><p>Create a src folder
+Optionally create virtual environment
+<code>python -m venv env</code>
+Activate virtual environment
+<code>.\env\Scripts\activate</code>
+install the follwing package (need it later)
+<code>pip install wheel</code></p>
+</li>
+<li><p>Create a file helloworld.py and put it in src folder</p>
+</li>
 </ol>
 <pre><code class="language-python">def say_hello(name=None):
     if name is None:
@@ -120,7 +128,8 @@ setup(
 )
 </code></pre>
 <ol start="4">
-<li>python <code>setup.py bdist_wheel</code><br />
+<li>Run the below code
+<code>python setup.py bdist_wheel</code><br />
 (<code>pip install wheel</code> if in a venv)</li>
 <li>testing our packaging----&gt;&gt;&gt; <code>pip install -e .</code>
 5.1 type python in current dir
@@ -295,7 +304,7 @@ s.setAttribute('data-timestamp', +new Date());
         <div class="row">
                 <div class="col-md-12 text-center">
                     <p class="copyright text-muted">
-                        Copyright © 2020
+                        Copyright © 2021
                         <br />
                             <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
                         |
