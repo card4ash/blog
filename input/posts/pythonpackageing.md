@@ -9,7 +9,14 @@ Tags:
 # Python Packaging Step by Step Guide
 
 1. Create a src folder
-2. Create a file helloworld.py and put
+Optionally create virtual environment 
+```python -m venv env```
+Activate virtual environment
+```.\env\Scripts\activate```
+install the follwing package (need it later)
+```pip install wheel```
+
+2. Create a file helloworld.py and put it in src folder
 ```python
 def say_hello(name=None):
     if name is None:
@@ -29,7 +36,8 @@ setup(
     package_dir={'':'src'},
 )
 ```
-4. python ```setup.py bdist_wheel```   
+4. Run the below code
+```python setup.py bdist_wheel```   
 (```pip install wheel``` if in a venv)
 5. testing our packaging---->>> ```pip install -e .```
 	5.1 type python in current dir 
