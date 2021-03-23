@@ -5,8 +5,18 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2021</copyright>
-		<pubDate>Fri, 22 Jan 2021 22:44:13 GMT</pubDate>
-		<lastBuildDate>Fri, 22 Jan 2021 22:44:13 GMT</lastBuildDate>
+		<pubDate>Tue, 23 Mar 2021 10:53:10 GMT</pubDate>
+		<lastBuildDate>Tue, 23 Mar 2021 10:53:10 GMT</lastBuildDate>
+		<item>
+			<title>Windows Utility</title>
+			<link>http://host.com/blog/posts/windowsUtil</link>
+			<description>&lt;p&gt;On Windows 10, an easy way to locate the startup folder is display the Start-&amp;gt;Run window (e.g. WindowsKey+R) and then type shell:startup. See this site for more info thewindowsclub.com/startup-folder-in-windows-8&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/windowsUtil</guid>
+			<pubDate>Tue, 23 Mar 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="location-of-the-startup-folder"&gt;Location of the Startup folder&lt;/h1&gt;
+&lt;p&gt;On Windows 10, an easy way to locate the startup folder is display the Start-&amp;gt;Run window (e.g. WindowsKey+R) and then type shell:startup. See this site for more info thewindowsclub.com/startup-folder-in-windows-8&lt;/p&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Python Packaging</title>
 			<link>http://host.com/blog/posts/pythonpackageing</link>
@@ -1921,17 +1931,6 @@ print &amp;#64;Result
 </content:encoded>
 		</item>
 		<item>
-			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
-			<link>http://host.com/blog/posts/jsonpatch</link>
-			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/jsonpatch</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
-&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
-&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
 			<title>Custom Model Validation</title>
 			<link>http://host.com/blog/posts/modelvalidation</link>
 			<guid>http://host.com/blog/posts/modelvalidation</guid>
@@ -1974,6 +1973,17 @@ print &amp;#64;Result
 </content:encoded>
 		</item>
 		<item>
+			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
+			<link>http://host.com/blog/posts/jsonpatch</link>
+			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/jsonpatch</guid>
+			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
+&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
+&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
 			<link>http://host.com/blog/posts/parameter</link>
 			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
@@ -1996,136 +2006,6 @@ Foo (??? y);
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
 &lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>HttpClient to Consume API</title>
-			<link>http://host.com/blog/posts/httpclient</link>
-			<description>&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/httpclient</guid>
-			<pubDate>Thu, 13 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="httpclient-to-comsume-api"&gt;HttpClient to Comsume API&lt;/h1&gt;
-&lt;h1 id="httpclient"&gt;HttpClient&lt;/h1&gt;
-&lt;p&gt;Provides a base class for sending HTTP requests and receiving HTTP responses&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;// HttpClient is intended to be instantiated once per application, rather than per-use. See Remarks.
-static readonly HttpClient client = new HttpClient();
- 
-static async Task Main()
-{
-  // Call asynchronous network methods in a try/catch block to handle exceptions
-  try	
-  {
-     HttpResponseMessage response = await client.GetAsync(&amp;quot;http://www.contoso.com/&amp;quot;);
-     response.EnsureSuccessStatusCode();
-     string responseBody = await response.Content.ReadAsStringAsync();
-     // Above three lines can be replaced with new helper method below
-     // string responseBody = await client.GetStringAsync(uri);
-
-     Console.WriteLine(responseBody);
-  }  
-  catch(HttpRequestException e)
-  {
-     Console.WriteLine(&amp;quot;\nException Caught!&amp;quot;);	
-     Console.WriteLine(&amp;quot;Message :{0} &amp;quot;,e.Message);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="webrequest"&gt;WebRequest&lt;/h2&gt;
-&lt;p&gt;Makes a request to a Uniform Resource Identifier (URI). This is an abstract class.&lt;/p&gt;
-&lt;p&gt;Because the WebRequest class is an abstract class, the actual behavior of WebRequest instances at run time is determined by the descendant class (such as HttpWebRequest and FileWebRequest) returned by Create method.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;            WebRequest request = WebRequest.Create (&amp;quot;http://www.google.com&amp;quot;);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
-            Stream dataStream = response.GetResponseStream ();
-            // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader (dataStream);
-            string responseFromServer = reader.ReadToEnd ();
-            Console.WriteLine (responseFromServer);
-            reader.Close ();
-            dataStream.Close ();
-            response.Close ();
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="httpwebrequest"&gt;HttpWebRequest&lt;/h2&gt;
-&lt;p&gt;Provides an HTTP-specific implementation of the WebRequest class.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;    HttpWebRequest myReq =
-    (HttpWebRequest)WebRequest.Create(&amp;quot;http://www.contoso.com/&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;for new development HttpClient class is recommended&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id="httpmessagehandler"&gt;HttpMessageHandler&lt;/h2&gt;
-&lt;p&gt;A base type for HTTP message handlers.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;public abstract class HttpMessageHandler : IDisposable
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There are various HTTP message handles that can be used. These include the following.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;DelegatingHandler - A class used to plug a handler into a handler chain.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;HttpMessageHandler - A simple class to derive from that supports the most common requirements for most applications.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;HttpClientHandler - A class that operates at the bottom of the handler chain that actually handles the HTTP transport operations.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;WebRequestHandler - A specialty class that operates at the bottom of the handler chain class that handles HTTP transport operations with options that are specific to the System.Net.HttpWebRequest object.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="httpclienthandler"&gt;HttpClientHandler&lt;/h2&gt;
-&lt;p&gt;The default message handler used by HttpClient in .NET Framework and .NET Core 2.0 and earlier.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;public class HttpClientHandler : System.Net.Http.HttpMessageHandler
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;static async Task Main()
-{
-   // Create an HttpClientHandler object and set to use default credentials
-   HttpClientHandler handler = new HttpClientHandler();
-   handler.UseDefaultCredentials = true;
-
-   // Create an HttpClient object
-   HttpClient client = new HttpClient(handler);
-
-   // Call asynchronous network methods in a try/catch block to handle exceptions
-   try	
-   {
-      HttpResponseMessage response = await client.GetAsync(&amp;quot;http://www.contoso.com/&amp;quot;);
-
-      response.EnsureSuccessStatusCode();
-
-      string responseBody = await response.Content.ReadAsStringAsync();
-      Console.WriteLine(responseBody);
-   }  
-   catch(HttpRequestException e)
-   {
-       Console.WriteLine(&amp;quot;\nException Caught!&amp;quot;);	
-       Console.WriteLine(&amp;quot;Message :{0} &amp;quot;,e.Message);
-   }
-
-   // Need to call dispose on the HttpClient and HttpClientHandler objects 
-   // when done using them, so the app doesn't leak resources
-   handler.Dispose(true);
-   client.Dispose(true);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;HttpClientHandler in .NET Core&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Starting with .NET Core 2.1, the System.Net.Http.SocketsHttpHandler class instead of HttpClientHandler provides the implementation used by higher-level HTTP networking APIs.&lt;/p&gt;
-&lt;h2 id="webrequesthandler"&gt;WebRequestHandler&lt;/h2&gt;
-&lt;p&gt;Provides desktop-specific features not available to Windows Store apps or other environments.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;public class WebRequestHandler : System.Net.Http.HttpClientHandler
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id="delegating-handler"&gt;Delegating handler&lt;/h2&gt;
-&lt;p&gt;A message handler is a class that receives an HTTP request and returns an HTTP response. Message handlers derive from the abstract HttpMessageHandler class.&lt;/p&gt;
-&lt;p&gt;Typically, a series of message handlers are chained together. The first handler receives an HTTP request, does some processing, and gives the request to the next handler. At some point, the response is created and goes back up the chain. This pattern is called a delegating handler.&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/image1.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Server-Side Message Handlers in Web API&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;On the server side, the Web API pipeline uses some built-in message handlers:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;HttpServer gets the request from the host.&lt;/li&gt;
-&lt;li&gt;HttpRoutingDispatcher dispatches the request based on the route.&lt;/li&gt;
-&lt;li&gt;HttpControllerDispatcher sends the request to a Web API controller.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="images/image2.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Client-Side Message Handlers&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;On the client side, the HttpClient class uses a message handler to process requests. The default handler is HttpClientHandler, which sends the request over the network and gets the response from the server. You can insert custom message handlers into the client pipeline:&lt;/p&gt;
-&lt;p&gt;&lt;img src="images/image3.png" class="img-fluid" alt="delegating handler" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Custom Message Handlers&lt;/strong&gt;
-To write a custom message handler, derive from System.Net.Http.DelegatingHandler and override the SendAsync method. Here is the method signature:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;Task&amp;lt;HttpResponseMessage&amp;gt; SendAsync(
-    HttpRequestMessage request, CancellationToken cancellationToken);
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 	</channel>
