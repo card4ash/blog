@@ -5,8 +5,69 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2021</copyright>
-		<pubDate>Sun, 25 Jul 2021 21:32:47 GMT</pubDate>
-		<lastBuildDate>Sun, 25 Jul 2021 21:32:47 GMT</lastBuildDate>
+		<pubDate>Tue, 02 Nov 2021 05:27:30 GMT</pubDate>
+		<lastBuildDate>Tue, 02 Nov 2021 05:27:30 GMT</lastBuildDate>
+		<item>
+			<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+			<link>http://host.com/blog/posts/charset</link>
+			<description>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/charset</guid>
+			<pubDate>Sun, 10 Oct 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;using System.IO;
+
+byte[] bytes = new byte[128];
+for (byte i = 0; i &amp;lt; 128; i++)
+{
+    bytes[i] = i;
+}
+File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+			<link>http://host.com/blog/posts/csharpimportant</link>
+			<description>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/csharpimportant</guid>
+			<pubDate>Sun, 10 Oct 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public static void WriteToBinaryFile&amp;lt;T&amp;gt;(string filePath, T objectToWrite, bool append = false)
+{
+    using (Stream stream = File.Open(filePath, append ? FileMode.Append : FileMode.Create))
+    {
+        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        binaryFormatter.Serialize(stream, objectToWrite);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;public static T ReadFromBinaryFile&amp;lt;T&amp;gt;(string filePath)
+{
+    using (Stream stream = File.Open(filePath, FileMode.Open))
+    {
+        var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        return (T)binaryFormatter.Deserialize(stream);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Windows Utility</title>
 			<link>http://host.com/blog/posts/windowsUtil</link>
@@ -1562,6 +1623,35 @@ Create and edit a new configuration file:
 </content:encoded>
 		</item>
 		<item>
+			<title>Wyam Blog Getting Started(cheetsheet)</title>
+			<link>http://host.com/blog/posts/wyamgettingstarted</link>
+			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
+			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Python Getting Started Cheet Sheet</title>
 			<link>http://host.com/blog/posts/djangocheetsh</link>
 			<description>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</description>
@@ -1637,35 +1727,6 @@ Create and edit a new configuration file:
 &lt;p&gt;where manage.py located cd into this location. Go to python shell with below command&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-shell"&gt;    python manage.py shell
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Wyam Blog Getting Started(cheetsheet)</title>
-			<link>http://host.com/blog/posts/wyamgettingstarted</link>
-			<description>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/wyamgettingstarted</guid>
-			<pubDate>Mon, 25 Nov 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
 </content:encoded>
 		</item>
 		<item>
@@ -2409,59 +2470,6 @@ BEGIN
 &lt;p&gt;&lt;code&gt;EXEC usp_CreateCRUDbyTableName &amp;#64;TableName = '' &lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="links"&gt;Links&lt;/h1&gt;
 &lt;p&gt;(&lt;a href="https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/"&gt;https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/&lt;/a&gt;)[https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/]&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Asp.net Core Web API Partial Updates with HTTP Patch (JSON Patch)</title>
-			<link>http://host.com/blog/posts/jsonpatch</link>
-			<description>&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/jsonpatch</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="partial-updates-with-http-patch-using-json-patch-document"&gt;Partial Updates with HTTP Patch using JSON Patch document&lt;/h1&gt;
-&lt;p&gt;JSON Patch is specified in &lt;a href="https://tools.ietf.org/html/rfc6902"&gt;RFC 6902&lt;/a&gt; from the IETF.&lt;/p&gt;
-&lt;p&gt;We use the HTTP PATCH method to apply partial updates to a resource. This means that, if we have a resource, and we want to update only a few fields of this, and not all, this is the HTTP method we should use.&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Custom Model Validation</title>
-			<link>http://host.com/blog/posts/modelvalidation</link>
-			<guid>http://host.com/blog/posts/modelvalidation</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="custom-model-validation"&gt;Custom Model Validation&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;public class Result
-{
-	public Result(bool success, string message)
-	{
-		Success = success;
-		Message = message;
-	}
-
-	public bool Success { get; private set; }
-
-	public string Message { get; private set; }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;private Result CheckModel(string test,string test2)
-{
-	var errors = new List&amp;lt;string&amp;gt;();
-	
-	if (!test.Equals(&amp;quot;TEST&amp;quot;))
-	{
-		errors.Add(&amp;quot;Input sting must be TEST&amp;quot;);
-	}
-
-	string test2 = sheet.Cell(1, 2).Value.ToString().Trim();
-	if (!test2.Equals(&amp;quot;MORE TEST&amp;quot;))
-	{
-		errors.Add(&amp;quot;Input sting must be MORE TEST&amp;quot;);
-	}
-
-	
-	var success = !errors.Any();
-	var message = success ? &amp;quot;Validation successful.&amp;quot; : string.Join(&amp;quot; &amp;quot;, errors);
-	return new Result(success, message);
-}
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
 		<item>
