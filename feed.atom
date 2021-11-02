@@ -4,39 +4,13 @@
 	<title>ashcoder.io</title>
 	<link rel="self" href="http://host.com/blog" />
 	<rights>2021</rights>
-	<updated>2021-11-02T05:27:30Z</updated>
+	<updated>2021-11-02T05:42:04Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
-		<id>http://host.com/blog/posts/charset</id>
-		<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
-		<link href="http://host.com/blog/posts/charset" />
-		<updated>2021-10-10T00:00:00Z</updated>
-		<content>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;using System.IO;
-
-byte[] bytes = new byte[128];
-for (byte i = 0; i &amp;lt; 128; i++)
-{
-    bytes[i] = i;
-}
-File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Helpful links&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-		<summary>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;</summary>
-	</entry>
-	<entry>
 		<id>http://host.com/blog/posts/csharpimportant</id>
-		<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+		<title>Serializable object to/from file</title>
 		<link href="http://host.com/blog/posts/csharpimportant" />
-		<updated>2021-10-10T00:00:00Z</updated>
+		<updated>2021-11-02T00:00:00Z</updated>
 		<content>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;public static void WriteToBinaryFile&amp;lt;T&amp;gt;(string filePath, T objectToWrite, bool append = false)
 {
@@ -66,6 +40,32 @@ File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
 &lt;/ol&gt;
 </content>
 		<summary>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/charset</id>
+		<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+		<link href="http://host.com/blog/posts/charset" />
+		<updated>2021-10-10T00:00:00Z</updated>
+		<content>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;using System.IO;
+
+byte[] bytes = new byte[128];
+for (byte i = 0; i &amp;lt; 128; i++)
+{
+    bytes[i] = i;
+}
+File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+		<summary>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/windowsUtil</id>

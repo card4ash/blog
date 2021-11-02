@@ -5,40 +5,14 @@
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
 		<copyright>2021</copyright>
-		<pubDate>Tue, 02 Nov 2021 05:27:30 GMT</pubDate>
-		<lastBuildDate>Tue, 02 Nov 2021 05:27:30 GMT</lastBuildDate>
+		<pubDate>Tue, 02 Nov 2021 05:42:04 GMT</pubDate>
+		<lastBuildDate>Tue, 02 Nov 2021 05:42:04 GMT</lastBuildDate>
 		<item>
-			<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
-			<link>http://host.com/blog/posts/charset</link>
-			<description>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/charset</guid>
-			<pubDate>Sun, 10 Oct 2021 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;using System.IO;
-
-byte[] bytes = new byte[128];
-for (byte i = 0; i &amp;lt; 128; i++)
-{
-    bytes[i] = i;
-}
-File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Helpful links&lt;/p&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+			<title>Serializable object to/from file</title>
 			<link>http://host.com/blog/posts/csharpimportant</link>
 			<description>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;</description>
 			<guid>http://host.com/blog/posts/csharpimportant</guid>
-			<pubDate>Sun, 10 Oct 2021 00:00:00 GMT</pubDate>
+			<pubDate>Tue, 02 Nov 2021 00:00:00 GMT</pubDate>
 			<content:encoded>&lt;p&gt;save/restore serializable object to/from file&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;public static void WriteToBinaryFile&amp;lt;T&amp;gt;(string filePath, T objectToWrite, bool append = false)
 {
@@ -57,6 +31,32 @@ File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
         return (T)binaryFormatter.Deserialize(stream);
     }
 }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+		</item>
+		<item>
+			<title>Character Encoding, Unicode, UTF-8 and the BOM</title>
+			<link>http://host.com/blog/posts/charset</link>
+			<description>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/charset</guid>
+			<pubDate>Sun, 10 Oct 2021 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;If you run the below code and open the output in text editor like notepad you can see bunch of unrecognizable text. check the default encoding if it choose UTF-16. But if you choose to open it with ANSI you can recongnise a lot of them&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-csharp"&gt;using System.IO;
+
+byte[] bytes = new byte[128];
+for (byte i = 0; i &amp;lt; 128; i++)
+{
+    bytes[i] = i;
+}
+File.WriteAllBytes(&amp;quot;123.txt&amp;quot;,bytes);
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Helpful links&lt;/p&gt;
 &lt;hr /&gt;
