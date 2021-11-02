@@ -1,5 +1,5 @@
-Title: Character Encoding, Unicode, UTF-8 and the BOM
-Published: 10/10/2021
+Title: Serializable object to/from file
+Published: 11/02/2021
 Tags:
     - Important
     - C#
