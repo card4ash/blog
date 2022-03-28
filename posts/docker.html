@@ -365,6 +365,13 @@ services:
       - &quot;5000:5000&quot;
 
 </code></pre>
+<h1 id="installing-sql-server-on-docker-desktop">installing sql server on docker desktop</h1>
+<p>links: <a href="https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver15">https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver15</a></p>
+<p><strong>Restore Database from bak file on host</strong></p>
+<pre><code class="language-shell">docker cp E:\Tutorial\AdventureWorksLT.bak sql1:/var/opt/mssql/backup
+</code></pre>
+<pre><code class="language-shell">docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd -S localhost  -U SA -P &quot;&lt;YourStrong!Passw0rd&gt;&quot;  -Q &quot;RESTORE FILELISTONLY FROM DISK = '/var/opt/mssql/backup/AdventureWorksLT.bak'&quot;
+</code></pre>
 
 
 <div id="disqus_thread"></div>
@@ -396,7 +403,7 @@ s.setAttribute('data-timestamp', +new Date());
         <div class="row">
                 <div class="col-md-12 text-center">
                     <p class="copyright text-muted">
-                        Copyright © 2021
+                        Copyright © 2022
                         <br />
                             <a href="/blog/feed.rss"><i class="fa fa-rss"></i> RSS Feed</a>
                         |

@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 
-        <title>ashcoder.io - Crete public key private key OpenSSL</title>
+        <title>ashcoder.io - Factory Design Patter</title>
         <meta name="description" content="Welcome!" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">        
 
@@ -28,9 +28,9 @@
         <meta name="msapplication-tooltip" content="ashcoder.io" />
         <meta name="msapplication-starturl" content="/blog/" />
 
-        <meta property="og:title" content="ashcoder.io - Crete public key private key OpenSSL" />
+        <meta property="og:title" content="ashcoder.io - Factory Design Patter" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://host.com/blog/posts/publickey-privatekey-generation" />
+        <meta property="og:url" content="http://host.com/blog/posts/factorydesignpatter" />
         <!-- TODO: More social graph meta tags -->
 
         
@@ -75,18 +75,13 @@
 
     
 <div class="post-heading">
-    <h1>Crete public key private key OpenSSL</h1>
+    <h1>Factory Design Patter</h1>
     <div class="meta">        
-Published on Sunday, December 8, 2019<br>    </div>
+Published on Tuesday, February 18, 2020<br>    </div>
         <div class="tags">
-                    <a role="button" href="/blog/tags/der" class="btn btn-default btn-xs">der</a>
-                    <a role="button" href="/blog/tags/intermediate" class="btn btn-default btn-xs">intermediate</a>
-                    <a role="button" href="/blog/tags/OpenSSL" class="btn btn-default btn-xs">OpenSSL</a>
-                    <a role="button" href="/blog/tags/pem" class="btn btn-default btn-xs">pem</a>
-                    <a role="button" href="/blog/tags/pkcs1" class="btn btn-default btn-xs">pkcs1</a>
-                    <a role="button" href="/blog/tags/pkcs8" class="btn btn-default btn-xs">pkcs8</a>
-                    <a role="button" href="/blog/tags/privatekey" class="btn btn-default btn-xs">privatekey</a>
-                    <a role="button" href="/blog/tags/publickey" class="btn btn-default btn-xs">publickey</a>
+                    <a role="button" href="/blog/tags/C%23" class="btn btn-default btn-xs">C#</a>
+                    <a role="button" href="/blog/tags/Design-Pattern" class="btn btn-default btn-xs">Design Pattern</a>
+                    <a role="button" href="/blog/tags/Factory" class="btn btn-default btn-xs">Factory</a>
         </div>     
 </div>
                                         </div>
@@ -100,73 +95,38 @@ Published on Sunday, December 8, 2019<br>    </div>
                                 <div id="content" class="col-md-12">
                                         
 
-<h1 id="create-public-key-private-key-openssl">Create public key private key OpenSSL</h1>
-<p>Generate Private key(pkcs1) and certificate</p>
-<pre><code class="language-shell">    openssl genrsa -out file.key 2048
-    openssl req -new -x509 -key file.key -out publickey.cer -days 1825
-</code></pre>
-<pre><code class="language-shell">
-    openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes  -keyout example.key -out example.crt -subj /CN=example.com  -addext subjectAltName=DNS:example.com,DNS:example.net,IP:10.0.0.1
-
-    openssl pkcs8 -topk8 -inform pem -in file.key -outform pem -nocrypt -out file.pem
-
-    openssl genrsa -out file.key 1024
-
-</code></pre>
-<p>Alternating Way (Create Private key and Certificate)</p>
-<pre><code class="language-shell">    openssl genrsa -out privkey.pem 4096
-    openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095 -subj /CN=example.com  -addext subjectAltName=DNS:example.com,DNS:example.net,IP:10.0.0.1
-</code></pre>
-<h1 id="convertion-between-different-formats">convertion between different formats</h1>
-<p>PKCS #1</p>
+<p>new console app</p>
 <hr />
-<p>Defines the traditional format for RSA keys. Two structures:</p>
-<pre><code class="language-shell">    -----BEGIN RSA PRIVATE KEY-----
-    RSAPrivateKey
-    -----END RSA PRIVATE KEY-----
+<pre><code>    dotnet new console -o myapp
 </code></pre>
-<pre><code class="language-shell">    -----BEGIN RSA PUBLIC KEY-----
-    RSAPublicKey
-    -----END RSA PUBLIC KEY-----
+<p>new solution</p>
+<hr />
+<p>run the dotnet new command to create a new solution golden.sln inside a new folder named golden</p>
+<pre><code>    dotnet new sln -o golden
 </code></pre>
-<p>Commands</p>
-<hr />
-<p>Generate RSA private key</p>
-<hr />
-<pre><code class="language-shell">    openssl genrsa -out private.pem 2048
+<p>Now cd into golden and add library project with the following command</p>
+<pre><code>    dotnet new classlib -o library
 </code></pre>
-<p>Extract public key from RSA private key</p>
-<hr />
-<pre><code class="language-shell">    openssl rsa -in private.pem -out public.pem -RSAPublicKey_out
+<p>Execute the dotnet sln command to add the newly created library.csproj project to the solution</p>
+<pre><code>    dotnet sln add library/library.csproj
 </code></pre>
-<p>ASN.1 and DER encoding</p>
+<p>Helpful links</p>
 <hr />
-<p>Within the RSA, PKCS#1 and SSL/TLS communities the Distinguished Encoding Rules (DER) encoding of ASN.1 is used to represent keys, certificates and such in a portable format. Although ASN.1 is not the easiest to understand representation formats and brings a lot of complexity, it does have its merits. The certificate or key information is stored in the binary DER for ASN.1 and applications providing RSA, SSL and TLS should handle DER encoding to read in the information.</p>
-<p>PEM files</p>
-<hr />
-<p>Because DER encoding results in a truly binary representation of the encoded data, a format has been devised for being able to send these in an encoding of printable characters so you can actually mail these things. The format I focus on now is the PEM format.</p>
-<p>In essence PEM files are just base64 encoded versions of the DER encoded data. In order to distinguish from the outside what kind of data is inside the DER encoded string, a header and footer are present around the data. An example of a PEM encoded file is:</p>
-<pre><code class="language-shell">    -----BEGIN PUBLIC KEY-----
-    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMYfnvWtC8Id5bPKae5yXSxQTt
-    +Zpul6AnnZWfI2TtIarvjHBFUtXRo96y7hoL4VWOPKGCsRqMFDkrbeUjRrx8iL91
-    4/srnyf6sh9c8Zk04xEOpK1ypvBz+Ks4uZObtjnnitf0NBGdjMKxveTq+VE7BWUI
-    yQjtQ8mbDOsiLLvh7wIDAQAB
-    -----END PUBLIC KEY-----
-</code></pre>
-<p>The first and last line indicate the DER format that should be expected inside. The data inside is a base64 encoded version of the DER encoded information.</p>
-<p>Good explanations of the difference between the two formats pkcs1 and pkcs8 <a href="https://tls.mbed.org/kb/cryptography/asn1-key-structures-in-der-and-pem">https://tls.mbed.org/kb/cryptography/asn1-key-structures-in-der-and-pem</a></p>
-<p>Also Take A look <a href="https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204">https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One">Abstract Syntax Notation One</a></p>
-<p><a href="https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204">https://stackoverflow.com/questions/18039401/how-can-i-transform-between-the-two-styles-of-public-key-format-one-begin-rsa/29707204</a></p>
+<ol>
+<li><p><a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos">https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos</a></p>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new">https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new</a></p>
+</li>
+</ol>
 
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'shadowkiller69x'; // required: replace example with your forum shortname
-    var disqus_identifier = 'publickey-privatekey-generation';
-    var disqus_title = 'Crete public key private key OpenSSL';
-    var disqus_url = 'http://host.com/blog/posts/publickey-privatekey-generation';
+    var disqus_identifier = 'factorydesignpatter';
+    var disqus_title = 'Factory Design Patter';
+    var disqus_url = 'http://host.com/blog/posts/factorydesignpatter';
 
     
 (function() { // DON'T EDIT BELOW THIS LINE

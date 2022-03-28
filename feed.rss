@@ -4,9 +4,255 @@
 		<title>ashcoder.io</title>
 		<link>http://host.com/blog</link>
 		<description>Welcome!</description>
-		<copyright>2021</copyright>
-		<pubDate>Tue, 02 Nov 2021 05:42:04 GMT</pubDate>
-		<lastBuildDate>Tue, 02 Nov 2021 05:42:04 GMT</lastBuildDate>
+		<copyright>2022</copyright>
+		<pubDate>Mon, 28 Mar 2022 16:35:42 GMT</pubDate>
+		<lastBuildDate>Mon, 28 Mar 2022 16:35:42 GMT</lastBuildDate>
+		<item>
+			<title>jquery-ajax</title>
+			<link>http://host.com/blog/posts/jqueryajax</link>
+			<description>&lt;p&gt;XMLHttpRequest object&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/jqueryajax</guid>
+			<pubDate>Sun, 20 Mar 2022 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;XMLHttpRequest object&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;the most fundamental building block of Ajax is the XMLHttpRequest object&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    function get() {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function () {
+        console.log(this);
+        };
+        req.open(&amp;quot;GET&amp;quot;, URL);
+        req.send();
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;post request&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;function postRequest() {
+        let postdata = getFromInput();
+        let req = new XMLHttpRequest();
+        // When the entire request fails it is probably a network error
+        req.onerror = function () {
+          
+        };
+
+        req.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE &amp;amp;&amp;amp; this.status === 201) {
+              var data = JSON.parse(this.response);
+            }
+            else if (this.readyState === XMLHttpRequest.DONE &amp;amp;&amp;amp; this.status &amp;gt;= 400) {
+            // Check for error
+            
+            }
+        };
+
+        req.open(&amp;quot;POST&amp;quot;, URL);
+        req.setRequestHeader(&amp;quot;Content-Type&amp;quot;,&amp;quot;application/json&amp;quot;);
+        req.send(JSON.stringify(postdata));
+      }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fetch API&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;The very basic fetch api looks like below&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    functionget(){
+        fetch(URL)
+        .then(response=&amp;gt;response.json())
+        .then(data=&amp;gt;console.log(data));
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;post using fetch api&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    function insertData() {
+        
+        let postdata = getFromInput();
+
+        let options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postdata)
+        };
+
+        fetch(URL, options)
+          .then(response =&amp;gt; response.json();)
+          .then(data =&amp;gt; {
+            console.log(data)
+          })
+          .catch(error =&amp;gt; console.log(error));
+      }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Jquery Ajax with ASP.net core&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;contentType&lt;/strong&gt;
+contentType (default: 'application/x-www-form-urlencoded; charset=UTF-8')&lt;/p&gt;
+&lt;p&gt;Type: String&lt;/p&gt;
+&lt;p&gt;When sending data to the server, use this content type. Default is &amp;quot;application/x-www-form-urlencoded; charset=UTF-8&amp;quot;, which is fine for most cases. If you explicitly pass in a content-type to $.ajax(), then it'll always be sent to the server (even if no data is sent). If no charset is specified, data will be transmitted to the server using the server's default charset; you must decode this appropriately on the server side.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;data type&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;dataType (default: Intelligent Guess (xml, json, script, or html))&lt;/p&gt;
+&lt;p&gt;Type: String&lt;/p&gt;
+&lt;p&gt;The type of data that you're expecting back from the server. If none is specified, jQuery will try to infer it based on the MIME type of the response (an XML MIME type will yield XML, in 1.4 JSON will yield a JavaScript object, in 1.4 script will execute the script, and anything else will be returned as a string).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ajax Get Example&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$.ajax({
+        url: URL,
+        dataType: 'JSON',
+        contentType: &amp;quot;application/json&amp;quot;,
+        type: &amp;quot;GET&amp;quot;,
+        data: { name: name },
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (ex) {
+            console.error(ex);
+        }
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;asp.net backend&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  [HttpGet]
+  public IActionResult GetInfoByName(string name)
+  {
+    try
+    {
+      .....
+      return Json(new { data = response, result = CommonAjaxResponse(MessageType.success, &amp;quot;&amp;quot;, ResponseCode.success) });
+    }
+    catch (Exception ex) when (ex is Exception)
+    {
+      ....
+      return Json(new { result = CommonAjaxResponse(MessageType.error, ex.Message, ResponseCode.error) });
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="ajax-post-example"&gt;Ajax Post Example&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;$.ajax({
+        type: &amp;quot;POST&amp;quot;,
+        url: url,
+        data: JSON.stringify(obj),
+        dataType: 'JSON',
+        contentType: &amp;quot;application/json&amp;quot;,
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (request, status, error) {
+            console.error(error);
+        }
+      });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;  [HttpPost]
+      
+  public JsonResult SaveData([FromBody] DataModelDto data)
+  {
+      try
+      {
+        ................
+        ................
+        return Json(new { result = CommonAjaxResponse(result.MessageType, result.Message, result.ResponseCode), data = dataItem });
+      }
+      catch (Exception exception)
+      {
+        return Json(new { result = CommonAjaxResponse(MessageType.error, exception.Message, ResponseCode.error) });
+      }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;var obj = $(&amp;quot;form#formid&amp;quot;).serialize();
+$.ajax({
+        url: '/Controller/Update',
+        type: 'post',
+        dataType: 'json',
+        data: obj,
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (xhr) {
+          console.error(xhr)
+        }
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;[HttpPost]
+public IActionResult Update(UpdateModelDto model)
+{
+    try
+    {
+      Response result = ......................
+      ........................................
+      return Json(new { result = CommonAjaxResponse(result.MessageType, result.Message, result.ResponseCode) });
+    }
+    catch (Exception ex) when (ex is { } exception)
+    {
+      return Json(new { result = CommonAjaxResponse(MessageType.error, ex.Message, ResponseCode.error) });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;var obj = {};
+obj.FromDate = $(&amp;quot;#txtFromDate&amp;quot;).val();
+obj.ToDate = $(&amp;quot;#txtToDate&amp;quot;).val();
+$.ajax({
+        type: &amp;quot;POST&amp;quot;,
+        url: &amp;quot;/Controller_Name/LoadData&amp;quot;,
+        data: obj,
+        dataType: 'JSON',
+        contentType: &amp;quot;application/x-www-form-urlencoded; charset=UTF-8&amp;quot;,
+        success: function (response) {
+            LoadAssignStatSuccessData(response.data);
+        },
+        error: function (xhr) {
+            ShowMessage('error', xhr.innerText);
+        }
+  });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;[HttpPost]
+[CustomAuthorize(IsCheck = false)]
+public IActionResult LoadData(DataViewModel model)
+{
+  try
+  {
+    DateTime fromDate = Convert.ToDateTime(model.FromDate);
+    DateTime toDate = Convert.ToDateTime(model.ToDate);
+    .................
+    return Json(new { data = StatusEntityList, result = CommonAjaxResponse(MessageType.success, &amp;quot;&amp;quot;, ResponseCode.success) });
+  }
+
+  catch (Exception exception) when (exception is Exception ex)
+  {
+    return Json(new { result = CommonAjaxResponse(MessageType.error, ex.Message, ResponseCode.error) });
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$('#vendorTable').on('click', '.btnEditDetails', function () {
+        $('#btnSaveVendor').show();
+        $('.modal-body').load(`/Vendor/GetEditVendorDetails?id=${$(this).data('id')}`, function (response, status, xhr) {
+            if (status == &amp;quot;error&amp;quot;) {
+                var msg = &amp;quot;Sorry but there was an error: &amp;quot;;
+                ShowMessage(&amp;quot;error&amp;quot;, msg);
+            }
+            else {
+                $('#modalVendor').modal('show');
+            }
+        });
+        
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;public PartialViewResult GetEditVendorDetails(int id)
+{
+    if (id &amp;lt;= 0)
+    {
+        return PartialView(&amp;quot;_error&amp;quot;);
+    }
+    try
+    {
+        var vendor = _vendorService.GetVendorById(id);
+        if (vendor == null || vendor.Id == 0)
+        {
+            return PartialView(&amp;quot;_error&amp;quot;);
+        }
+        return PartialView(&amp;quot;_EditVendorPartials&amp;quot;, vendor);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, &amp;quot;{ProcessName} {Channel} Message: &amp;quot; + ex.Message, ControllerContext.ActionDescriptor.ControllerName, &amp;quot;web&amp;quot;);
+        return PartialView(&amp;quot;_error&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded>
+		</item>
 		<item>
 			<title>Serializable object to/from file</title>
 			<link>http://host.com/blog/posts/csharpimportant</link>
@@ -776,6 +1022,13 @@ services:
     ports:
       - &amp;quot;5000:5000&amp;quot;
 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="installing-sql-server-on-docker-desktop"&gt;installing sql server on docker desktop&lt;/h1&gt;
+&lt;p&gt;links: &lt;a href="https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver15"&gt;https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver15&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Restore Database from bak file on host&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;docker cp E:\Tutorial\AdventureWorksLT.bak sql1:/var/opt/mssql/backup
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd -S localhost  -U SA -P &amp;quot;&amp;lt;YourStrong!Passw0rd&amp;gt;&amp;quot;  -Q &amp;quot;RESTORE FILELISTONLY FROM DISK = '/var/opt/mssql/backup/AdventureWorksLT.bak'&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 </content:encoded>
 		</item>
@@ -1557,6 +1810,37 @@ Create and edit a new configuration file:
 </content:encoded>
 		</item>
 		<item>
+			<title>Factory Design Patter</title>
+			<link>http://host.com/blog/posts/factorydesignpatter</link>
+			<description>&lt;p&gt;new console app&lt;/p&gt;</description>
+			<guid>http://host.com/blog/posts/factorydesignpatter</guid>
+			<pubDate>Tue, 18 Feb 2020 00:00:00 GMT</pubDate>
+			<content:encoded>&lt;p&gt;new console app&lt;/p&gt;
+&lt;hr /&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new console -o myapp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;new solution&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;run the dotnet new command to create a new solution golden.sln inside a new folder named golden&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new sln -o golden
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now cd into golden and add library project with the following command&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet new classlib -o library
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Execute the dotnet sln command to add the newly created library.csproj project to the solution&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    dotnet sln add library/library.csproj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Helpful links&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos"&gt;https://docs.microsoft.com/en-us/dotnet/core/tutorials/using-on-macos&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new"&gt;https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content:encoded>
+		</item>
+		<item>
 			<title>Crete public key private key OpenSSL</title>
 			<link>http://host.com/blog/posts/publickey-privatekey-generation</link>
 			<description>&lt;p&gt;Generate Private key(pkcs1) and certificate&lt;/p&gt;</description>
@@ -1792,709 +2076,6 @@ port = 3306
 port=3306
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Change both instances to another port (i.e. 3307) and restart Wamp MYSQL&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Sql Server Important Query</title>
-			<link>http://host.com/blog/posts/sqlServerhelper</link>
-			<description>&lt;p&gt;&lt;strong&gt;method1:&lt;/strong&gt;&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/sqlServerhelper</guid>
-			<pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="get-all-table-row-count"&gt;Get All Table Row Count&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;method1:&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;CREATE TABLE #counts
-(
-    table_name varchar(255),
-    row_count int
-)
-
-EXEC sp_MSForEachTable &amp;#64;command1='INSERT #counts (table_name, row_count) SELECT ''?'', COUNT(*) FROM ?'
-SELECT table_name, row_count FROM #counts ORDER BY table_name, row_count DESC
-DROP TABLE #counts
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;method2:&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;SELECT o.NAME,
-  i.rowcnt 
-FROM sysindexes AS i
-  INNER JOIN sysobjects AS o ON i.id = o.id 
-WHERE i.indid &amp;lt; 2  AND OBJECTPROPERTY(o.id, 'IsMSShipped') = 0
-ORDER BY o.NAME
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;method3:&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;-- Shows all user tables and row counts for the current database 
--- Remove is_ms_shipped = 0 check to include system objects 
--- i.index_id &amp;lt; 2 indicates clustered index (1) or hash table (0) 
-SELECT o.name,
-  ddps.row_count 
-FROM sys.indexes AS i
-  INNER JOIN sys.objects AS o ON i.OBJECT_ID = o.OBJECT_ID
-  INNER JOIN sys.dm_db_partition_stats AS ddps ON i.OBJECT_ID = ddps.OBJECT_ID
-  AND i.index_id = ddps.index_id 
-WHERE i.index_id &amp;lt; 2  AND o.is_ms_shipped = 0 ORDER BY o.NAME 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Describe Table&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;exec sp_help 'table_name';
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;select *
-from INFORMATION_SCHEMA.COLUMNS
-where TABLE_NAME='Mct_GL'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Force Database Delete(Database Is in Use)&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;Use master;
-ALTER database DatabaseName set offline with ROLLBACK IMMEDIATE;
-DROP database DatabaseName;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Get table constraints&lt;/p&gt;
-&lt;hr /&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;Select C.*, (Select definition From sys.default_constraints Where object_id = C.object_id) As dk_definition,
-(Select definition From sys.check_constraints Where object_id = C.object_id) As ck_definition,
-(Select name From sys.objects Where object_id = D.referenced_object_id) As fk_table,
-(Select name From sys.columns Where column_id = D.parent_column_id And object_id = D.parent_object_id) As fk_col
-From sys.objects As C
-Left Join (Select * From sys.foreign_key_columns) As D On D.constraint_object_id = C.object_id 
-Where C.parent_object_id = (Select object_id From sys.objects Where type = 'U'
-And name = 'Table Name Here');
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="database-size-estimation"&gt;Database Size estimation&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;  SELECT 
-    t.NAME AS TableName,
-    s.Name AS SchemaName,
-    p.rows,
-    SUM(a.total_pages) * 8 AS TotalSpaceKB, 
-    CAST(ROUND(((SUM(a.total_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS TotalSpaceMB,
-    SUM(a.used_pages) * 8 AS UsedSpaceKB, 
-    CAST(ROUND(((SUM(a.used_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS UsedSpaceMB, 
-    (SUM(a.total_pages) - SUM(a.used_pages)) * 8 AS UnusedSpaceKB,
-    CAST(ROUND(((SUM(a.total_pages) - SUM(a.used_pages)) * 8) / 1024.00, 2) AS NUMERIC(36, 2)) AS UnusedSpaceMB
-FROM 
-    sys.tables t
-INNER JOIN      
-    sys.indexes i ON t.OBJECT_ID = i.object_id
-INNER JOIN 
-    sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
-INNER JOIN 
-    sys.allocation_units a ON p.partition_id = a.container_id
-LEFT OUTER JOIN 
-    sys.schemas s ON t.schema_id = s.schema_id
-WHERE 
-    t.NAME NOT LIKE 'dt%' 
-    AND t.is_ms_shipped = 0
-    AND i.OBJECT_ID &amp;gt; 255 
-GROUP BY 
-    t.Name, s.Name, p.Rows
-ORDER BY 
-    TotalSpaceMB DESC, t.Name
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="sqlcmd-utility"&gt;sqlcmd Utility&lt;/h1&gt;
-&lt;p&gt;Download and Install appropriate version of sqlcmd.Check the following atricle about sqlcmd utility and latest vesion of download link&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15"&gt;https://docs.microsoft.com/en-us/sql/tools/sqlcmd-utility?view=sql-server-ver15&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Connecting and Running Script using sqlcmd&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Example:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;sqlcmd -S.\SQLEXPRESS14 -i e:\ASH\test\posinventoryfullscript.sql -o e:\ASH\test\posoutput.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="sql-server-localdb-cheet-sheet"&gt;SQL Server localdb Cheet sheet&lt;/h1&gt;
-&lt;pre&gt;&lt;code&gt;    SqlLocalDb info
-    SQLLocalDB info v11.0
-    SQLLocalDB share v11.0 Mare
-    SQLLocalDB info v11.0
-    SqlLocalDB create NewInstance
-    SqlLocalDB info NewInstance
-    SqlLocalDB create Test 11.0
-    SqlLocalDB info Test
-    SQLLocalDB create “Test instance” 
-    SqlLocalDB start Test
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;SQL ServerManagement Studio Connect:
-ServerName:(LocalDB)\ followed by the name of the LocalDB instance (v11.0)
-Example:(LocalDB)\Test
-Example:(LocalDB)\v11.0
-And Windows Authentication&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;    SqlLocalDB stop MSSQLLocaDB
-    cd C:\Program Files\Microsoft SQL Server\110\Tools\Binn\
-    sqlcmd -S (localDB)\v11.0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;    CREATE DATABASE TestSQlCMD;
-    GO
-    USE TestSQlCMD;
-    GO
-    CREATE TABLE dbo.Pesron(
-    ID INT,
-    Name VARCHAR(50)
-    );
-    GO
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="generate-class-from-database-table"&gt;Generate class from database table&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;declare &amp;#64;TableName sysname = 'Division'
-declare &amp;#64;Result varchar(max) = 'public class ' + &amp;#64;TableName + '
-{'
-
-select &amp;#64;Result = &amp;#64;Result + '
-    public ' + ColumnType + NullableSign + ' ' + ColumnName + ' { get; set; }
-'
-from
-(
-    select 
-        replace(col.name, ' ', '_') ColumnName,
-        column_id ColumnId,
-        case typ.name 
-            when 'bigint' then 'long'
-            when 'binary' then 'byte[]'
-            when 'bit' then 'bool'
-            when 'char' then 'string'
-            when 'date' then 'DateTime'
-            when 'datetime' then 'DateTime'
-            when 'datetime2' then 'DateTime'
-            when 'datetimeoffset' then 'DateTimeOffset'
-            when 'decimal' then 'decimal'
-            when 'float' then 'double'
-            when 'image' then 'byte[]'
-            when 'int' then 'int'
-            when 'money' then 'decimal'
-            when 'nchar' then 'string'
-            when 'ntext' then 'string'
-            when 'numeric' then 'decimal'
-            when 'nvarchar' then 'string'
-            when 'real' then 'float'
-            when 'smalldatetime' then 'DateTime'
-            when 'smallint' then 'short'
-            when 'smallmoney' then 'decimal'
-            when 'text' then 'string'
-            when 'time' then 'TimeSpan'
-            when 'timestamp' then 'long'
-            when 'tinyint' then 'byte'
-            when 'uniqueidentifier' then 'Guid'
-            when 'varbinary' then 'byte[]'
-            when 'varchar' then 'string'
-            else 'UNKNOWN_' + typ.name
-        end ColumnType,
-        case 
-            when col.is_nullable = 1 and typ.name in ('bigint', 'bit', 'date', 'datetime', 'datetime2', 'datetimeoffset', 'decimal', 'float', 'int', 'money', 'numeric', 'real', 'smalldatetime', 'smallint', 'smallmoney', 'time', 'tinyint', 'uniqueidentifier') 
-            then '?' 
-            else '' 
-        end NullableSign
-    from sys.columns col
-        join sys.types typ on
-            col.system_type_id = typ.system_type_id AND col.user_type_id = typ.user_type_id
-    where object_id = object_id(&amp;#64;TableName)
-) t
-order by ColumnId
-
-set &amp;#64;Result = &amp;#64;Result  + '
-}'
-
-print &amp;#64;Result
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="crud-stored-procedure"&gt;Crud Stored Procedure&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-sql"&gt;CREATE TABLE ProcedureTemplate
-  (
-	TemplateName VARCHAR (200) NULL,
-	Template VARCHAR (MAX) NULL
-  )
-  GO
-  INSERT INTO ProcedureTemplate(TemplateName, Template)
-  VALUES('Insert','
-GO
-/****** Object:  StoredProcedure [dbo].[usp_~N_Ins]    Script Date: 3/6/2015 3:32:54 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF EXISTS(SELECT NAME FROM SYSOBJECTS WHERE NAME = ''usp_~N_Ins'')
-  BEGIN
-	DROP PROCEDURE usp_~N_Ins
-  END
-  GO
-/* ============================================================================
- Author:      ~U
- Create date: ~D
- Description: Add description
-
-				History
- Date			Name				Comments
- ==============================================================================
-
- ==============================================================================*/
-CREATE PROCEDURE [dbo].[usp_~N_Ins]
-(
-	~I
-)
-AS
-BEGIN
-
-	SET FMTONLY OFF;
-    SET NOCOUNT ON;
-    DECLARE &amp;#64;ErrorMessage		VARCHAR(MAX)
-			,&amp;#64;ErrorProcedure	VARCHAR(255)
-			,&amp;#64;ErrorSeverity		INT
-			,&amp;#64;ErrorState		INT
-			,&amp;#64;ErrorLine			INT
-
-    BEGIN TRY
-		INSERT INTO ~N
-		(
-			~C
-		)
-		VALUES
-		(
-			~V
-		)
-
-    END TRY
-    BEGIN CATCH
-
-         SELECT  &amp;#64;ErrorMessage		= ERROR_MESSAGE()
-				,&amp;#64;ErrorSeverity		= ERROR_SEVERITY()
-				,&amp;#64;ErrorProcedure	= ERROR_PROCEDURE()
-				,&amp;#64;ErrorState		= ERROR_STATE()
-				,&amp;#64;ErrorLine			= ERROR_LINE()
-
-		SET &amp;#64;ErrorMessage = ''Procedure: '' + &amp;#64;ErrorProcedure + space(1) + 
-		&amp;#64;ErrorMessage + '' Line: '' + CONVERT(VARCHAR(20),&amp;#64;ErrorLine)
-
-
-        RAISERROR ( &amp;#64;ErrorMessage, &amp;#64;ErrorSeverity, &amp;#64;ErrorState)
-
-    END CATCH
-END
-GO
-')
-GO
- INSERT INTO ProcedureTemplate(TemplateName, Template)
- VALUES('Update','
-GO
-/****** Object:  StoredProcedure [dbo].[usp_~N_Upd]    Script Date: 3/6/2015 3:32:54 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF EXISTS(SELECT NAME FROM SYSOBJECTS WHERE NAME = ''usp_~N_Upd'')
-  BEGIN
-	DROP PROCEDURE usp_~N_Upd
-  END
-  GO
-/* ============================================================================
- Author:      ~U
- Create date: ~D
- Description: Add description
-
-				History
- Date			Name				Comments
- ==============================================================================
-
- ==============================================================================*/
-CREATE PROCEDURE [dbo].[usp_~N_Upd]
-(
-	&amp;#64;RecID INT,
-	~I
-)
-AS
-BEGIN
-
-	SET FMTONLY OFF;
-    SET NOCOUNT ON;
-         DECLARE &amp;#64;ErrorMessage		VARCHAR(MAX)
-				,&amp;#64;ErrorProcedure	VARCHAR(255)
-				,&amp;#64;ErrorSeverity		INT
-				,&amp;#64;ErrorState		INT
-				,&amp;#64;ErrorLine			INT
-
-    BEGIN TRY
-		UPDATE ~N
-		SET ~C
-		WHERE RecID = &amp;#64;RecID
-
-    END TRY
-    BEGIN CATCH
-
-         SELECT  &amp;#64;ErrorMessage		= ERROR_MESSAGE()
-				,&amp;#64;ErrorSeverity		= ERROR_SEVERITY()
-				,&amp;#64;ErrorProcedure	= ERROR_PROCEDURE()
-				,&amp;#64;ErrorState		= ERROR_STATE()
-				,&amp;#64;ErrorLine			= ERROR_LINE()
-
-		SET &amp;#64;ErrorMessage = ''Procedure: '' + &amp;#64;ErrorProcedure + '' '' + 
-		&amp;#64;ErrorMessage + '' Line: '' + CONVERT(VARCHAR(20),&amp;#64;ErrorLine)
-
-
-        RAISERROR ( &amp;#64;ErrorMessage, &amp;#64;ErrorSeverity, &amp;#64;ErrorState)
-
-    END CATCH
-END
-GO')
-go
- INSERT INTO ProcedureTemplate(TemplateName, Template)
- VALUES('Delete','
-GO
-/****** Object:  StoredProcedure [dbo].[usp_~N_Del]    Script Date: 3/6/2015 3:32:54 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF EXISTS(SELECT NAME FROM SYSOBJECTS WHERE NAME = ''usp_~N_Del'')
-  BEGIN
-	DROP PROCEDURE usp_~N_Del
-  END
-  GO
-/* ============================================================================
- Author:      ~U
- Create date: ~D
- Description: Add description
-
-				History
- Date			Name				Comments
- ==============================================================================
-
- ==============================================================================*/
-CREATE PROCEDURE [dbo].[usp_~N_Del]
-(
-	&amp;#64;RecID INT
-
-)
-AS
-BEGIN
-
-	SET FMTONLY OFF;
-    SET NOCOUNT ON;
-         DECLARE &amp;#64;ErrorMessage		VARCHAR(MAX)
-				,&amp;#64;ErrorProcedure	VARCHAR(255)
-				,&amp;#64;ErrorSeverity		INT
-				,&amp;#64;ErrorState		INT
-				,&amp;#64;ErrorLine			INT
-
-    BEGIN TRY
-		DELETE ~N
-		WHERE RecID = &amp;#64;RecID
-
-    END TRY
-    BEGIN CATCH
-
-         SELECT  &amp;#64;ErrorMessage		= ERROR_MESSAGE()
-				,&amp;#64;ErrorSeverity		= ERROR_SEVERITY()
-				,&amp;#64;ErrorProcedure	= ERROR_PROCEDURE()
-				,&amp;#64;ErrorState		= ERROR_STATE()
-				,&amp;#64;ErrorLine			= ERROR_LINE()
-
-		SET &amp;#64;ErrorMessage = ''Procedure: '' + &amp;#64;ErrorProcedure + '' '' + 
-		&amp;#64;ErrorMessage + '' Line: '' + CONVERT(VARCHAR(20),&amp;#64;ErrorLine)
-
-
-        RAISERROR ( &amp;#64;ErrorMessage, &amp;#64;ErrorSeverity, &amp;#64;ErrorState)
-
-    END CATCH
-END
-GO')
-GO
- INSERT INTO ProcedureTemplate(TemplateName, Template)
- VALUES('Set','
-GO
-/****** Object:  StoredProcedure [dbo].[usp_~N_Set]    Script Date: 3/6/2015 3:32:54 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF EXISTS(SELECT NAME FROM SYSOBJECTS WHERE NAME = ''usp_~N_Set'')
-  BEGIN
-	DROP PROCEDURE usp_~N_Set
-  END
-  GO
-/* ============================================================================
- Author:      ~U
- Create date: ~D
- Description: Add description
-
-				History
- Date			Name				Comments
- ==============================================================================
-
- ==============================================================================*/
-CREATE PROCEDURE [dbo].[usp_~N_Set]
-(
-	&amp;#64;RecID INT,
-	~I
-)
-AS
-BEGIN
-
-	SET FMTONLY OFF;
-    SET NOCOUNT ON;
-         DECLARE &amp;#64;ErrorMessage		VARCHAR(MAX)
-				,&amp;#64;ErrorProcedure	VARCHAR(255)
-				,&amp;#64;ErrorSeverity		INT
-				,&amp;#64;ErrorState		INT
-				,&amp;#64;ErrorLine			INT
-
-    BEGIN TRY
-		SELECT ~C
-		FROM ~N
-		WHERE ~V
-
-    END TRY
-    BEGIN CATCH
-
-         SELECT  &amp;#64;ErrorMessage		= ERROR_MESSAGE()
-				,&amp;#64;ErrorSeverity		= ERROR_SEVERITY()
-				,&amp;#64;ErrorProcedure	= ERROR_PROCEDURE()
-				,&amp;#64;ErrorState		= ERROR_STATE()
-				,&amp;#64;ErrorLine			= ERROR_LINE()
-
-		SET &amp;#64;ErrorMessage = ''Procedure: '' + &amp;#64;ErrorProcedure + '' '' + 
-		&amp;#64;ErrorMessage + '' Line: '' + CONVERT(VARCHAR(20),&amp;#64;ErrorLine)
-
-
-        RAISERROR ( &amp;#64;ErrorMessage, &amp;#64;ErrorSeverity, &amp;#64;ErrorState)
-
-    END CATCH
-END
-')
-GO
--------------------------END --------------------------------------------------------------------------------------------------------------------
-
--------------------------------------Stored procedure here --------------------------------------------------------------------------------------
-GO
-/****** Object:  StoredProcedure [dbo].[usp_CreateCRUDbyTableName]    Script Date: 3/6/2015 3:32:54 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-IF EXISTS(SELECT NAME FROM SYSOBJECTS WHERE NAME = 'usp_CreateCRUDbyTableName')
-  BEGIN
-	DROP PROCEDURE usp_CreateCRUDbyTableName
-  END
-GO
-/* ============================================================================
- Author:      Mitchell Guzman
- Create date: 2015-04-23
- Description: Creates the CRUD by Table Name
-
- Example:
- EXEC usp_CreateCRUDbyTableName &amp;#64;TableName = 'MarginRounder'
-				History
- Date			Name				Comments
- ==============================================================================
-
- ==============================================================================*/
-CREATE PROCEDURE [dbo].[usp_CreateCRUDbyTableName]
-(
-  &amp;#64;TableName VARCHAR(255)
-)
-AS
-BEGIN
-	--Get Insert Template
-	DECLARE	&amp;#64;InputParams		VARCHAR(2000) = ''
-			,&amp;#64;OutputParams		VARCHAR(2000) = ''
-			,&amp;#64;InsertTemplate	VARCHAR(MAX)
-			,&amp;#64;UpdateTemplate	VARCHAR(MAX)
-			,&amp;#64;DeleteTemplate	VARCHAR(MAX)
-			,&amp;#64;SetTemplate		VARCHAR(MAX)
-			,&amp;#64;Columns			VARCHAR(MAX) = ''
-			,&amp;#64;Columns1			VARCHAR(MAX) = ''
-			,&amp;#64;User				VARCHAR(50) = ''
-			,&amp;#64;CurDate			VARCHAR(20)
-			,&amp;#64;ErrorMessage		VARCHAR(MAX)
-			,&amp;#64;ErrorProcedure	VARCHAR(255)
-			,&amp;#64;ErrorSeverity		INT
-			,&amp;#64;ErrorState		INT
-			,&amp;#64;ErrorLine			INT
-
-	BEGIN TRY
-		--Input params
-		SELECT &amp;#64;User = REPLACE(SYSTEM_USER,'MIDDLE_EARTH\',''), 
-                       &amp;#64;CurDate = CONVERT(VARCHAR(20),GETDATE(),100)
-
-		SELECT  &amp;#64;InputParams = &amp;#64;InputParams + CHAR(9) + '&amp;#64;' + sc.name  + ' ' +  
-		UPPER(st.name)  + ' ' + case when sc.user_type_id in (167,175,231,239) 
-		then '(' + convert(varchar(20),CASE WHEN CONVERT(VARCHAR(6),sc.max_length) = '-1' 
-		THEN 'MAX' ELSE CONVERT(VARCHAR(6),sc.max_length) END ) + ')' ELSE '' END + '' + 
-		CASE WHEN sc.user_type_id in(59,60,106,108,122) THEN '(' + convert(varchar(5),sc.precision) + 
-		',' + convert(varchar(5),sc.scale) + ')' ELSE '' END +  ',' + CHAR(10)  
-		FROM sys.columns SC (NOLOCK) JOIN SYSOBJECTS SO(NOLOCK) ON SO.ID = SC.object_ID 
-		JOIN sys.types ST (NOLOCK) ON ST.user_TYPE_ID = SC.user_TYPE_ID  WHERE so.type = 'U'  
-		and so.name = &amp;#64;TableName and sc.is_identity = 0 order by Column_ID
-		SELECT &amp;#64;InputParams = LEFT(&amp;#64;InputParams,LEN(&amp;#64;InputParams) - 2)
-
-		SELECT &amp;#64;OutputParams = &amp;#64;OutputParams + CHAR(9)  + sc.name  + ' ' +  UPPER(st.name)  + 
-		' ' + case when sc.user_type_id in (167,175,231,239) 
-        then '(' + convert(varchar(20),sc.max_length) + ')' 
-		ELSE '' END + '' + CASE WHEN sc.user_type_id in(59,60,106,108,122) THEN '(' + 
-		convert(varchar(5),sc.precision) + ',' + convert(varchar(5),sc.scale) + ')' ELSE '' 
-		END +  ',' + CHAR(10)  FROM sys.columns SC (NOLOCK) JOIN SYSOBJECTS SO(NOLOCK) 
-		ON SO.ID = SC.object_ID JOIN sys.types ST (NOLOCK) ON ST.user_TYPE_ID = SC.user_TYPE_ID  
-		WHERE so.type = 'U'  and so.name = &amp;#64;TableName and sc.is_identity = 0 order by Column_ID
-		SELECT &amp;#64;OutputParams = LEFT(&amp;#64;OutputParams,LEN(&amp;#64;OutputParams) - 2)
-
-		SELECT &amp;#64;Columns = &amp;#64;Columns + CHAR(9) +  SC.NAME + ',' + CHAR(10) + CHAR(9) + CHAR(9)
-		FROM SYS.OBJECTS SO (NOLOCK)
-		JOIN SYS.COLUMNS SC (NOLOCK) ON SC.object_id = SO.object_id
-		WHERE SO.NAME = &amp;#64;TableName
-		 AND sc.is_identity = 0
-		 ORDER BY SC.NAME
-
-		SET &amp;#64;Columns = LEFT(&amp;#64;Columns,LEN(&amp;#64;Columns) - 4)
-
-		SELECT &amp;#64;Columns1 = &amp;#64;Columns1 + CHAR(9) + '&amp;#64;' +  SC.NAME + ',' + CHAR(10)+ CHAR(9) + CHAR(9)
-		FROM SYS.OBJECTS SO (NOLOCK)
-		JOIN SYS.COLUMNS SC (NOLOCK) ON SC.object_id = SO.object_id
-		WHERE SO.NAME = &amp;#64;TableName
-		 AND sc.is_identity = 0
-		ORDER BY SC.NAME
-
-		SET &amp;#64;Columns1 = LEFT(&amp;#64;Columns1,LEN(&amp;#64;Columns1) - 4)
-		---------------------------------------
-		---Insert
-		---------------------------------------
-		SELECT &amp;#64;InsertTemplate = Template
-		FROM ProcedureTemplate t (NOLOCK)
-		WHERE TemplateName = 'Insert'
-
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~N',&amp;#64;TableName)
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~U',&amp;#64;User)
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~I',&amp;#64;InputParams)
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~C',&amp;#64;Columns)
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~V',&amp;#64;Columns1)
-		SET &amp;#64;InsertTemplate = REPLACE(&amp;#64;InsertTemplate,'~D',&amp;#64;CurDate)
-
-		SELECT &amp;#64;InsertTemplate
-
-		------------------------------------
-		---Update
-		------------------------------------
-		SELECT &amp;#64;UpdateTemplate = Template
-		FROM ProcedureTemplate t (NOLOCK)
-		WHERE TemplateName = 'Update'
-
-		SET &amp;#64;Columns1 = ''
-
-		SELECT &amp;#64;Columns1 = &amp;#64;Columns1 + CHAR(9) + SC.NAME + ' = ' + '&amp;#64;' +  
-		SC.NAME + ',' + CHAR(10)+ CHAR(9) + CHAR(9)+ CHAR(9)
-		FROM SYS.OBJECTS SO (NOLOCK)
-		JOIN SYS.COLUMNS SC (NOLOCK) ON SC.object_id = SO.object_id
-		WHERE SO.NAME = &amp;#64;TableName
-		 AND sc.is_identity = 0
-		ORDER BY SC.NAME
-
-		SET &amp;#64;Columns1 = LEFT(&amp;#64;Columns1,LEN(&amp;#64;Columns1) - 5)
-
-		SET &amp;#64;UpdateTemplate = REPLACE(&amp;#64;UpdateTemplate,'~N',&amp;#64;TableName)
-		SET &amp;#64;UpdateTemplate = REPLACE(&amp;#64;UpdateTemplate,'~U',&amp;#64;User)
-		SET &amp;#64;UpdateTemplate = REPLACE(&amp;#64;UpdateTemplate,'~I',&amp;#64;InputParams)
-		SET &amp;#64;UpdateTemplate = REPLACE(&amp;#64;UpdateTemplate,'~C',&amp;#64;Columns1)
-		SET &amp;#64;UpdateTemplate = REPLACE(&amp;#64;UpdateTemplate,'~D',&amp;#64;CurDate)
-
-		SELECT &amp;#64;UpdateTemplate
-
-		------------------------------------
-		---DELETE
-		------------------------------------
-		SELECT &amp;#64;DeleteTemplate = Template
-		FROM ProcedureTemplate t (NOLOCK)
-		WHERE TemplateName = 'Delete'
-
-		SET &amp;#64;DeleteTemplate = REPLACE(&amp;#64;DeleteTemplate,'~N',&amp;#64;TableName)
-		SET &amp;#64;DeleteTemplate = REPLACE(&amp;#64;DeleteTemplate,'~U',&amp;#64;User)
-		SET &amp;#64;DeleteTemplate = REPLACE(&amp;#64;DeleteTemplate,'~D',&amp;#64;CurDate)
-
-		SELECT &amp;#64;DeleteTemplate
-
-		------------------------------------
-		---SET
-		------------------------------------
-		SELECT &amp;#64;SetTemplate = Template
-		FROM ProcedureTemplate t (NOLOCK)
-		WHERE TemplateName = 'Set'
-
-		SET &amp;#64;InputParams = ''
-		SELECT  &amp;#64;InputParams = &amp;#64;InputParams + CHAR(9) + '&amp;#64;' + sc.name  + ' ' +  
-		UPPER(st.name)  + ' ' + case when sc.user_type_id in (167,175,231,239) 
-		then '(' + convert(varchar(20),CASE WHEN CONVERT(VARCHAR(20),sc.max_length) = '-1' 
-		THEN 'MAX' ELSE CONVERT(VARCHAR(20),sc.max_length) END) + ')' ELSE '' END + '' + CASE 
-		WHEN sc.user_type_id in(59,60,106,108,122) THEN '(' + convert(varchar(5),sc.precision) + ',' + 
-		convert(varchar(5),sc.scale) + ')' ELSE '' END +  CHAR(9) + ' = NULL,' + CHAR(10)    
-		FROM sys.columns SC (NOLOCK) JOIN SYSOBJECTS SO(NOLOCK) ON SO.ID = 
-		SC.object_ID JOIN sys.types ST (NOLOCK) ON ST.user_TYPE_ID = SC.user_TYPE_ID  
-		WHERE so.type = 'U'  and so.name = &amp;#64;TableName and sc.is_identity = 0 order by Column_ID
-		SELECT &amp;#64;InputParams = LEFT(&amp;#64;InputParams,LEN(&amp;#64;InputParams) - 2)
-
-
-		SET &amp;#64;Columns = ''
-		SELECT &amp;#64;Columns = &amp;#64;Columns + CHAR(9) +  SC.NAME + ',' + CHAR(10) + CHAR(9) + CHAR(9) + CHAR(9)
-		FROM SYS.OBJECTS SO (NOLOCK)
-		JOIN SYS.COLUMNS SC (NOLOCK) ON SC.object_id = SO.object_id
-		WHERE SO.NAME = &amp;#64;TableName
-		ORDER BY SC.name
-		 --AND sc.is_identity = 0
-
-		SET &amp;#64;Columns1 = ''
-		SELECT &amp;#64;Columns1 = &amp;#64;Columns1 + CHAR(9) +  '(&amp;#64;' + SC.NAME + ' IS NULL OR ' + 
-		SC.NAME + ' =  &amp;#64;' + SC.NAME + ')' + CHAR(10)  + CHAR(9) + CHAR(9)  + ' AND'
-		FROM SYS.OBJECTS SO (NOLOCK)
-		JOIN SYS.COLUMNS SC (NOLOCK) ON SC.object_id = SO.object_id
-		WHERE SO.NAME = &amp;#64;TableName
-		ORDER BY SC.name
-
-		IF RIGHT(&amp;#64;Columns1,3) = 'AND'
-		  BEGIN
-			SET &amp;#64;Columns1 = LEFT(&amp;#64;Columns1,LEN(&amp;#64;Columns1) - 3)
-		  END
-		SET &amp;#64;Columns = LEFT(&amp;#64;Columns,LEN(&amp;#64;Columns) - 5)
-
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~N',&amp;#64;TableName)
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~C',&amp;#64;Columns)
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~U',&amp;#64;User)
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~I',&amp;#64;InputParams)
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~V',&amp;#64;Columns1)
-		SET &amp;#64;SetTemplate = REPLACE(&amp;#64;SetTemplate,'~D',&amp;#64;CurDate)
-
-		SELECT &amp;#64;SetTemplate
-	 END TRY
-	 BEGIN CATCH
-
-         SELECT  &amp;#64;ErrorMessage		= ERROR_MESSAGE()
-				,&amp;#64;ErrorSeverity		= ERROR_SEVERITY()
-				,&amp;#64;ErrorProcedure	= ERROR_PROCEDURE()
-				,&amp;#64;ErrorState		= ERROR_STATE()
-				,&amp;#64;ErrorLine			= ERROR_LINE()
-
-		SET &amp;#64;ErrorMessage = 'Procedure: ' + &amp;#64;ErrorProcedure + ' ' + 
-		&amp;#64;ErrorMessage + ' Line: ' + CONVERT(VARCHAR(6),&amp;#64;ErrorLine)
-
-        RAISERROR ( &amp;#64;ErrorMessage, &amp;#64;ErrorSeverity, &amp;#64;ErrorState)
-
-    END CATCH
-	END
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;then&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;EXEC usp_CreateCRUDbyTableName &amp;#64;TableName = '' &lt;/code&gt;&lt;/p&gt;
-&lt;h1 id="links"&gt;Links&lt;/h1&gt;
-&lt;p&gt;(&lt;a href="https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/"&gt;https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/&lt;/a&gt;)[https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/]&lt;/p&gt;
-</content:encoded>
-		</item>
-		<item>
-			<title>Parameter passing in C# Passing by reference vs. passing by value</title>
-			<link>http://host.com/blog/posts/parameter</link>
-			<description>&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;</description>
-			<guid>http://host.com/blog/posts/parameter</guid>
-			<pubDate>Sun, 16 Jun 2019 00:00:00 GMT</pubDate>
-			<content:encoded>&lt;h1 id="parameter-passing-in-c-passing-by-reference-vs.passing-by-value"&gt;Parameter passing in C# Passing by reference vs. passing by value&lt;/h1&gt;
-&lt;p&gt;there is a nice article about it by John skeet.A &lt;a href="http://www.leerichardson.com/2007/01/parameter-passing-in-c.html"&gt;complementary article&lt;/a&gt; to this one. &lt;a href="https://jonskeet.uk/csharp/parameters.html"&gt;Here&lt;/a&gt; is the John skeet article. Some parts of it is as follows&lt;/p&gt;
-&lt;p&gt;Sidenote: what is the difference between passing a value object by reference and a reference object by value?
-You may have noticed that the last example, passing a struct by reference, had the same effect in this code as passing a class by value. This doesn't mean that they're the same thing, however. Consider the following code:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-csharp"&gt;void Foo (??? IntHolder x)
-{
-    x = new IntHolder();
-}
-
-...
-
-IntHolder y = new IntHolder();
-y.i=5;
-Foo (??? y);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Consider the case where IntHolder is a struct (i.e. a value type) and the parameter is a reference parameter (i.e. replace ??? with ref above). After the call to Foo(ref y), the value of y is a new IntHolder value - i.e. y.i is 0.&lt;/p&gt;
-&lt;p&gt;In the case where IntHolder is a class (i.e. a reference type) and the parameter is a value parameter (i.e. remove ??? above), the value of y isn't changed - it's a reference to the same object it was before the function member call. This difference is absolutely crucial to understanding parameter passing in C#, and is why I believe it is highly confusing to say that objects are passed by reference by default instead of the correct statement that object references are passed by value by default.&lt;/p&gt;
 </content:encoded>
 		</item>
 	</channel>
