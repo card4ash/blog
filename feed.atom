@@ -4,13 +4,13 @@
 	<title>ashcoder.io</title>
 	<link rel="self" href="http://host.com/blog" />
 	<rights>2022</rights>
-	<updated>2022-03-28T16:35:42Z</updated>
+	<updated>2022-03-28T17:08:28Z</updated>
 	<subtitle>Welcome!</subtitle>
 	<entry>
 		<id>http://host.com/blog/posts/jqueryajax</id>
 		<title>jquery-ajax</title>
 		<link href="http://host.com/blog/posts/jqueryajax" />
-		<updated>2022-03-20T00:00:00Z</updated>
+		<updated>2022-03-28T00:00:00Z</updated>
 		<content>&lt;p&gt;XMLHttpRequest object&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;the most fundamental building block of Ajax is the XMLHttpRequest object&lt;/p&gt;
@@ -1778,9 +1778,9 @@ Create and edit a new configuration file:
 		<summary>&lt;p&gt;HA proxy&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/aspnetcore</id>
-		<title>aspnet core notebook</title>
-		<link href="http://host.com/blog/posts/aspnetcore" />
+		<id>http://host.com/blog/posts/factorydesignpatter</id>
+		<title>Factory Design Patter</title>
+		<link href="http://host.com/blog/posts/factorydesignpatter" />
 		<updated>2020-02-18T00:00:00Z</updated>
 		<content>&lt;p&gt;new console app&lt;/p&gt;
 &lt;hr /&gt;
@@ -1809,9 +1809,9 @@ Create and edit a new configuration file:
 		<summary>&lt;p&gt;new console app&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/factorydesignpatter</id>
-		<title>Factory Design Patter</title>
-		<link href="http://host.com/blog/posts/factorydesignpatter" />
+		<id>http://host.com/blog/posts/aspnetcore</id>
+		<title>aspnet core notebook</title>
+		<link href="http://host.com/blog/posts/aspnetcore" />
 		<updated>2020-02-18T00:00:00Z</updated>
 		<content>&lt;p&gt;new console app&lt;/p&gt;
 &lt;hr /&gt;
@@ -1906,35 +1906,6 @@ Create and edit a new configuration file:
 		<summary>&lt;p&gt;Generate Private key(pkcs1) and certificate&lt;/p&gt;</summary>
 	</entry>
 	<entry>
-		<id>http://host.com/blog/posts/wyamgettingstarted</id>
-		<title>Wyam Blog Getting Started(cheetsheet)</title>
-		<link href="http://host.com/blog/posts/wyamgettingstarted" />
-		<updated>2019-11-25T00:00:00Z</updated>
-		<content>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="building"&gt;Building&lt;/h1&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To select a theme&lt;/p&gt;
-&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
-</content>
-		<summary>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</summary>
-	</entry>
-	<entry>
 		<id>http://host.com/blog/posts/djangocheetsh</id>
 		<title>Python Getting Started Cheet Sheet</title>
 		<link href="http://host.com/blog/posts/djangocheetsh" />
@@ -2011,6 +1982,35 @@ Create and edit a new configuration file:
 &lt;/code&gt;&lt;/pre&gt;
 </content>
 		<summary>&lt;p&gt;Installing virtualenv and virtualenvwrapper&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<id>http://host.com/blog/posts/wyamgettingstarted</id>
+		<title>Wyam Blog Getting Started(cheetsheet)</title>
+		<link href="http://host.com/blog/posts/wyamgettingstarted" />
+		<updated>2019-11-25T00:00:00Z</updated>
+		<content>&lt;h1 id="installing"&gt;Installing&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/usage/obtaining"&gt;Wyam Docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The easiest way to install Wyam is via the global tool package named Wyam.Tool. You can install it like this&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet tool install -g Wyam.Tool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="scaffolding-blog-recipe"&gt;Scaffolding Blog Recipe&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/recipes/blog/overview"&gt;Docs&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam new -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="building"&gt;Building&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To select a theme&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;wyam -r Blog -t CleanBlog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="appveyor-for-continuous-integration"&gt;AppVeyor for Continuous Integration&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://wyam.io/docs/deployment/appveyor"&gt;link here&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="deploy-to-github-pages"&gt;Deploy To Github Pages&lt;/h1&gt;
+&lt;p&gt;&lt;a href="https://help.github.com/en/github/working-with-github-pages/creating-a-github-pages-site"&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After configuring add new .md page in /input/post and commit project will get build and publish to github pages&lt;/p&gt;
+</content>
+		<summary>&lt;p&gt;&lt;a href="https://github.com/Wyamio/Wyam"&gt;Github link&lt;/a&gt; For Wyam Source&lt;/p&gt;</summary>
 	</entry>
 	<entry>
 		<id>http://host.com/blog/posts/mysqlbasic</id>
