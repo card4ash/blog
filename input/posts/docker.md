@@ -391,3 +391,19 @@ services:
       - "5000:5000"
 
 ```
+
+# installing sql server on docker desktop
+
+links: https://docs.microsoft.com/en-us/sql/linux/tutorial-restore-backup-in-sql-server-container?view=sql-server-ver15
+
+**Restore Database from bak file on host**
+
+```shell
+docker cp E:\Tutorial\AdventureWorksLT.bak sql1:/var/opt/mssql/backup
+```
+
+```shell
+docker exec -it sql1 /opt/mssql-tools/bin/sqlcmd -S localhost  -U SA -P "<YourStrong!Passw0rd>"  -Q "RESTORE FILELISTONLY FROM DISK = '/var/opt/mssql/backup/AdventureWorksLT.bak'"
+```
+
+
