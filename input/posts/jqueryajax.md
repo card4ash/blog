@@ -1,5 +1,5 @@
 Title: jquery-ajax
-Published: 03/20/2022
+Published: 03/28/2022
 Tags:
     - ajax
     - jquery
